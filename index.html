@@ -302,6 +302,54 @@
     position:sticky; top:0;
   }
 
+  /* ===== Quick nav ===== */
+  nav.quicknav{
+    position:sticky; top:0; z-index:20;
+    background:var(--panel);
+    border-bottom:1px solid var(--line);
+    display:flex; flex-wrap:wrap; gap:8px;
+    padding:10px 20px;
+  }
+  nav.quicknav button{
+    background:var(--panel-2);
+    color:var(--muted);
+    border:1px solid var(--line);
+    text-transform:none;
+    letter-spacing:0;
+    font-weight:600;
+    font-size:12px;
+    padding:6px 12px;
+  }
+  nav.quicknav button:hover{color:var(--green-bright); border-color:var(--green);}
+
+  /* ===== Upcoming banner ===== */
+  #upcomingBanner{
+    display:none;
+    max-width:1100px; margin:16px auto 0; padding:0 20px;
+  }
+  .banner-inner{
+    background:rgba(217,164,65,0.1);
+    border:1px solid var(--amber);
+    border-radius:2px;
+    padding:12px 16px;
+  }
+  .banner-title{
+    font-family:'Courier New',monospace;
+    font-size:11px;
+    color:var(--amber);
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    margin-bottom:8px;
+  }
+  .banner-item{
+    font-size:13px;
+    padding:4px 0;
+    display:flex; justify-content:space-between; gap:12px;
+    border-top:1px solid rgba(217,164,65,0.2);
+  }
+  .banner-item:first-of-type{border-top:none;}
+  .banner-item .when{color:var(--amber); font-family:'Courier New',monospace; white-space:nowrap;}
+
   footer{
     max-width:1100px;margin:50px auto 0;padding:20px;
     border-top:1px solid var(--line);
@@ -322,11 +370,11 @@
   <div class="header-inner">
     <p class="eyebrow stamp-font">// LAST ASYLUM PLAGUE — ALLIANCE OPS FILE</p>
     <h1>Containment Calendar</h1>
-    <p class="subtitle">All server events, converted live to your local time. Server clock runs GMT&minus;3, fixed offset (no DST).</p>
+    <p class="subtitle">All server events, converted live to your local time. Server clock runs GMT&minus;2, fixed offset (no DST).</p>
 
     <div class="clock-row">
       <div class="clock-box">
-        <div class="clock-label">Server Time (GMT&minus;3)</div>
+        <div class="clock-label">Server Time (GMT&minus;2)</div>
         <div class="clock-value stamp-font" id="serverClock">--:--:--</div>
         <div class="clock-sub" id="serverDate">--</div>
       </div>
@@ -348,10 +396,27 @@
   </div>
 </header>
 
+<nav class="quicknav">
+  <button onclick="document.getElementById('sec-survival').scrollIntoView({behavior:'smooth'})">Survival Battle</button>
+  <button onclick="document.getElementById('sec-kvk').scrollIntoView({behavior:'smooth'})">KvK War</button>
+  <button onclick="document.getElementById('sec-duel').scrollIntoView({behavior:'smooth'})">Alliance Duel</button>
+  <button onclick="document.getElementById('sec-elixir').scrollIntoView({behavior:'smooth'})">Elixir Scramble</button>
+  <button onclick="document.getElementById('sec-cheese').scrollIntoView({behavior:'smooth'})">Cheese Trap</button>
+  <button onclick="document.getElementById('sec-tbd').scrollIntoView({behavior:'smooth'})">Other Events</button>
+  <button onclick="document.getElementById('sec-milestones').scrollIntoView({behavior:'smooth'})">Milestones</button>
+</nav>
+
+<div id="upcomingBanner">
+  <div class="banner-inner">
+    <div class="banner-title">⚠ Coming up in the next 24 hours</div>
+    <div id="upcomingList"></div>
+  </div>
+</div>
+
 <main>
 
   <!-- ============ SURVIVAL BATTLE ============ -->
-  <section>
+  <section id="sec-survival">
     <div class="section-head">
       <span class="section-tag">DAILY</span>
       <h2>Survival Battle</h2>
@@ -372,18 +437,8 @@
     </table>
   </section>
 
-  <!-- ============ SERVER MILESTONES ============ -->
-  <section>
-    <div class="section-head">
-      <span class="section-tag tbd">ONE-TIME UNLOCKS</span>
-      <h2>Server Milestones</h2>
-    </div>
-    <p class="section-note">Features that switch on once as the server ages, rather than a recurring schedule. Scroll to browse — it auto-jumps to today's position on load. Past entries are dimmed, today is highlighted.</p>
-    <div id="milestoneScroll" style="max-height:420px; overflow-y:auto; border:1px solid var(--line); border-radius:2px; background:var(--panel-2);"></div>
-  </section>
-
   <!-- ============ KVK WAR ============ -->
-  <section>
+  <section id="sec-kvk">
     <div class="section-head">
       <span class="section-tag war">WEEKLY + MONTHLY</span>
       <h2>Kingdom vs Kingdom War</h2>
@@ -395,53 +450,18 @@
     <div class="monthly-note">
       <b style="color:var(--amber)">Monthly layer — bracket tournament:</b> weekly KvK winners advance through elimination rounds (Round 1 → Quarterfinals → Semifinals → Final) against other matched kingdoms, over several weeks, until a monthly champion is crowned. Each week's Saturday battle still happens as above; the bracket just decides who you face next.
     </div>
-  </section>
-
-  <!-- ============ CHEESE TRAP ============ -->
-  <section>
-    <div class="section-head">
-      <span class="section-tag recur">RECURRING · 48H</span>
-      <h2>Cheese Trap — "Basil the Rat"</h2>
-    </div>
-    <p class="section-note">Repeats every 48 hours. Server-time slot(s) can be 18:00, 23:00, or both — set which apply, and anchor the next known occurrence date so upcoming ones calculate automatically.</p>
-
-    <div class="recur-controls">
-      <div class="checkbox-row">
-        <label><input type="checkbox" id="basil18"> 18:00 server time</label>
-        <label><input type="checkbox" id="basil23"> 23:00 server time</label>
-      </div>
-      <div class="field">
-        <label>Next known occurrence (date)</label>
-        <input type="date" id="basilAnchor">
-      </div>
-      <button id="basilSave">Save</button>
-      <span class="save-msg" id="basilMsg"></span>
-    </div>
-
-    <div class="occ-list" id="basilOccList"></div>
-  </section>
-
-  <!-- ============ TBD EVENTS ============ -->
-  <section>
-    <div class="section-head">
-      <span class="section-tag tbd">SCHEDULE PENDING</span>
-      <h2>Other Alliance Events</h2>
-    </div>
-    <p class="section-note">Days/times not yet confirmed for these. Any alliance leader can fill them in here — saved for everyone viewing this page.</p>
-
-    <div class="tbd-grid" id="tbdGrid"></div>
-    <div style="margin-top:14px;">
-      <button id="tbdSave">Save all</button>
-      <span class="save-msg" id="tbdMsg"></span>
+    <div class="monthly-note" style="border-left-color:var(--red-bright);">
+      <b style="color:var(--red-bright)">⚠ Reported discrepancy:</b> the in-game rules text says the Royal City Scramble happens Saturday 12:00–16:00 server time, but a player in kingdom #217 reports it actually landing on <b>Fridays at 12:00</b> server time for them. Timing may vary by kingdom/bracket — worth double-checking which applies to your kingdom before relying on the Saturday slot above.
     </div>
   </section>
+
   <!-- ============ ALLIANCE DUEL ============ -->
-  <section>
+  <section id="sec-duel">
     <div class="section-head">
       <span class="section-tag war">WEEKLY</span>
       <h2>Alliance Duel</h2>
     </div>
-    <p class="section-note">Runs Monday–Saturday against a matched rival alliance. One themed phase per day; each day's result settles at server midnight (00:00 GMT&minus;3), and whoever wins more of the 6 phases wins the week. No Alliance Duel activity on Sunday.</p>
+    <p class="section-note">Runs Monday–Saturday against a matched rival alliance. One themed phase per day; each day's result settles at server midnight (00:00 GMT&minus;2), and whoever wins more of the 6 phases wins the week. No Alliance Duel activity on Sunday.</p>
 
     <table class="sb-table">
       <thead>
@@ -454,6 +474,70 @@
     </div>
   </section>
 
+  <!-- ============ ELIXIR SCRAMBLE ============ -->
+  <section id="sec-elixir">
+    <div class="section-head">
+      <span class="section-tag war">WEEKLY · CONFIRMED</span>
+      <h2>Elixir Scramble</h2>
+    </div>
+    <p class="section-note">Runs every Friday, server time, with two scheduled slots.</p>
+    <table class="sb-table">
+      <thead>
+        <tr><th>Server Time</th><th id="elixirLocalHeader">Your Time</th></tr>
+      </thead>
+      <tbody id="elixirBody"></tbody>
+    </table>
+  </section>
+
+  <!-- ============ CHEESE TRAP ============ -->
+  <section id="sec-cheese">
+    <div class="section-head">
+      <span class="section-tag recur">RECURRING · 48H</span>
+      <h2>Cheese Trap — "Basil the Rat"</h2>
+    </div>
+    <p class="section-note">Repeats every 48 hours. Timing is flexible — reported as usually 18:30 server time, sometimes with a second occurrence at 22:00, 22:30, or 00:00. This section's schedule may need re-confirming now that alliances have merged. Enter any known server-time slots (comma-separated) and the next known occurrence date below.</p>
+
+    <div class="recur-controls">
+      <div class="field" style="flex:1 1 220px;">
+        <label>Server-time slots (comma-separated, HH:MM)</label>
+        <input type="text" id="basilTimes" style="width:100%;" placeholder="e.g. 18:30, 22:00">
+      </div>
+      <div class="field">
+        <label>Next known occurrence (date)</label>
+        <input type="date" id="basilAnchor">
+      </div>
+      <button id="basilSave">Update</button>
+      <span class="save-msg" id="basilMsg"></span>
+    </div>
+
+    <div class="occ-list" id="basilOccList"></div>
+  </section>
+
+  <!-- ============ TBD EVENTS ============ -->
+  <section id="sec-tbd">
+    <div class="section-head">
+      <span class="section-tag tbd">SCHEDULE PENDING</span>
+      <h2>Other Alliance Events</h2>
+    </div>
+    <p class="section-note">Days/times not yet fully confirmed for these. Any alliance leader can try values here — see the note below on making changes permanent.</p>
+
+    <div class="tbd-grid" id="tbdGrid"></div>
+    <div style="margin-top:14px;">
+      <button id="tbdSave">Update</button>
+      <span class="save-msg" id="tbdMsg"></span>
+    </div>
+  </section>
+
+  <!-- ============ SERVER MILESTONES ============ -->
+  <section id="sec-milestones">
+    <div class="section-head">
+      <span class="section-tag tbd">ONE-TIME UNLOCKS</span>
+      <h2>Server Milestones</h2>
+    </div>
+    <p class="section-note">Features that switch on once as the server ages, rather than a recurring schedule. Scroll to browse — it auto-jumps to today's position on load. Past entries are dimmed, today is highlighted.</p>
+    <div id="milestoneScroll" style="max-height:420px; overflow-y:auto; border:1px solid var(--line); border-radius:2px; background:var(--panel-2);"></div>
+  </section>
+
 </main>
 
 
@@ -461,7 +545,7 @@
 // ============================================================
 // Config
 // ============================================================
-const SERVER_OFFSET_MINUTES = -180; // GMT-3, fixed, no DST
+const SERVER_OFFSET_MINUTES = -120; // GMT-2, fixed, no DST
 
 // Anchor: confirmed reference points (from screenshots / user reports on 2026-07-23)
 const SERVER_DAY_ANCHOR = { dateISO: '2026-07-23', serverDay: 69 };
@@ -490,15 +574,20 @@ function getLiveCycleDay(){
 // for everyone, edit the values below and re-upload the file.
 // ============================================================
 const CHEESE_TRAP_CONFIG = {
-  slot18: true,
-  slot23: false,
-  anchor: '2026-07-23'   // next known occurrence (server-local date, YYYY-MM-DD)
+  times: ['18:30'],       // server-time slots, HH:MM, one occurrence per slot every 48h
+  anchor: '2026-07-23',   // next known occurrence (server-local date, YYYY-MM-DD)
+  note: 'Usually 18:30 server time; a second occurrence has been seen at 22:00, 22:30, or 00:00 with mixed results. Schedule may need re-confirming post-merge.'
+};
+
+const ELIXIR_SCRAMBLE_CONFIG = {
+  weekday: 5,             // 0=Sun ... 5=Fri
+  weekdayName: 'Friday',
+  times: ['18:00', '23:00']
 };
 
 const TBD_EVENTS_CONFIG = {
   pandemic: { day:'', time:'', notes:"Not found under this name in 120 days of server milestones — may be a different in-game title. Check with the alliance if it maps to another event." },
-  canyon:   { day:'', time:'', notes:'Confirmed recurring (live countdown seen), but exact clock time not yet confirmed — only a single snapshot available so far.' },
-  elixir:   { day:'', time:'', notes:'Shows as an ongoing ranking/competition rather than a fixed start/end window — may not need a scheduled slot at all.' },
+  canyon:   { day:'Sun', time:'02:00', notes:'Believed to run on Sundays with several set start times through the day — only 02:00 server time confirmed so far. Other slots still unknown.' },
   undead:   { day:'', time:'', notes:'No countdown observed yet — still fully unknown.' }
 };
 
@@ -618,7 +707,7 @@ function getSelectedTZ(){
   return v;
 }
 
-// Convert a server-time (GMT-3) HH:MM on a given weekday to a string in target tz,
+// Convert a server-time (GMT-2) HH:MM on a given weekday to a string in target tz,
 // using the NEXT upcoming occurrence relative to "now" so DST-observing zones resolve correctly.
 function serverTimeToTZString(hh, mm, targetTZ, weekday){
   const now = new Date();
@@ -681,8 +770,8 @@ function updateClocks(){
   const now = new Date();
   const tz = getSelectedTZ();
 
-  const serverStr = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZone:'Etc/GMT+3'}).format(now);
-  const serverDateStr = new Intl.DateTimeFormat('en-GB',{weekday:'long', day:'2-digit', month:'short', timeZone:'Etc/GMT+3'}).format(now);
+  const serverStr = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZone:'Etc/GMT+2'}).format(now);
+  const serverDateStr = new Intl.DateTimeFormat('en-GB',{weekday:'long', day:'2-digit', month:'short', timeZone:'Etc/GMT+2'}).format(now);
   document.getElementById('serverClock').textContent = serverStr;
   document.getElementById('serverDate').textContent = serverDateStr;
 
@@ -698,7 +787,7 @@ updateClocks();
 updateServerDayCounter();
 setInterval(updateClocks, 1000);
 setInterval(updateServerDayCounter, 60000);
-tzSelect.addEventListener('change', ()=>{ updateClocks(); renderSurvivalBattle(); renderKvK(); renderBasilOccurrences(); renderAllianceDuel(); });
+tzSelect.addEventListener('change', ()=>{ updateClocks(); renderSurvivalBattle(); renderKvK(); renderBasilOccurrences(); renderAllianceDuel(); renderElixirScramble(); renderUpcomingBanner(); });
 
 // ============================================================
 // Survival Battle rendering
@@ -743,7 +832,7 @@ function renderSurvivalBattle(){
   const cycle = SB_CYCLE[day];
 
   const now = new Date();
-  const serverNowStr = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Etc/GMT+3'}).format(now);
+  const serverNowStr = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Etc/GMT+2'}).format(now);
   const serverNowHour = parseInt(serverNowStr.split(':')[0],10);
   // find the current slot index (last slot whose hour <= now, wrapping)
   const slotHours = [4,8,12,16,20,24];
@@ -829,7 +918,7 @@ function nextDateForWeekdayServer(targetDayIdx, hh, mm){
   for(let offset=0; offset<8; offset++){
     const candidateUTCms = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()+offset, hh, mm) - SERVER_OFFSET_MINUTES*60000;
     const candidate = new Date(candidateUTCms);
-    const serverWeekdayStr = new Intl.DateTimeFormat('en-US',{weekday:'short', timeZone:'Etc/GMT+3'}).format(candidate);
+    const serverWeekdayStr = new Intl.DateTimeFormat('en-US',{weekday:'short', timeZone:'Etc/GMT+2'}).format(candidate);
     const idx = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(serverWeekdayStr);
     if(idx === targetDayIdx && candidate.getTime() >= now.getTime() - 86400000){
       return candidate;
@@ -876,6 +965,23 @@ function renderKvK(){
 }
 
 // ============================================================
+// Elixir Scramble rendering (confirmed weekly, Friday)
+// ============================================================
+function renderElixirScramble(){
+  const tbody = document.getElementById('elixirBody');
+  tbody.innerHTML = '';
+  const tz = getSelectedTZ();
+  ELIXIR_SCRAMBLE_CONFIG.times.forEach(t=>{
+    const [hh,mm] = t.split(':').map(Number);
+    const d = nextDateForWeekdayServer(ELIXIR_SCRAMBLE_CONFIG.weekday, hh, mm);
+    const conv = convertServerDateTime(d, tz);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td class="time">${ELIXIR_SCRAMBLE_CONFIG.weekdayName} ${t}</td><td class="time">${conv.dateStr} ${conv.timeStr}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ============================================================
 // Alliance Duel rendering
 // ============================================================
 const ALLIANCE_DUEL_PHASES = [
@@ -904,8 +1010,7 @@ function renderAllianceDuel(){
 }
 
 function initBasil(){
-  document.getElementById('basil18').checked = !!CHEESE_TRAP_CONFIG.slot18;
-  document.getElementById('basil23').checked = !!CHEESE_TRAP_CONFIG.slot23;
+  document.getElementById('basilTimes').value = CHEESE_TRAP_CONFIG.times.join(', ');
   if(CHEESE_TRAP_CONFIG.anchor) document.getElementById('basilAnchor').value = CHEESE_TRAP_CONFIG.anchor;
   renderBasilOccurrences();
 }
@@ -917,39 +1022,48 @@ document.getElementById('basilSave').addEventListener('click', ()=>{
   setTimeout(()=>msg.textContent='', 4000);
 });
 
+function parseTimesList(str){
+  return str.split(',')
+    .map(s=>s.trim())
+    .filter(s=>/^\d{1,2}:\d{2}$/.test(s))
+    .map(s=>{ const [h,m] = s.split(':').map(Number); return {h,m}; });
+}
+
 function renderBasilOccurrences(){
   const list = document.getElementById('basilOccList');
   list.innerHTML = '';
+  if(CHEESE_TRAP_CONFIG.note){
+    const noteEl = document.createElement('div');
+    noteEl.className = 'section-note';
+    noteEl.style.margin = '0 0 10px';
+    noteEl.textContent = CHEESE_TRAP_CONFIG.note;
+    list.appendChild(noteEl);
+  }
   const tz = getSelectedTZ();
   const anchorVal = document.getElementById('basilAnchor').value;
-  const slot18 = document.getElementById('basil18').checked;
-  const slot23 = document.getElementById('basil23').checked;
+  const slots = parseTimesList(document.getElementById('basilTimes').value);
 
-  if(!anchorVal || (!slot18 && !slot23)){
+  if(!anchorVal || slots.length === 0){
     const p = document.createElement('div');
     p.className = 'section-note';
     p.style.margin = '0';
-    p.textContent = 'Set at least one time slot and a next-known date above, then Save, to see upcoming occurrences here.';
+    p.textContent = 'Enter at least one server-time slot and a next-known date above to see upcoming occurrences here.';
     list.appendChild(p);
     return;
   }
 
   const [y,m,d] = anchorVal.split('-').map(Number);
-  const slots = [];
-  if(slot18) slots.push(18);
-  if(slot23) slots.push(23);
-
   const occurrences = [];
   for(let cycle=0; cycle<4; cycle++){
-    slots.forEach(hh=>{
-      const utcMs = Date.UTC(y, m-1, d + cycle*2, hh, 0) - SERVER_OFFSET_MINUTES*60000;
+    slots.forEach(slot=>{
+      const utcMs = Date.UTC(y, m-1, d + cycle*2, slot.h, slot.m) - SERVER_OFFSET_MINUTES*60000;
       occurrences.push(new Date(utcMs));
     });
   }
   occurrences.sort((a,b)=>a-b);
 
   occurrences.slice(0,8).forEach(dateObj=>{
-    const serverStr = new Intl.DateTimeFormat('en-GB',{weekday:'short', day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit', hour12:false, timeZone:'Etc/GMT+3'}).format(dateObj);
+    const serverStr = new Intl.DateTimeFormat('en-GB',{weekday:'short', day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit', hour12:false, timeZone:'Etc/GMT+2'}).format(dateObj);
     const conv = convertServerDateTime(dateObj, tz);
     const row = document.createElement('div');
     row.className = 'occ-row';
@@ -961,8 +1075,8 @@ function renderBasilOccurrences(){
   });
 }
 
-['basilAnchor','basil18','basil23'].forEach(id=>{
-  document.getElementById(id).addEventListener('change', renderBasilOccurrences);
+['basilAnchor','basilTimes'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', ()=>{ renderBasilOccurrences(); renderUpcomingBanner(); });
 });
 
 // ============================================================
@@ -970,8 +1084,7 @@ function renderBasilOccurrences(){
 // ============================================================
 const TBD_EVENTS = [
   {key:'pandemic', name:'Pandemic Experience'},
-  {key:'canyon', name:'Canyon Conquest'},
-  {key:'elixir', name:'Elixir Scramble'},
+  {key:'canyon', name:'Canyon Conquest ("Crystal Canyon")'},
   {key:'undead', name:'Undead Siege'}
 ];
 
@@ -1038,23 +1151,107 @@ document.getElementById('tbdSave').addEventListener('click', ()=>{
   setTimeout(()=>msg.textContent='', 4000);
 });
 
-document.getElementById('tbdGrid').addEventListener('change', renderTBDConversions);
+document.getElementById('tbdGrid').addEventListener('change', ()=>{ renderTBDConversions(); renderUpcomingBanner(); });
 
 // ============================================================
-// Init
+// Upcoming (next 24h) banner
 // ============================================================
+function nextFutureWeeklyServerTime(weekdayIdx, hh, mm){
+  let d = nextDateForWeekdayServer(weekdayIdx, hh, mm);
+  if(d.getTime() < Date.now()) d = new Date(d.getTime() + 7*86400000);
+  return d;
+}
+
+function nextCheeseTrapOccurrence(){
+  const anchorVal = document.getElementById('basilAnchor').value;
+  const slots = parseTimesList(document.getElementById('basilTimes').value);
+  if(!anchorVal || slots.length === 0) return null;
+  const [y,m,d] = anchorVal.split('-').map(Number);
+  const occurrences = [];
+  for(let cycle=0; cycle<8; cycle++){
+    slots.forEach(slot=>{
+      const utcMs = Date.UTC(y, m-1, d + cycle*2, slot.h, slot.m) - SERVER_OFFSET_MINUTES*60000;
+      occurrences.push(new Date(utcMs));
+    });
+  }
+  const now = Date.now();
+  const future = occurrences.filter(o=>o.getTime() >= now).sort((a,b)=>a-b);
+  return future.length ? future[0] : null;
+}
+
+function renderUpcomingBanner(){
+  const tz = getSelectedTZ();
+  const now = Date.now();
+  const HOURS_24 = 24*3600*1000;
+  const candidates = [];
+
+  // Cheese Trap
+  const basilNext = nextCheeseTrapOccurrence();
+  if(basilNext) candidates.push({name:'Cheese Trap — Basil the Rat', date:basilNext});
+
+  // Elixir Scramble (both slots)
+  ELIXIR_SCRAMBLE_CONFIG.times.forEach(t=>{
+    const [hh,mm] = t.split(':').map(Number);
+    candidates.push({name:`Elixir Scramble (${t} server)`, date: nextFutureWeeklyServerTime(ELIXIR_SCRAMBLE_CONFIG.weekday, hh, mm)});
+  });
+
+  // KvK: attacker relocate window + Royal City Scramble
+  candidates.push({name:'KvK War — Attacker relocate window opens', date: nextFutureWeeklyServerTime(6, 0, 5)});
+  candidates.push({name:'KvK War — Royal City Scramble (per official rules; #217 reports Friday instead)', date: nextFutureWeeklyServerTime(6, 12, 0)});
+
+  // Alliance Duel Raid phase (Saturday, server 00:00)
+  candidates.push({name:'Alliance Duel — Phase 6: Raid begins', date: nextFutureWeeklyServerTime(6, 0, 0)});
+
+  // TBD events with day+time currently set (viewer-entered or pre-filled, e.g. Canyon Conquest)
+  TBD_EVENTS.forEach(ev=>{
+    const daySel = document.getElementById(`day-${ev.key}`);
+    const timeInput = document.getElementById(`time-${ev.key}`);
+    if(daySel && timeInput && daySel.value && timeInput.value){
+      const dayIdx = DAY_NAMES.indexOf(daySel.value);
+      const [hh,mm] = timeInput.value.split(':').map(Number);
+      candidates.push({name: ev.name, date: nextFutureWeeklyServerTime(dayIdx, hh, mm)});
+    }
+  });
+
+  const upcoming = candidates
+    .filter(c => c.date && (c.date.getTime() - now) <= HOURS_24 && (c.date.getTime() - now) >= -60000)
+    .sort((a,b)=>a.date-b.date);
+
+  const banner = document.getElementById('upcomingBanner');
+  const list = document.getElementById('upcomingList');
+  list.innerHTML = '';
+
+  if(upcoming.length === 0){
+    banner.style.display = 'none';
+    return;
+  }
+
+  upcoming.forEach(item=>{
+    const conv = convertServerDateTime(item.date, tz);
+    const row = document.createElement('div');
+    row.className = 'banner-item';
+    row.innerHTML = `<span>${item.name}</span><span class="when">${conv.dateStr} ${conv.timeStr}</span>`;
+    list.appendChild(row);
+  });
+  banner.style.display = 'block';
+}
+
+
 (function init(){
   renderDayStrip();
   renderSurvivalBattle();
   renderKvK();
   renderAllianceDuel();
+  renderElixirScramble();
   renderMilestones();
   initBasil();
   initTBD();
+  renderUpcomingBanner();
   setInterval(()=>{
     renderDayStrip();
     renderSurvivalBattle();
     updateServerDayCounter();
+    renderUpcomingBanner();
   }, 60000);
 })();
 </script>
