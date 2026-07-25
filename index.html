@@ -405,6 +405,7 @@
     <button onclick="document.getElementById('sec-kvk').scrollIntoView({behavior:'smooth'})">KvK War</button>
     <button onclick="document.getElementById('sec-duel').scrollIntoView({behavior:'smooth'})">Alliance Duel</button>
     <button onclick="document.getElementById('sec-elixir').scrollIntoView({behavior:'smooth'})">Elixir Scramble</button>
+    <button onclick="document.getElementById('sec-crystal').scrollIntoView({behavior:'smooth'})">Crystal Cluster Valley</button>
     <button onclick="document.getElementById('sec-cheese').scrollIntoView({behavior:'smooth'})">Cheese Trap</button>
     <button onclick="document.getElementById('sec-tbd').scrollIntoView({behavior:'smooth'})">Other Events</button>
     <button onclick="document.getElementById('sec-milestones').scrollIntoView({behavior:'smooth'})">Milestones</button>
@@ -491,6 +492,21 @@
         <tr><th>Server Time</th><th id="elixirLocalHeader">Your Time</th></tr>
       </thead>
       <tbody id="elixirBody"></tbody>
+    </table>
+  </section>
+
+  <!-- ============ CRYSTAL CLUSTER VALLEY ============ -->
+  <section id="sec-crystal">
+    <div class="section-head">
+      <span class="section-tag war">WEEKLY · CONFIRMED</span>
+      <h2>Crystal Cluster Valley</h2>
+    </div>
+    <p class="section-note">An individual event you opt into (not automatic). Runs on Sundays, server time, across 4 entry windows. Entry closes 20 minutes after each window opens.</p>
+    <table class="sb-table">
+      <thead>
+        <tr><th>Server Time Window</th><th id="crystalLocalHeader">Your Time</th></tr>
+      </thead>
+      <tbody id="crystalBody"></tbody>
     </table>
   </section>
 
@@ -590,9 +606,16 @@ const ELIXIR_SCRAMBLE_CONFIG = {
   times: ['18:00', '23:00']
 };
 
+const CRYSTAL_VALLEY_CONFIG = {
+  weekday: 0,             // Sunday
+  weekdayName: 'Sunday',
+  windows: ['02:00-02:30', '09:00-09:30', '18:00-18:30', '23:00-23:30'],
+  entryClosesAfterMin: 20
+};
+
 const TBD_EVENTS_CONFIG = {
   pandemic: { day:'', time:'', notes:"Not found under this name in 120 days of server milestones — may be a different in-game title. Check with the alliance if it maps to another event." },
-  canyon:   { day:'Sun', time:'02:00', notes:'Believed to run on Sundays with several set start times through the day — only 02:00 server time confirmed so far. Other slots still unknown.' },
+  canyon:   { day:'', time:'', notes:'Structure confirmed: register individually (15+ members, Sanctuary Lv.10+), then a round-robin tournament — 6 alliances per group, 5 rounds, each round has Registration → Matching → Preparation → Battle → Settlement phases. Runs automatically once registered; believed biweekly. Exact calendar day/time it kicks off is still unconfirmed.' },
   undead:   { day:'', time:'', notes:'No countdown observed yet — still fully unknown.' }
 };
 
@@ -792,7 +815,7 @@ updateClocks();
 updateServerDayCounter();
 setInterval(updateClocks, 1000);
 setInterval(updateServerDayCounter, 60000);
-tzSelect.addEventListener('change', ()=>{ updateClocks(); renderSurvivalBattle(); renderKvK(); renderBasilOccurrences(); renderAllianceDuel(); renderElixirScramble(); renderUpcomingBanner(); });
+tzSelect.addEventListener('change', ()=>{ updateClocks(); renderSurvivalBattle(); renderKvK(); renderBasilOccurrences(); renderAllianceDuel(); renderElixirScramble(); renderCrystalValley(); renderUpcomingBanner(); });
 
 // ============================================================
 // Survival Battle rendering
@@ -987,6 +1010,26 @@ function renderElixirScramble(){
 }
 
 // ============================================================
+// Crystal Cluster Valley rendering (confirmed weekly, Sunday, 4 windows)
+// ============================================================
+function renderCrystalValley(){
+  const tbody = document.getElementById('crystalBody');
+  tbody.innerHTML = '';
+  const tz = getSelectedTZ();
+  CRYSTAL_VALLEY_CONFIG.windows.forEach(w=>{
+    const startStr = w.split('-')[0];
+    const [hh,mm] = startStr.split(':').map(Number);
+    const d = nextDateForWeekdayServer(CRYSTAL_VALLEY_CONFIG.weekday, hh, mm);
+    const conv = convertServerDateTime(d, tz);
+    const closeDate = new Date(d.getTime() + CRYSTAL_VALLEY_CONFIG.entryClosesAfterMin*60000);
+    const closeConv = convertServerDateTime(closeDate, tz);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td class="time">${CRYSTAL_VALLEY_CONFIG.weekdayName} ${w}</td><td class="time">${conv.dateStr} ${conv.timeStr}&ndash;${closeConv.timeStr} <span style="color:var(--muted);font-size:11px;">(entry window)</span></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ============================================================
 // Alliance Duel rendering
 // ============================================================
 const ALLIANCE_DUEL_PHASES = [
@@ -1089,7 +1132,7 @@ function renderBasilOccurrences(){
 // ============================================================
 const TBD_EVENTS = [
   {key:'pandemic', name:'Pandemic Experience'},
-  {key:'canyon', name:'Canyon Conquest ("Crystal Canyon")'},
+  {key:'canyon', name:'Canyon Conquest'},
   {key:'undead', name:'Undead Siege'}
 ];
 
@@ -1200,6 +1243,12 @@ function renderUpcomingBanner(){
     candidates.push({name:`Elixir Scramble (${t} server)`, date: nextFutureWeeklyServerTime(ELIXIR_SCRAMBLE_CONFIG.weekday, hh, mm)});
   });
 
+  // Crystal Cluster Valley (4 windows, Sunday)
+  CRYSTAL_VALLEY_CONFIG.windows.forEach(w=>{
+    const [hh,mm] = w.split('-')[0].split(':').map(Number);
+    candidates.push({name:`Crystal Cluster Valley (${w} server)`, date: nextFutureWeeklyServerTime(CRYSTAL_VALLEY_CONFIG.weekday, hh, mm)});
+  });
+
   // KvK: attacker relocate window + Royal City Scramble
   candidates.push({name:'KvK War — Attacker relocate window opens', date: nextFutureWeeklyServerTime(6, 0, 5)});
   candidates.push({name:'KvK War — Royal City Scramble (per official rules; #217 reports Friday instead)', date: nextFutureWeeklyServerTime(6, 12, 0)});
@@ -1248,6 +1297,7 @@ function renderUpcomingBanner(){
   renderKvK();
   renderAllianceDuel();
   renderElixirScramble();
+  renderCrystalValley();
   renderMilestones();
   initBasil();
   initTBD();
