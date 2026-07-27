@@ -353,6 +353,43 @@
   .banner-item:first-of-type{border-top:none;}
   .banner-item .when{color:var(--amber); font-family:'Courier New',monospace; white-space:nowrap;}
 
+  .ad-day-accordion{
+    border:1px solid var(--line);
+    border-radius:2px;
+    margin-bottom:8px;
+    background:var(--panel-2);
+    overflow:hidden;
+  }
+  .ad-day-accordion summary{
+    cursor:pointer;
+    padding:10px 14px;
+    font-size:13px;
+    font-weight:600;
+    color:var(--text);
+    list-style:none;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .ad-day-accordion summary::-webkit-details-marker{display:none;}
+  .ad-day-accordion summary::after{
+    content:'+';
+    color:var(--green-bright);
+    font-size:16px;
+  }
+  .ad-day-accordion[open] summary::after{content:'–';}
+  .ad-day-accordion summary .ad-day-tag{
+    color:var(--muted); font-weight:400; font-size:12px; margin-left:8px;
+  }
+  .ad-task-row{
+    display:flex; justify-content:space-between; gap:12px;
+    padding:7px 14px;
+    border-top:1px solid var(--line);
+    font-size:12.5px;
+  }
+  .ad-task-name{color:var(--text);}
+  .ad-task-reward{color:var(--green-bright); font-family:'Courier New',monospace; white-space:nowrap;}
+
   footer{
     max-width:1100px;margin:50px auto 0;padding:20px;
     border-top:1px solid var(--line);
@@ -373,7 +410,7 @@
   <div class="header-inner">
     <p class="eyebrow stamp-font">// LAST ASYLUM PLAGUE — ALLIANCE OPS FILE</p>
     <h1>Containment Calendar</h1>
-    <p class="subtitle">All server events, converted live to your local time. Server clock runs GMT&minus;2, fixed offset (no DST).</p>
+    <p class="subtitle">Kingdom #217 — all server events, converted live to your local time. Server clock runs GMT&minus;2, fixed offset (no DST).</p>
 
     <div class="clock-row">
       <div class="clock-box">
@@ -443,24 +480,6 @@
     </table>
   </section>
 
-  <!-- ============ KVK WAR ============ -->
-  <section id="sec-kvk">
-    <div class="section-head">
-      <span class="section-tag war">WEEKLY + MONTHLY</span>
-      <h2>Kingdom vs Kingdom War</h2>
-    </div>
-    <p class="section-note">One weekly cycle runs Sunday through Saturday. Times below convert automatically to your selected timezone.</p>
-
-    <div class="kvk-timeline" id="kvkTimeline"></div>
-
-    <div class="monthly-note">
-      <b style="color:var(--amber)">Monthly layer — bracket tournament:</b> weekly KvK winners advance through elimination rounds (Round 1 → Quarterfinals → Semifinals → Final) against other matched kingdoms, over several weeks, until a monthly champion is crowned. Each week's Saturday battle still happens as above; the bracket just decides who you face next.
-    </div>
-    <div class="monthly-note" style="border-left-color:var(--red-bright);">
-      <b style="color:var(--red-bright)">⚠ Reported discrepancy:</b> the in-game rules text says the Royal City Scramble happens Saturday 12:00–16:00 server time, but a player in kingdom #217 reports it actually landing on <b>Fridays at 12:00</b> server time for them. Timing may vary by kingdom/bracket — worth double-checking which applies to your kingdom before relying on the Saturday slot above.
-    </div>
-  </section>
-
   <!-- ============ ALLIANCE DUEL ============ -->
   <section id="sec-duel">
     <div class="section-head">
@@ -477,6 +496,31 @@
     </table>
     <div class="monthly-note">
       Daily settlement is always server 00:00 — converted to your time, that's <b id="adResetTime">--:--</b> <span id="adResetDay" style="color:var(--muted)"></span>. Phase 6 (Raid) is when you can attack the opposing alliance's territory directly for points.
+    </div>
+
+    <p class="section-note" style="margin-top:18px;">Daily task list &amp; points per phase (tap a day to expand):</p>
+    <div id="adTasksAccordion"></div>
+  </section>
+
+  <!-- ============ KVK WAR ============ -->
+  <section id="sec-kvk">
+    <div class="section-head">
+      <span class="section-tag war">WEEKLY + MONTHLY</span>
+      <h2>Kingdom vs Kingdom War</h2>
+    </div>
+    <p class="section-note">One weekly cycle runs Sunday through Saturday. Times below convert automatically to your selected timezone.</p>
+
+    <div class="monthly-note">
+      <b style="color:var(--green-bright)">Our kingdom:</b> #217 &nbsp;|&nbsp; <b style="color:var(--green-bright)">Grouped with (bracket/matchmaking pool):</b> #218, #219, #220, #221, #222, #223, #224
+    </div>
+
+    <div class="kvk-timeline" id="kvkTimeline"></div>
+
+    <div class="monthly-note">
+      <b style="color:var(--amber)">Monthly layer — bracket tournament:</b> weekly KvK winners advance through elimination rounds (Round 1 → Quarterfinals → Semifinals → Final) against other matched kingdoms, over several weeks, until a monthly champion is crowned. Each week's Saturday battle still happens as above; the bracket just decides who you face next.
+    </div>
+    <div class="monthly-note" style="border-left-color:var(--red-bright);">
+      <b style="color:var(--red-bright)">⚠ Reported discrepancy:</b> the in-game rules text says the Royal City Scramble happens Saturday 12:00–16:00 server time, but a player in kingdom #217 reports it actually landing on <b>Fridays at 12:00</b> server time for them. Timing may vary by kingdom/bracket — worth double-checking which applies to your kingdom before relying on the Saturday slot above.
     </div>
   </section>
 
@@ -1057,6 +1101,130 @@ function renderAllianceDuel(){
   document.getElementById('adResetDay').textContent = '(shifts by one calendar day either side of server midnight depending on your timezone)';
 }
 
+// Daily task list & point values, per phase day (from in-game "Today's Theme" screens)
+const ALLIANCE_DUEL_TASKS = {
+  1: { label:'Monday — Phase 1: Enhance Raven', tasks:[
+    ['Consume 1 Stamina','+307.5'],
+    ['Complete Falcon Quest once','+25,500.0'],
+    ['Use 660 Antitoxin','+2.0'],
+    ['Buy a pack containing Diamonds [1 Diamond]','+30.0'],
+    ['Gather 100 Grain','+10.2'],
+    ['Gather 100 Timber','+10.2'],
+    ['Gather 60 Herbs','+10.2'],
+    ['Consume 1 Raven Fruit','+6.1'],
+    ['Consume 1 Raven Essence','+5,125.0']
+  ]},
+  2: { label:'Tuesday — Phase 2: Territory Development', tasks:[
+    ['Buy a pack containing Diamonds [1 Diamond]','+30.0'],
+    ['Use 1m Construction Speedup','+122.5'],
+    ['Increase 1 Building Might','+23.0'],
+    ['Execute 1 UR Covert Operation','+168,750.0'],
+    ['Dispatch a UR Caravan','+220,000.0'],
+    ['Recruit survivor once','+3,300.0']
+  ]},
+  3: { label:'Wednesday — Phase 3: Tech Research', tasks:[
+    ['Complete Falcon Quest once','+25,500.0'],
+    ['Buy a pack containing Diamonds [1 Diamond]','+30.0'],
+    ['Use 1m Research Speedup','+122.5'],
+    ['Consume 1 Study Scroll','+615.0'],
+    ['Increase 1 Tech Might','+22.5'],
+    ['For each Lv.1 Raven Gear Chest opened','+2,255.0'],
+    ['For each Lv.2 Raven Gear Chest opened','+6,765.0'],
+    ['For each Lv.3 Raven Gear Chest opened','+20,500.0'],
+    ['For each Lv.4 Raven Gear Chest opened','+61,500.0'],
+    ['For each Lv.5 Raven Gear Chest opened','+184,500.0'],
+    ['For each Lv.6 Raven Gear Chest opened','+553,500.0'],
+    ['For each Lv.7 Raven Gear Chest opened','+1,660,500.0']
+  ]},
+  4: { label:'Thursday — Phase 4: Hero Growth', tasks:[
+    ['Use 660 Antitoxin','+2.0'],
+    ['Buy a pack containing Diamonds [1 Diamond]','+30.0'],
+    ['Recruit heroes once','+3,675.0'],
+    ['Consume 1 UR Hero Shard','+20,500.0'],
+    ['Consume 1 SSR Hero Shard','+7,175.0'],
+    ['Consume 1 SR Hero Shard','+2,050.0'],
+    ['Use 1 Skill Badge','+20.5']
+  ]},
+  5: { label:'Friday — Phase 5: War Preparation', tasks:[
+    ['Complete Falcon Quest once','+25,500.0'],
+    ['Buy a pack containing Diamonds [1 Diamond]','+30.0'],
+    ['Use 1m Construction Speedup','+122.5'],
+    ['Increase 1 Building Might','+23.0'],
+    ['Use 1m Research Speedup','+122.5'],
+    ['Increase 1 Tech Might','+22.5'],
+    ['Use 1m Training Boost','+122.5'],
+    ['Train 1 Lv.1 soldier','+47.0'],
+    ['Train 1 Lv.2 soldier','+70.5'],
+    ['Train 1 Lv.3 soldier','+94.0'],
+    ['Train 1 Lv.4 soldier','+117.5'],
+    ['Train 1 Lv.5 soldier','+141.0'],
+    ['Train 1 Lv.6 soldier','+164.5'],
+    ['Train 1 Lv.7 soldier','+188.0'],
+    ['Train 1 Lv.8 soldier','+211.5'],
+    ['Train 1 Lv.9 soldier','+235.0'],
+    ['Train 1 Lv.10 soldier','+258.5']
+  ]},
+  6: { label:'Saturday — Phase 6: Raid the Enemy', tasks:[
+    ['Buy a pack containing Diamonds [1 Diamond]','+30.0'],
+    ['Use 1m Construction Speedup','+122.5'],
+    ['Execute 1 UR Covert Operation','+168,750.0'],
+    ['Use 1m Research Speedup','+122.5'],
+    ['Use 1m Training Boost','+122.5'],
+    ['Use 1m Healing Speedup','+122.5'],
+    ['For each Lv.1 soldier defeated (specific match)','+23.5'],
+    ['For each Lv.2 soldier defeated (specific match)','+35.2'],
+    ['For each Lv.3 soldier defeated (specific match)','+47.0'],
+    ['For each Lv.4 soldier defeated (specific match)','+58.7'],
+    ['For each Lv.5 soldier defeated (specific match)','+70.5'],
+    ['For each Lv.6 soldier defeated (specific match)','+82.2'],
+    ['For each Lv.7 soldier defeated (specific match)','+94.0'],
+    ['For each Lv.8 soldier defeated (specific match)','+105.7'],
+    ['For each Lv.9 soldier defeated (specific match)','+117.5'],
+    ['For each Lv.10 soldier defeated (specific match)','+129.2'],
+    ['For each Lv.1 soldier defeated','+4.7'],
+    ['For each Lv.2 soldier defeated','+7.0'],
+    ['For each Lv.3 soldier defeated','+9.4'],
+    ['For each Lv.4 soldier defeated','+11.7'],
+    ['For each Lv.5 soldier defeated','+14.1'],
+    ['For each Lv.6 soldier defeated','+16.4'],
+    ['For each Lv.7 soldier defeated','+18.8'],
+    ['For each Lv.8 soldier defeated','+21.1'],
+    ['For each Lv.9 soldier defeated','+23.5'],
+    ['For each Lv.10 soldier defeated','+25.8'],
+    ['For each Lv.1 soldier lost','+4.1'],
+    ['For each Lv.2 soldier lost','+6.1'],
+    ['For each Lv.3 soldier lost','+8.2'],
+    ['For each Lv.4 soldier lost','+10.2'],
+    ['For each Lv.5 soldier lost','+12.3'],
+    ['For each Lv.6 soldier lost','+14.3'],
+    ['For each Lv.7 soldier lost','+16.4'],
+    ['For each Lv.8 soldier lost','+18.4'],
+    ['For each Lv.9 soldier lost','+20.5'],
+    ['For each Lv.10 soldier lost','+22.5'],
+    ['Dispatch a UR Caravan','+220,000.0']
+  ]}
+};
+
+function renderAllianceDuelTasks(){
+  const container = document.getElementById('adTasksAccordion');
+  container.innerHTML = '';
+  for(let day=1; day<=6; day++){
+    const info = ALLIANCE_DUEL_TASKS[day];
+    const details = document.createElement('details');
+    details.className = 'ad-day-accordion';
+    const summary = document.createElement('summary');
+    summary.innerHTML = `<span>${info.label}</span><span class="ad-day-tag">${info.tasks.length} tasks</span>`;
+    details.appendChild(summary);
+    info.tasks.forEach(([name, reward])=>{
+      const row = document.createElement('div');
+      row.className = 'ad-task-row';
+      row.innerHTML = `<span class="ad-task-name">${name}</span><span class="ad-task-reward">${reward}</span>`;
+      details.appendChild(row);
+    });
+    container.appendChild(details);
+  }
+}
+
 function initBasil(){
   document.getElementById('basilTimes').value = CHEESE_TRAP_CONFIG.times.join(', ');
   if(CHEESE_TRAP_CONFIG.anchor) document.getElementById('basilAnchor').value = CHEESE_TRAP_CONFIG.anchor;
@@ -1296,6 +1464,7 @@ function renderUpcomingBanner(){
   renderSurvivalBattle();
   renderKvK();
   renderAllianceDuel();
+  renderAllianceDuelTasks();
   renderElixirScramble();
   renderCrystalValley();
   renderMilestones();
