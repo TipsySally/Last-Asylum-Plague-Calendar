@@ -408,29 +408,33 @@
 
 <header>
   <div class="header-inner">
-    <p class="eyebrow stamp-font">// LAST ASYLUM PLAGUE — ALLIANCE OPS FILE</p>
-    <h1>Containment Calendar</h1>
-    <p class="subtitle">Kingdom #217 — all server events, converted live to your local time. Server clock runs GMT&minus;2, fixed offset (no DST).</p>
+    <p class="eyebrow stamp-font" data-i18n="site.eyebrow">// LAST ASYLUM PLAGUE — ALLIANCE OPS FILE</p>
+    <h1 data-i18n="site.title">Containment Calendar</h1>
+    <p class="subtitle" data-i18n="site.subtitle">Kingdom #217 — all server events, converted live to your local time. Server clock runs GMT&minus;2, fixed offset (no DST).</p>
 
     <div class="clock-row">
       <div class="clock-box">
-        <div class="clock-label">Server Time (GMT&minus;2)</div>
+        <div class="clock-label" data-i18n="clock.serverTimeLabel">Server Time (GMT&minus;2)</div>
         <div class="clock-value stamp-font" id="serverClock">--:--:--</div>
         <div class="clock-sub" id="serverDate">--</div>
       </div>
       <div class="clock-box">
-        <div class="clock-label">Server Day</div>
+        <div class="clock-label" data-i18n="clock.serverDayLabel">Server Day</div>
         <div class="clock-value stamp-font" id="serverDayCounter">Day --</div>
-        <div class="clock-sub">Updates at server midnight</div>
+        <div class="clock-sub" data-i18n="clock.serverDaySub">Updates at server midnight</div>
       </div>
       <div class="clock-box">
-        <div class="clock-label">Your Local Time</div>
+        <div class="clock-label" data-i18n="clock.yourTimeLabel">Your Local Time</div>
         <div class="clock-value stamp-font" id="localClock">--:--:--</div>
         <div class="clock-sub" id="localDate">--</div>
       </div>
-      <div class="clock-box" style="flex:1 1 260px;">
-        <div class="clock-label">Display Timezone</div>
+      <div class="clock-box" style="flex:1 1 200px;">
+        <div class="clock-label" data-i18n="clock.tzLabel">Display Timezone</div>
         <select id="tzSelect" style="width:100%;margin-top:4px;"></select>
+      </div>
+      <div class="clock-box" style="flex:1 1 160px;">
+        <div class="clock-label" data-i18n="clock.langLabel">Language</div>
+        <select id="langSelect" style="width:100%;margin-top:4px;"></select>
       </div>
     </div>
   </div>
@@ -438,20 +442,20 @@
 
 <nav class="quicknav">
   <div class="quicknav-inner">
-    <button onclick="document.getElementById('sec-survival').scrollIntoView({behavior:'smooth'})">Survival Battle</button>
-    <button onclick="document.getElementById('sec-kvk').scrollIntoView({behavior:'smooth'})">KvK War</button>
-    <button onclick="document.getElementById('sec-duel').scrollIntoView({behavior:'smooth'})">Alliance Duel</button>
-    <button onclick="document.getElementById('sec-elixir').scrollIntoView({behavior:'smooth'})">Elixir Scramble</button>
-    <button onclick="document.getElementById('sec-crystal').scrollIntoView({behavior:'smooth'})">Crystal Cluster Valley</button>
-    <button onclick="document.getElementById('sec-cheese').scrollIntoView({behavior:'smooth'})">Cheese Trap</button>
-    <button onclick="document.getElementById('sec-tbd').scrollIntoView({behavior:'smooth'})">Other Events</button>
-    <button onclick="document.getElementById('sec-milestones').scrollIntoView({behavior:'smooth'})">Milestones</button>
+    <button data-i18n="nav.survival" onclick="document.getElementById('sec-survival').scrollIntoView({behavior:'smooth'})">Survival Battle</button>
+    <button data-i18n="nav.duel" onclick="document.getElementById('sec-duel').scrollIntoView({behavior:'smooth'})">Alliance Duel</button>
+    <button data-i18n="nav.kvk" onclick="document.getElementById('sec-kvk').scrollIntoView({behavior:'smooth'})">KvK War</button>
+    <button data-i18n="nav.elixir" onclick="document.getElementById('sec-elixir').scrollIntoView({behavior:'smooth'})">Elixir Scramble</button>
+    <button data-i18n="nav.crystal" onclick="document.getElementById('sec-crystal').scrollIntoView({behavior:'smooth'})">Crystal Cluster Valley</button>
+    <button data-i18n="nav.cheese" onclick="document.getElementById('sec-cheese').scrollIntoView({behavior:'smooth'})">Cheese Trap</button>
+    <button data-i18n="nav.tbd" onclick="document.getElementById('sec-tbd').scrollIntoView({behavior:'smooth'})">Other Events</button>
+    <button data-i18n="nav.milestones" onclick="document.getElementById('sec-milestones').scrollIntoView({behavior:'smooth'})">Milestones</button>
   </div>
 </nav>
 
 <div id="upcomingBanner">
   <div class="banner-inner">
-    <div class="banner-title">⚠ Coming up in the next 24 hours</div>
+    <div class="banner-title" data-i18n="banner.title">⚠ Coming up in the next 24 hours</div>
     <div id="upcomingList"></div>
   </div>
 </div>
@@ -461,20 +465,20 @@
   <!-- ============ SURVIVAL BATTLE ============ -->
   <section id="sec-survival">
     <div class="section-head">
-      <span class="section-tag">DAILY</span>
-      <h2>Survival Battle</h2>
+      <span class="section-tag" data-i18n="tag.daily">DAILY</span>
+      <h2 data-i18n="title.survival">Survival Battle</h2>
     </div>
-    <p class="section-note">Runs every day, 6 sub-objectives on a 4-hour rotation, cycling across a 7-day pattern. The live day is calculated automatically — no saving needed. Click any day below to preview it; click "Today" to jump back.</p>
+    <p class="section-note" data-i18n="note.survival">Runs every day, 6 sub-objectives on a 4-hour rotation, cycling across a 7-day pattern. The live day is calculated automatically — no saving needed. Click any day below to preview it; click "Today" to jump back.</p>
 
     <div class="today-setter">
       <span id="liveDayLabel" style="color:var(--green-bright);font-weight:600;">Today: Cycle Day --</span>
       <div class="day-strip" id="dayStrip" style="flex:1;margin:0;"></div>
-      <button class="secondary" id="jumpToday" style="white-space:nowrap;">Today</button>
+      <button class="secondary" id="jumpToday" data-i18n="btn.today" style="white-space:nowrap;">Today</button>
     </div>
 
     <table class="sb-table">
       <thead>
-        <tr><th>Server Time</th><th id="localTimeHeader">Your Time</th><th>Objective</th></tr>
+        <tr><th data-i18n="th.serverTime">Server Time</th><th id="localTimeHeader" data-i18n="th.yourTime">Your Time</th><th data-i18n="th.objective">Objective</th></tr>
       </thead>
       <tbody id="sbBody"></tbody>
     </table>
@@ -483,57 +487,57 @@
   <!-- ============ ALLIANCE DUEL ============ -->
   <section id="sec-duel">
     <div class="section-head">
-      <span class="section-tag war">WEEKLY</span>
-      <h2>Alliance Duel</h2>
+      <span class="section-tag war" data-i18n="tag.weekly">WEEKLY</span>
+      <h2 data-i18n="title.duel">Alliance Duel</h2>
     </div>
-    <p class="section-note">Runs Monday–Saturday against a matched rival alliance. One themed phase per day; each day's result settles at server midnight (00:00 GMT&minus;2), and whoever wins more of the 6 phases wins the week. No Alliance Duel activity on Sunday.</p>
+    <p class="section-note" data-i18n="note.duel">Runs Monday–Saturday against a matched rival alliance. One themed phase per day; each day's result settles at server midnight (00:00 GMT&minus;2), and whoever wins more of the 6 phases wins the week. No Alliance Duel activity on Sunday.</p>
 
     <table class="sb-table">
       <thead>
-        <tr><th>Day</th><th>Phase</th><th>Focus</th></tr>
+        <tr><th data-i18n="th.day">Day</th><th data-i18n="th.phase">Phase</th><th data-i18n="th.focus">Focus</th></tr>
       </thead>
       <tbody id="adBody"></tbody>
     </table>
     <div class="monthly-note">
-      Daily settlement is always server 00:00 — converted to your time, that's <b id="adResetTime">--:--</b> <span id="adResetDay" style="color:var(--muted)"></span>. Phase 6 (Raid) is when you can attack the opposing alliance's territory directly for points.
+      <span data-i18n="duel.resetPrefix">Daily settlement is always server 00:00 — converted to your time, that's</span> <b id="adResetTime">--:--</b> <span id="adResetDay" style="color:var(--muted)"></span>. <span data-i18n="duel.raidNote">Phase 6 (Raid) is when you can attack the opposing alliance's territory directly for points.</span>
     </div>
 
-    <p class="section-note" style="margin-top:18px;">Daily task list &amp; points per phase (tap a day to expand):</p>
+    <p class="section-note" data-i18n="duel.tasksIntro" style="margin-top:18px;">Daily task list &amp; points per phase (tap a day to expand):</p>
     <div id="adTasksAccordion"></div>
   </section>
 
   <!-- ============ KVK WAR ============ -->
   <section id="sec-kvk">
     <div class="section-head">
-      <span class="section-tag war">WEEKLY + MONTHLY</span>
-      <h2>Kingdom vs Kingdom War</h2>
+      <span class="section-tag war" data-i18n="tag.weeklyMonthly">WEEKLY + MONTHLY</span>
+      <h2 data-i18n="title.kvk">Kingdom vs Kingdom War</h2>
     </div>
-    <p class="section-note">One weekly cycle runs Sunday through Saturday. Times below convert automatically to your selected timezone.</p>
+    <p class="section-note" data-i18n="note.kvk">One weekly cycle runs Sunday through Saturday. Times below convert automatically to your selected timezone.</p>
 
     <div class="monthly-note">
-      <b style="color:var(--green-bright)">Our kingdom:</b> #217 &nbsp;|&nbsp; <b style="color:var(--green-bright)">Grouped with (bracket/matchmaking pool):</b> #218, #219, #220, #221, #222, #223, #224
+      <b style="color:var(--green-bright)" data-i18n="kvk.ourKingdom">Our kingdom:</b> #217 &nbsp;|&nbsp; <b style="color:var(--green-bright)" data-i18n="kvk.groupedWith">Grouped with (bracket/matchmaking pool):</b> #218, #219, #220, #221, #222, #223, #224
     </div>
 
     <div class="kvk-timeline" id="kvkTimeline"></div>
 
     <div class="monthly-note">
-      <b style="color:var(--amber)">Monthly layer — bracket tournament:</b> weekly KvK winners advance through elimination rounds (Round 1 → Quarterfinals → Semifinals → Final) against other matched kingdoms, over several weeks, until a monthly champion is crowned. Each week's Saturday battle still happens as above; the bracket just decides who you face next.
+      <span data-i18n="kvk.monthlyNote"><b style="color:var(--amber)">Monthly layer — bracket tournament:</b> weekly KvK winners advance through elimination rounds (Round 1 → Quarterfinals → Semifinals → Final) against other matched kingdoms, over several weeks, until a monthly champion is crowned. Each week's Saturday battle still happens as above; the bracket just decides who you face next.</span>
     </div>
     <div class="monthly-note" style="border-left-color:var(--red-bright);">
-      <b style="color:var(--red-bright)">⚠ Reported discrepancy:</b> the in-game rules text says the Royal City Scramble happens Saturday 12:00–16:00 server time, but a player in kingdom #217 reports it actually landing on <b>Fridays at 12:00</b> server time for them. Timing may vary by kingdom/bracket — worth double-checking which applies to your kingdom before relying on the Saturday slot above.
+      <span data-i18n="kvk.discrepancyNote"><b style="color:var(--red-bright)">⚠ Reported discrepancy:</b> the in-game rules text says the Royal City Scramble happens Saturday 12:00–16:00 server time, but a player in kingdom #217 reports it actually landing on <b>Fridays at 12:00</b> server time for them. Timing may vary by kingdom/bracket — worth double-checking which applies to your kingdom before relying on the Saturday slot above.</span>
     </div>
   </section>
 
   <!-- ============ ELIXIR SCRAMBLE ============ -->
   <section id="sec-elixir">
     <div class="section-head">
-      <span class="section-tag war">WEEKLY · CONFIRMED</span>
-      <h2>Elixir Scramble</h2>
+      <span class="section-tag war" data-i18n="tag.weeklyConfirmed">WEEKLY · CONFIRMED</span>
+      <h2 data-i18n="title.elixir">Elixir Scramble</h2>
     </div>
-    <p class="section-note">Runs every Friday, server time, with two scheduled slots.</p>
+    <p class="section-note" data-i18n="note.elixir">Runs every Friday, server time, with two scheduled slots.</p>
     <table class="sb-table">
       <thead>
-        <tr><th>Server Time</th><th id="elixirLocalHeader">Your Time</th></tr>
+        <tr><th data-i18n="th.serverTime">Server Time</th><th id="elixirLocalHeader" data-i18n="th.yourTime">Your Time</th></tr>
       </thead>
       <tbody id="elixirBody"></tbody>
     </table>
@@ -542,13 +546,13 @@
   <!-- ============ CRYSTAL CLUSTER VALLEY ============ -->
   <section id="sec-crystal">
     <div class="section-head">
-      <span class="section-tag war">WEEKLY · CONFIRMED</span>
-      <h2>Crystal Cluster Valley</h2>
+      <span class="section-tag war" data-i18n="tag.weeklyConfirmed">WEEKLY · CONFIRMED</span>
+      <h2 data-i18n="title.crystal">Crystal Cluster Valley</h2>
     </div>
-    <p class="section-note">An individual event you opt into (not automatic). Runs on Sundays, server time, across 4 entry windows. Entry closes 20 minutes after each window opens.</p>
+    <p class="section-note" data-i18n="note.crystal">An individual event you opt into (not automatic). Runs on Sundays, server time, across 4 entry windows. Entry closes 20 minutes after each window opens.</p>
     <table class="sb-table">
       <thead>
-        <tr><th>Server Time Window</th><th id="crystalLocalHeader">Your Time</th></tr>
+        <tr><th data-i18n="th.window">Server Time Window</th><th id="crystalLocalHeader" data-i18n="th.yourTime">Your Time</th></tr>
       </thead>
       <tbody id="crystalBody"></tbody>
     </table>
@@ -557,21 +561,21 @@
   <!-- ============ CHEESE TRAP ============ -->
   <section id="sec-cheese">
     <div class="section-head">
-      <span class="section-tag recur">RECURRING · 48H</span>
+      <span class="section-tag recur" data-i18n="tag.recurring48">RECURRING · 48H</span>
       <h2>Cheese Trap — "Basil the Rat"</h2>
     </div>
-    <p class="section-note">Repeats every 48 hours. Timing is flexible — reported as usually 18:30 server time, sometimes with a second occurrence at 22:00, 22:30, or 00:00. This section's schedule may need re-confirming now that alliances have merged. Enter any known server-time slots (comma-separated) and the next known occurrence date below.</p>
+    <p class="section-note" data-i18n="note.cheese">Repeats every 48 hours. Timing is flexible — reported as usually 18:30 server time, sometimes with a second occurrence at 22:00, 22:30, or 00:00. This section's schedule may need re-confirming now that alliances have merged. Enter any known server-time slots (comma-separated) and the next known occurrence date below.</p>
 
     <div class="recur-controls">
       <div class="field" style="flex:1 1 220px;">
-        <label>Server-time slots (comma-separated, HH:MM)</label>
+        <label data-i18n="cheese.timesLabel">Server-time slots (comma-separated, HH:MM)</label>
         <input type="text" id="basilTimes" style="width:100%;" placeholder="e.g. 18:30, 22:00">
       </div>
       <div class="field">
-        <label>Next known occurrence (date)</label>
+        <label data-i18n="cheese.anchorLabel">Next known occurrence (date)</label>
         <input type="date" id="basilAnchor">
       </div>
-      <button id="basilSave">Update</button>
+      <button id="basilSave" data-i18n="btn.update">Update</button>
       <span class="save-msg" id="basilMsg"></span>
     </div>
 
@@ -581,14 +585,14 @@
   <!-- ============ TBD EVENTS ============ -->
   <section id="sec-tbd">
     <div class="section-head">
-      <span class="section-tag tbd">SCHEDULE PENDING</span>
-      <h2>Other Alliance Events</h2>
+      <span class="section-tag tbd" data-i18n="tag.pending">SCHEDULE PENDING</span>
+      <h2 data-i18n="title.tbd">Other Alliance Events</h2>
     </div>
-    <p class="section-note">Days/times not yet fully confirmed for these. Any alliance leader can try values here — see the note below on making changes permanent.</p>
+    <p class="section-note" data-i18n="note.tbd">Days/times not yet fully confirmed for these. Any alliance leader can try values here — see the note below on making changes permanent.</p>
 
     <div class="tbd-grid" id="tbdGrid"></div>
     <div style="margin-top:14px;">
-      <button id="tbdSave">Update</button>
+      <button id="tbdSave" data-i18n="btn.update">Update</button>
       <span class="save-msg" id="tbdMsg"></span>
     </div>
   </section>
@@ -596,10 +600,10 @@
   <!-- ============ SERVER MILESTONES ============ -->
   <section id="sec-milestones">
     <div class="section-head">
-      <span class="section-tag tbd">ONE-TIME UNLOCKS</span>
-      <h2>Server Milestones</h2>
+      <span class="section-tag tbd" data-i18n="tag.oneTime">ONE-TIME UNLOCKS</span>
+      <h2 data-i18n="title.milestones">Server Milestones</h2>
     </div>
-    <p class="section-note">Features that switch on once as the server ages, rather than a recurring schedule. Scroll to browse — it auto-jumps to today's position on load. Past entries are dimmed, today is highlighted.</p>
+    <p class="section-note" data-i18n="note.milestones">Features that switch on once as the server ages, rather than a recurring schedule. Scroll to browse — it auto-jumps to today's position on load. Past entries are dimmed, today is highlighted.</p>
     <div id="milestoneScroll" style="max-height:420px; overflow-y:auto; border:1px solid var(--line); border-radius:2px; background:var(--panel-2);"></div>
   </section>
 
@@ -607,6 +611,732 @@
 
 
 <script>
+// ============================================================
+// i18n — languages, translations, weekday names, engine
+// ============================================================
+const SUPPORTED_LANGS = ['en','de','nl','fr','es','pt','hu','ru','uk','pl','fi','et'];
+const LANG_NATIVE_NAMES = {
+  en:'English', de:'Deutsch', nl:'Nederlands', fr:'Français', es:'Español',
+  pt:'Português', hu:'Magyar', ru:'Русский', uk:'Українська', pl:'Polski',
+  fi:'Suomi', et:'Eesti'
+};
+
+// Full weekday names, index 0=Sunday .. 6=Saturday (display only)
+const WEEKDAY_FULL = {
+  en:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+  de:["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"],
+  nl:["zondag","maandag","dinsdag","woensdag","donderdag","vrijdag","zaterdag"],
+  fr:["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"],
+  es:["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],
+  pt:["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"],
+  hu:["vasárnap","hétfő","kedd","szerda","csütörtök","péntek","szombat"],
+  ru:["воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"],
+  uk:["неділя","понеділок","вівторок","середа","четвер","п'ятниця","субота"],
+  pl:["niedziela","poniedziałek","wtorek","środa","czwartek","piątek","sobota"],
+  fi:["sunnuntai","maanantai","tiistai","keskiviikko","torstai","perjantai","lauantai"],
+  et:["pühapäev","esmaspäev","teisipäev","kolmapäev","neljapäev","reede","laupäev"]
+};
+// Short abbreviations, same index order — used for the TBD day <select>
+const WEEKDAY_ABBR = {
+  en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+  de:["So","Mo","Di","Mi","Do","Fr","Sa"],
+  nl:["zo","ma","di","wo","do","vr","za"],
+  fr:["dim","lun","mar","mer","jeu","ven","sam"],
+  es:["dom","lun","mar","mié","jue","vie","sáb"],
+  pt:["dom","seg","ter","qua","qui","sex","sáb"],
+  hu:["V","H","K","Sze","Cs","P","Szo"],
+  ru:["вс","пн","вт","ср","чт","пт","сб"],
+  uk:["нд","пн","вт","ср","чт","пт","сб"],
+  pl:["nie","pon","wt","śr","czw","pt","sob"],
+  fi:["su","ma","ti","ke","to","pe","la"],
+  et:["P","E","T","K","N","R","L"]
+};
+
+// NOTE ON SCOPE: all page chrome (navigation, headings, notes, labels,
+// buttons) is translated below. Literal in-game proper nouns — objective
+// names (e.g. "Enhance Raven"), Alliance Duel task names and phase focus
+// names, milestone event names, and the free-text notes in the Cheese Trap
+// / Other Events cards (which alliance leaders edit directly) — are left
+// in English on purpose, since there's no official localized string to
+// match against and guessing could mislead players comparing to their
+// actual in-game client.
+const TRANSLATIONS = {
+en: {
+"site.eyebrow":"// LAST ASYLUM PLAGUE — ALLIANCE OPS FILE",
+"site.title":"Containment Calendar",
+"site.subtitle":"Kingdom #217 — all server events, converted live to your local time. Server clock runs GMT&minus;2, fixed offset (no DST).",
+"clock.serverTimeLabel":"Server Time (GMT&minus;2)",
+"clock.serverDayLabel":"Server Day",
+"clock.serverDaySub":"Updates at server midnight",
+"clock.yourTimeLabel":"Your Local Time",
+"clock.tzLabel":"Display Timezone",
+"clock.langLabel":"Language",
+"nav.survival":"Survival Battle","nav.duel":"Alliance Duel","nav.kvk":"KvK War",
+"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Cheese Trap",
+"nav.tbd":"Other Events","nav.milestones":"Milestones",
+"banner.title":"⚠ Coming up in the next 24 hours",
+"tag.daily":"DAILY","tag.weekly":"WEEKLY","tag.weeklyMonthly":"WEEKLY + MONTHLY",
+"tag.recurring48":"RECURRING · 48H","tag.pending":"SCHEDULE PENDING",
+"tag.oneTime":"ONE-TIME UNLOCKS","tag.weeklyConfirmed":"WEEKLY · CONFIRMED",
+"title.survival":"Survival Battle","title.duel":"Alliance Duel","title.kvk":"Kingdom vs Kingdom War",
+"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.tbd":"Other Alliance Events","title.milestones":"Server Milestones",
+"note.survival":"Runs every day, 6 sub-objectives on a 4-hour rotation, cycling across a 7-day pattern. The live day is calculated automatically — no saving needed. Click any day below to preview it; click \"Today\" to jump back.",
+"note.duel":"Runs Monday–Saturday against a matched rival alliance. One themed phase per day; each day's result settles at server midnight (00:00 GMT&minus;2), and whoever wins more of the 6 phases wins the week. No Alliance Duel activity on Sunday.",
+"note.kvk":"One weekly cycle runs Sunday through Saturday. Times below convert automatically to your selected timezone.",
+"note.elixir":"Runs every Friday, server time, with two scheduled slots.",
+"note.crystal":"An individual event you opt into (not automatic). Runs on Sundays, server time, across 4 entry windows. Entry closes 20 minutes after each window opens.",
+"note.cheese":"Repeats every 48 hours. Timing is flexible — reported as usually 18:30 server time, sometimes with a second occurrence at 22:00, 22:30, or 00:00. This section's schedule may need re-confirming now that alliances have merged. Enter any known server-time slots (comma-separated) and the next known occurrence date below.",
+"note.tbd":"Days/times not yet fully confirmed for these. Any alliance leader can try values here — see the note below on making changes permanent.",
+"note.milestones":"Features that switch on once as the server ages, rather than a recurring schedule. Scroll to browse — it auto-jumps to today's position on load. Past entries are dimmed, today is highlighted.",
+"th.serverTime":"Server Time","th.yourTime":"Your Time","th.objective":"Objective",
+"th.day":"Day","th.phase":"Phase","th.focus":"Focus","th.window":"Server Time Window",
+"btn.today":"Today","btn.update":"Update",
+"duel.resetPrefix":"Daily settlement is always server 00:00 — converted to your time, that's",
+"duel.resetSuffix":"(shifts by one calendar day either side of server midnight depending on your timezone)",
+"duel.raidNote":"Phase 6 (Raid) is when you can attack the opposing alliance's territory directly for points.",
+"duel.tasksIntro":"Daily task list &amp; points per phase (tap a day to expand):",
+"duel.tasksSuffix":"tasks",
+"kvk.ourKingdom":"Our kingdom:","kvk.groupedWith":"Grouped with (bracket/matchmaking pool):",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Monthly layer — bracket tournament:</b> weekly KvK winners advance through elimination rounds (Round 1 → Quarterfinals → Semifinals → Final) against other matched kingdoms, over several weeks, until a monthly champion is crowned. Each week's Saturday battle still happens as above; the bracket just decides who you face next.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Reported discrepancy:</b> the in-game rules text says the Royal City Scramble happens Saturday 12:00–16:00 server time, but a player in kingdom #217 reports it actually landing on <b>Fridays at 12:00</b> server time for them. Timing may vary by kingdom/bracket — worth double-checking which applies to your kingdom before relying on the Saturday slot above.",
+"cheese.timesLabel":"Server-time slots (comma-separated, HH:MM)","cheese.anchorLabel":"Next known occurrence (date)",
+"cheese.localMsg":"Updated for this view only — send the confirmed value to update it for everyone.",
+"cheese.emptyMsg":"Enter at least one server-time slot and a next-known date above to see upcoming occurrences here.",
+"tbd.fieldDay":"Day","tbd.fieldTime":"Server time (HH:MM)","tbd.fieldNotes":"Notes","tbd.notSet":"Not set",
+"tbd.localMsg":"Updated for this view only — send confirmed values to update it for everyone.",
+"tbd.yourTimeSuffix":"your time",
+"milestones.era1":"Era 1 — Server Day 1 to 120",
+"milestones.revival":"Era of Revival — begins after Era 1 concludes (exact server day TBD), own Day 1 count",
+"milestones.dayPrefix":"DAY",
+"survival.todayLabel":"Today: Cycle Day","survival.previewLabel":"Previewing Cycle Day",
+"label.server":"SERVER","label.yourTime":"YOUR TIME",
+"crystal.entryWindowLabel":"(entry window)",
+"banner.cheeseTrapName":"Cheese Trap — Basil the Rat",
+"banner.elixirName":"Elixir Scramble ({time} server)","banner.crystalName":"Crystal Cluster Valley ({time} server)",
+"banner.kvkRelocate":"KvK War — Attacker relocate window opens",
+"banner.kvkScramble":"KvK War — Royal City Scramble (per official rules; #217 reports Friday instead)",
+"banner.duelRaid":"Alliance Duel — Phase 6: Raid begins"
+},
+de: {
+"site.eyebrow":"// LAST ASYLUM PLAGUE — ALLIANCE-EINSATZAKTE",
+"site.title":"Seuchen-Kalender",
+"site.subtitle":"Königreich #217 — alle Server-Events, live in deine Ortszeit umgerechnet. Serveruhr läuft auf GMT&minus;2, feste Verschiebung (keine Sommerzeit).",
+"clock.serverTimeLabel":"Serverzeit (GMT&minus;2)","clock.serverDayLabel":"Servertag",
+"clock.serverDaySub":"Aktualisiert um Mitternacht (Server)","clock.yourTimeLabel":"Deine Ortszeit",
+"clock.tzLabel":"Anzeige-Zeitzone","clock.langLabel":"Sprache",
+"nav.survival":"Survival Battle","nav.duel":"Allianz-Duell","nav.kvk":"KvK-Krieg",
+"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Käsefalle",
+"nav.tbd":"Weitere Events","nav.milestones":"Meilensteine",
+"banner.title":"⚠ In den nächsten 24 Stunden",
+"tag.daily":"TÄGLICH","tag.weekly":"WÖCHENTLICH","tag.weeklyMonthly":"WÖCHENTLICH + MONATLICH",
+"tag.recurring48":"WIEDERKEHREND · 48 STD","tag.pending":"ZEITPLAN OFFEN",
+"tag.oneTime":"EINMALIGE FREISCHALTUNGEN","tag.weeklyConfirmed":"WÖCHENTLICH · BESTÄTIGT",
+"title.survival":"Survival Battle","title.duel":"Allianz-Duell","title.kvk":"Königreich-gegen-Königreich-Krieg",
+"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.tbd":"Weitere Allianz-Events","title.milestones":"Server-Meilensteine",
+"note.survival":"Läuft jeden Tag, 6 Unterziele in einer 4-Stunden-Rotation, die sich über ein 7-Tage-Muster wiederholt. Der aktuelle Tag wird automatisch berechnet — kein Speichern nötig. Klicke auf einen Tag, um ihn als Vorschau zu sehen; klicke auf „Heute“, um zurückzuspringen.",
+"note.duel":"Läuft Montag bis Samstag gegen eine zugeloste gegnerische Allianz. Jeden Tag eine eigene Phase; das Tagesergebnis wird um Serverzeit-Mitternacht (00:00 GMT&minus;2) festgelegt, und wer mehr der 6 Phasen gewinnt, gewinnt die Woche. Sonntags findet kein Allianz-Duell statt.",
+"note.kvk":"Ein wöchentlicher Zyklus läuft von Sonntag bis Samstag. Die Zeiten unten werden automatisch in deine gewählte Zeitzone umgerechnet.",
+"note.elixir":"Findet jeden Freitag statt, Serverzeit, mit zwei festen Zeitfenstern.",
+"note.crystal":"Ein individuelles Event, dem man beitritt (nicht automatisch). Findet sonntags statt, Serverzeit, über 4 Eintrittsfenster. Der Eintritt schließt 20 Minuten nach Öffnung des jeweiligen Fensters.",
+"note.cheese":"Wiederholt sich alle 48 Stunden. Zeitpunkt ist variabel — meist 18:30 Uhr Serverzeit gemeldet, manchmal mit einem zweiten Vorkommen um 22:00, 22:30 oder 00:00 Uhr. Dieser Abschnitt muss nach dem Allianz-Zusammenschluss eventuell neu bestätigt werden. Trage bekannte Serverzeit-Fenster (durch Komma getrennt) und das nächste bekannte Datum unten ein.",
+"note.tbd":"Tage/Uhrzeiten für diese Events sind noch nicht vollständig bestätigt. Jeder Allianzleiter kann hier Werte ausprobieren — siehe die Anmerkung unten, wie Änderungen dauerhaft übernommen werden.",
+"note.milestones":"Features, die einmalig mit zunehmendem Serveralter freigeschaltet werden, statt einem wiederkehrenden Zeitplan zu folgen. Zum Durchsuchen scrollen — springt beim Laden automatisch zur heutigen Position. Vergangene Einträge sind abgedunkelt, der heutige ist hervorgehoben.",
+"th.serverTime":"Serverzeit","th.yourTime":"Deine Zeit","th.objective":"Ziel",
+"th.day":"Tag","th.phase":"Phase","th.focus":"Fokus","th.window":"Serverzeit-Fenster",
+"btn.today":"Heute","btn.update":"Aktualisieren",
+"duel.resetPrefix":"Die tägliche Abrechnung erfolgt immer um Serverzeit 00:00 Uhr — umgerechnet in deine Zeit ist das",
+"duel.resetSuffix":"(verschiebt sich je nach Zeitzone um einen Kalendertag in die eine oder andere Richtung)",
+"duel.raidNote":"In Phase 6 (Raid) kannst du das Gebiet der gegnerischen Allianz direkt angreifen, um Punkte zu erzielen.",
+"duel.tasksIntro":"Tägliche Aufgabenliste &amp; Punkte pro Phase (auf einen Tag tippen zum Aufklappen):",
+"duel.tasksSuffix":"Aufgaben",
+"kvk.ourKingdom":"Unser Königreich:","kvk.groupedWith":"Gruppiert mit (Bracket/Matchmaking-Pool):",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Monatliche Ebene — Turnierbaum:</b> die wöchentlichen KvK-Gewinner steigen durch Ausscheidungsrunden (Runde 1 → Viertelfinale → Halbfinale → Finale) gegen andere zugeloste Königreiche auf, über mehrere Wochen hinweg, bis ein Monatssieger gekrönt wird. Die wöchentliche Samstagsschlacht findet weiterhin wie oben statt; der Turnierbaum entscheidet nur, gegen wen als Nächstes.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Gemeldete Abweichung:</b> laut den Spielregeln findet das Royal City Scramble samstags 12:00–16:00 Uhr Serverzeit statt, aber ein Spieler in Königreich #217 berichtet, dass es bei ihm tatsächlich <b>freitags um 12:00 Uhr</b> Serverzeit stattfindet. Die Zeit kann je nach Königreich/Turnierbaum variieren — es lohnt sich zu prüfen, was für euer Königreich gilt, bevor ihr euch auf den Samstagstermin oben verlasst.",
+"cheese.timesLabel":"Serverzeit-Fenster (durch Komma getrennt, HH:MM)","cheese.anchorLabel":"Nächstes bekanntes Vorkommen (Datum)",
+"cheese.localMsg":"Nur für diese Ansicht aktualisiert — sende den bestätigten Wert, damit er für alle übernommen wird.",
+"cheese.emptyMsg":"Gib oben mindestens ein Serverzeit-Fenster und ein bekanntes Datum ein, um hier die nächsten Termine zu sehen.",
+"tbd.fieldDay":"Tag","tbd.fieldTime":"Serverzeit (HH:MM)","tbd.fieldNotes":"Notizen","tbd.notSet":"Nicht festgelegt",
+"tbd.localMsg":"Nur für diese Ansicht aktualisiert — sende bestätigte Werte, damit sie für alle übernommen werden.",
+"tbd.yourTimeSuffix":"deine Zeit",
+"milestones.era1":"Ära 1 — Servertag 1 bis 120",
+"milestones.revival":"Ära der Wiedergeburt — beginnt nach Ende von Ära 1 (genauer Servertag offen), eigene Tag-1-Zählung",
+"milestones.dayPrefix":"TAG",
+"survival.todayLabel":"Heute: Zyklustag","survival.previewLabel":"Vorschau: Zyklustag",
+"label.server":"SERVER","label.yourTime":"DEINE ZEIT",
+"crystal.entryWindowLabel":"(Eintrittsfenster)",
+"banner.cheeseTrapName":"Käsefalle — Basil the Rat",
+"banner.elixirName":"Elixir Scramble ({time} Server)","banner.crystalName":"Crystal Cluster Valley ({time} Server)",
+"banner.kvkRelocate":"KvK-Krieg — Verlegungsfenster für Angreifer öffnet",
+"banner.kvkScramble":"KvK-Krieg — Royal City Scramble (laut offiziellen Regeln; #217 meldet stattdessen Freitag)",
+"banner.duelRaid":"Allianz-Duell — Phase 6: Raid beginnt"
+},
+nl: {
+"site.eyebrow":"// LAST ASYLUM PLAGUE — ALLIANTIE-OPERATIEDOSSIER",
+"site.title":"Quarantainekalender",
+"site.subtitle":"Koninkrijk #217 — alle servergebeurtenissen, live omgerekend naar jouw lokale tijd. Serverklok loopt op GMT&minus;2, vaste verschuiving (geen zomertijd).",
+"clock.serverTimeLabel":"Servertijd (GMT&minus;2)","clock.serverDayLabel":"Serverdag",
+"clock.serverDaySub":"Wordt bijgewerkt om middernacht (server)","clock.yourTimeLabel":"Jouw lokale tijd",
+"clock.tzLabel":"Weergavetijdzone","clock.langLabel":"Taal",
+"nav.survival":"Survival Battle","nav.duel":"Alliantie-Duel","nav.kvk":"KvK-oorlog",
+"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Kaasval",
+"nav.tbd":"Overige events","nav.milestones":"Mijlpalen",
+"banner.title":"⚠ Binnen de komende 24 uur",
+"tag.daily":"DAGELIJKS","tag.weekly":"WEKELIJKS","tag.weeklyMonthly":"WEKELIJKS + MAANDELIJKS",
+"tag.recurring48":"TERUGKEREND · 48U","tag.pending":"TIJDSTIP NOG ONBEKEND",
+"tag.oneTime":"EENMALIGE ONTGRENDELINGEN","tag.weeklyConfirmed":"WEKELIJKS · BEVESTIGD",
+"title.survival":"Survival Battle","title.duel":"Alliantie-Duel","title.kvk":"Koninkrijk-tegen-Koninkrijk-oorlog",
+"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.tbd":"Overige alliantie-events","title.milestones":"Servermijlpalen",
+"note.survival":"Loopt elke dag, 6 subdoelen in een rotatie van 4 uur, over een patroon van 7 dagen. De actuele dag wordt automatisch berekend — niets hoeft opgeslagen te worden. Klik op een dag om die te bekijken; klik op \"Vandaag\" om terug te springen.",
+"note.duel":"Loopt van maandag t/m zaterdag tegen een gekoppelde rivaliserende alliantie. Elke dag een eigen fase; het dagresultaat wordt vastgesteld om middernacht servertijd (00:00 GMT&minus;2), en wie de meeste van de 6 fases wint, wint de week. Op zondag is er geen Alliantie-Duel.",
+"note.kvk":"Eén wekelijkse cyclus loopt van zondag t/m zaterdag. Onderstaande tijden worden automatisch omgerekend naar jouw gekozen tijdzone.",
+"note.elixir":"Vindt elke vrijdag plaats, servertijd, met twee vaste tijdstippen.",
+"note.crystal":"Een individueel event waar je zelf voor kiest (niet automatisch). Vindt plaats op zondag, servertijd, verdeeld over 4 toegangsvensters. Deelname sluit 20 minuten nadat elk venster opent.",
+"note.cheese":"Herhaalt elke 48 uur. Tijdstip is wisselend — meestal gemeld om 18:30 servertijd, soms met een tweede moment om 22:00, 22:30 of 00:00. Dit onderdeel moet mogelijk opnieuw bevestigd worden nu de allianties zijn samengevoegd. Vul hieronder bekende servertijd-tijdstippen in (komma-gescheiden) en de eerstvolgende bekende datum.",
+"note.tbd":"Dagen/tijden voor deze events zijn nog niet volledig bevestigd. Elke alliantieleider kan hier waarden uitproberen — zie de opmerking hieronder over hoe wijzigingen permanent worden gemaakt.",
+"note.milestones":"Functies die eenmalig vrijkomen naarmate de server ouder wordt, in plaats van een terugkerend schema. Scrol om te bladeren — springt bij het laden automatisch naar de positie van vandaag. Eerdere items zijn gedimd, vandaag is gemarkeerd.",
+"th.serverTime":"Servertijd","th.yourTime":"Jouw tijd","th.objective":"Doel",
+"th.day":"Dag","th.phase":"Fase","th.focus":"Focus","th.window":"Servertijd-venster",
+"btn.today":"Vandaag","btn.update":"Bijwerken",
+"duel.resetPrefix":"De dagelijkse afrekening is altijd om 00:00 servertijd — omgerekend naar jouw tijd is dat",
+"duel.resetSuffix":"(verschuift een kalenderdag naar voren of achteren, afhankelijk van jouw tijdzone)",
+"duel.raidNote":"Fase 6 (Raid) is het moment waarop je het grondgebied van de tegenstander direct kunt aanvallen voor punten.",
+"duel.tasksIntro":"Dagelijkse takenlijst &amp; punten per fase (tik op een dag om uit te klappen):",
+"duel.tasksSuffix":"taken",
+"kvk.ourKingdom":"Ons koninkrijk:","kvk.groupedWith":"Gegroepeerd met (bracket/matchmaking-pool):",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Maandelijkse laag — toernooiboom:</b> de wekelijkse KvK-winnaars gaan via uitschakelingsrondes (Ronde 1 → Kwartfinale → Halve finale → Finale) tegen andere gekoppelde koninkrijken, over meerdere weken, tot er een maandkampioen wordt gekroond. Het wekelijkse gevecht op zaterdag blijft gewoon zoals hierboven plaatsvinden; de toernooiboom bepaalt alleen tegen wie je daarna speelt.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Gemelde afwijking:</b> volgens de spelregels vindt de Royal City Scramble plaats op zaterdag 12:00–16:00 servertijd, maar een speler in koninkrijk #217 meldt dat het bij hen daadwerkelijk op <b>vrijdag om 12:00</b> servertijd valt. De timing kan verschillen per koninkrijk/toernooigroep — controleer dit voor je eigen koninkrijk voordat je op het zaterdagtijdstip hierboven vertrouwt.",
+"cheese.timesLabel":"Servertijd-tijdstippen (komma-gescheiden, UU:MM)","cheese.anchorLabel":"Eerstvolgende bekende voorval (datum)",
+"cheese.localMsg":"Alleen bijgewerkt voor deze weergave — stuur de bevestigde waarde door om het voor iedereen bij te werken.",
+"cheese.emptyMsg":"Vul hierboven minstens één servertijd-tijdstip en een bekende datum in om hier de eerstvolgende momenten te zien.",
+"tbd.fieldDay":"Dag","tbd.fieldTime":"Servertijd (UU:MM)","tbd.fieldNotes":"Notities","tbd.notSet":"Niet ingesteld",
+"tbd.localMsg":"Alleen bijgewerkt voor deze weergave — stuur bevestigde waarden door om ze voor iedereen bij te werken.",
+"tbd.yourTimeSuffix":"jouw tijd",
+"milestones.era1":"Era 1 — Serverdag 1 t/m 120",
+"milestones.revival":"Era of Revival — begint na afloop van Era 1 (exacte serverdag nog onbekend), eigen telling vanaf Dag 1",
+"milestones.dayPrefix":"DAG",
+"survival.todayLabel":"Vandaag: Cyclusdag","survival.previewLabel":"Voorbeeld: Cyclusdag",
+"label.server":"SERVER","label.yourTime":"JOUW TIJD",
+"crystal.entryWindowLabel":"(toegangsvenster)",
+"banner.cheeseTrapName":"Kaasval — Basil the Rat",
+"banner.elixirName":"Elixir Scramble ({time} servertijd)","banner.crystalName":"Crystal Cluster Valley ({time} servertijd)",
+"banner.kvkRelocate":"KvK-oorlog — verplaatsingsvenster voor aanvaller opent",
+"banner.kvkScramble":"KvK-oorlog — Royal City Scramble (volgens officiële regels; #217 meldt vrijdag)",
+"banner.duelRaid":"Alliantie-Duel — Fase 6: Raid begint"
+},
+fr: {
+"site.eyebrow":"// LAST ASYLUM PLAGUE — DOSSIER D'OPÉRATIONS D'ALLIANCE",
+"site.title":"Calendrier de Confinement",
+"site.subtitle":"Royaume #217 — tous les événements du serveur, convertis en direct dans votre heure locale. L'horloge du serveur tourne en GMT&minus;2, décalage fixe (pas d'heure d'été).",
+"clock.serverTimeLabel":"Heure serveur (GMT&minus;2)","clock.serverDayLabel":"Jour serveur",
+"clock.serverDaySub":"Mise à jour à minuit serveur","clock.yourTimeLabel":"Votre heure locale",
+"clock.tzLabel":"Fuseau horaire d'affichage","clock.langLabel":"Langue",
+"nav.survival":"Survival Battle","nav.duel":"Duel d'Alliance","nav.kvk":"Guerre KvK",
+"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Piège à Fromage",
+"nav.tbd":"Autres événements","nav.milestones":"Jalons",
+"banner.title":"⚠ À venir dans les prochaines 24 heures",
+"tag.daily":"QUOTIDIEN","tag.weekly":"HEBDOMADAIRE","tag.weeklyMonthly":"HEBDOMADAIRE + MENSUEL",
+"tag.recurring48":"RÉCURRENT · 48H","tag.pending":"HORAIRE À CONFIRMER",
+"tag.oneTime":"DÉBLOCAGES UNIQUES","tag.weeklyConfirmed":"HEBDOMADAIRE · CONFIRMÉ",
+"title.survival":"Survival Battle","title.duel":"Duel d'Alliance","title.kvk":"Guerre Royaume contre Royaume",
+"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.tbd":"Autres événements d'alliance","title.milestones":"Jalons du serveur",
+"note.survival":"Se déroule chaque jour, 6 sous-objectifs sur une rotation de 4 heures, selon un cycle de 7 jours. Le jour actuel est calculé automatiquement — aucune sauvegarde nécessaire. Cliquez sur un jour ci-dessous pour le prévisualiser ; cliquez sur « Aujourd'hui » pour revenir.",
+"note.duel":"Se déroule du lundi au samedi contre une alliance rivale attribuée. Une phase thématique par jour ; le résultat du jour est arrêté à minuit serveur (00:00 GMT&minus;2), et celui qui remporte le plus des 6 phases gagne la semaine. Pas de Duel d'Alliance le dimanche.",
+"note.kvk":"Un cycle hebdomadaire se déroule du dimanche au samedi. Les horaires ci-dessous se convertissent automatiquement dans le fuseau horaire choisi.",
+"note.elixir":"Se déroule chaque vendredi, heure serveur, avec deux créneaux programmés.",
+"note.crystal":"Un événement individuel auquel on s'inscrit soi-même (pas automatique). A lieu le dimanche, heure serveur, sur 4 fenêtres d'entrée. L'entrée se ferme 20 minutes après l'ouverture de chaque fenêtre.",
+"note.cheese":"Se répète toutes les 48 heures. L'horaire est variable — généralement signalé à 18h30 heure serveur, parfois avec une seconde occurrence à 22h00, 22h30 ou 00h00. Cette section pourrait nécessiter une reconfirmation maintenant que les alliances ont fusionné. Indiquez ci-dessous les créneaux horaires connus (séparés par des virgules) et la prochaine date connue.",
+"note.tbd":"Jours/horaires pas encore totalement confirmés pour ces événements. Tout responsable d'alliance peut essayer des valeurs ici — voir la remarque ci-dessous sur la façon de rendre les changements permanents.",
+"note.milestones":"Fonctionnalités qui se débloquent une seule fois à mesure que le serveur vieillit, plutôt que selon un calendrier récurrent. Faites défiler pour parcourir — se positionne automatiquement sur aujourd'hui au chargement. Les entrées passées sont estompées, celle d'aujourd'hui est surlignée.",
+"th.serverTime":"Heure serveur","th.yourTime":"Votre heure","th.objective":"Objectif",
+"th.day":"Jour","th.phase":"Phase","th.focus":"Focus","th.window":"Fenêtre horaire serveur",
+"btn.today":"Aujourd'hui","btn.update":"Mettre à jour",
+"duel.resetPrefix":"Le règlement quotidien a toujours lieu à minuit serveur — converti dans votre heure, cela donne",
+"duel.resetSuffix":"(décalé d'un jour calendaire dans un sens ou l'autre selon votre fuseau horaire)",
+"duel.raidNote":"La Phase 6 (Raid) est le moment où vous pouvez attaquer directement le territoire de l'alliance adverse pour marquer des points.",
+"duel.tasksIntro":"Liste des tâches quotidiennes &amp; points par phase (touchez un jour pour déplier) :",
+"duel.tasksSuffix":"tâches",
+"kvk.ourKingdom":"Notre royaume :","kvk.groupedWith":"Groupé avec (poule de bracket/matchmaking) :",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Palier mensuel — tournoi à élimination :</b> les vainqueurs hebdomadaires du KvK avancent à travers des tours d'élimination (Tour 1 → Quarts → Demi-finales → Finale) contre d'autres royaumes attribués, sur plusieurs semaines, jusqu'à ce qu'un champion mensuel soit couronné. La bataille du samedi a toujours lieu comme indiqué ci-dessus ; le tournoi détermine seulement contre qui vous jouerez ensuite.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Écart signalé :</b> le texte des règles du jeu indique que le Royal City Scramble a lieu le samedi de 12h00 à 16h00 heure serveur, mais un joueur du royaume #217 signale que, chez lui, cela tombe en réalité <b>le vendredi à 12h00</b> heure serveur. L'horaire peut varier selon le royaume/le tournoi — mieux vaut vérifier ce qui s'applique à votre royaume avant de se fier au créneau du samedi ci-dessus.",
+"cheese.timesLabel":"Créneaux horaires serveur (séparés par des virgules, HH:MM)","cheese.anchorLabel":"Prochaine occurrence connue (date)",
+"cheese.localMsg":"Mis à jour pour cette vue uniquement — envoyez la valeur confirmée pour la mettre à jour pour tout le monde.",
+"cheese.emptyMsg":"Saisissez au moins un créneau horaire serveur et une date connue ci-dessus pour voir les prochaines occurrences ici.",
+"tbd.fieldDay":"Jour","tbd.fieldTime":"Heure serveur (HH:MM)","tbd.fieldNotes":"Notes","tbd.notSet":"Non défini",
+"tbd.localMsg":"Mis à jour pour cette vue uniquement — envoyez les valeurs confirmées pour les mettre à jour pour tout le monde.",
+"tbd.yourTimeSuffix":"votre heure",
+"milestones.era1":"Ère 1 — Jour serveur 1 à 120",
+"milestones.revival":"Ère de la Renaissance — débute après la fin de l'Ère 1 (jour serveur exact à confirmer), sa propre numérotation à partir du Jour 1",
+"milestones.dayPrefix":"JOUR",
+"survival.todayLabel":"Aujourd'hui : Jour du cycle","survival.previewLabel":"Aperçu : Jour du cycle",
+"label.server":"SERVEUR","label.yourTime":"VOTRE HEURE",
+"crystal.entryWindowLabel":"(fenêtre d'entrée)",
+"banner.cheeseTrapName":"Piège à Fromage — Basil the Rat",
+"banner.elixirName":"Elixir Scramble ({time} heure serveur)","banner.crystalName":"Crystal Cluster Valley ({time} heure serveur)",
+"banner.kvkRelocate":"Guerre KvK — ouverture de la fenêtre de relocalisation de l'attaquant",
+"banner.kvkScramble":"Guerre KvK — Royal City Scramble (selon les règles officielles ; #217 signale le vendredi à la place)",
+"banner.duelRaid":"Duel d'Alliance — Phase 6 : le Raid commence"
+},
+es: {
+"site.eyebrow":"// LAST ASYLUM PLAGUE — ARCHIVO DE OPERACIONES DE ALIANZA",
+"site.title":"Calendario de Contención",
+"site.subtitle":"Reino #217 — todos los eventos del servidor, convertidos en vivo a tu hora local. El reloj del servidor funciona en GMT&minus;2, desfase fijo (sin horario de verano).",
+"clock.serverTimeLabel":"Hora del servidor (GMT&minus;2)","clock.serverDayLabel":"Día del servidor",
+"clock.serverDaySub":"Se actualiza a medianoche del servidor","clock.yourTimeLabel":"Tu hora local",
+"clock.tzLabel":"Zona horaria de visualización","clock.langLabel":"Idioma",
+"nav.survival":"Survival Battle","nav.duel":"Duelo de Alianza","nav.kvk":"Guerra KvK",
+"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Trampa de Queso",
+"nav.tbd":"Otros eventos","nav.milestones":"Hitos",
+"banner.title":"⚠ Próximamente en las próximas 24 horas",
+"tag.daily":"DIARIO","tag.weekly":"SEMANAL","tag.weeklyMonthly":"SEMANAL + MENSUAL",
+"tag.recurring48":"RECURRENTE · 48H","tag.pending":"HORARIO PENDIENTE",
+"tag.oneTime":"DESBLOQUEOS ÚNICOS","tag.weeklyConfirmed":"SEMANAL · CONFIRMADO",
+"title.survival":"Survival Battle","title.duel":"Duelo de Alianza","title.kvk":"Guerra de Reino contra Reino",
+"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.tbd":"Otros eventos de la alianza","title.milestones":"Hitos del servidor",
+"note.survival":"Se ejecuta todos los días, 6 subobjetivos en una rotación de 4 horas, repitiéndose en un patrón de 7 días. El día actual se calcula automáticamente — no hace falta guardar nada. Haz clic en cualquier día para previsualizarlo; haz clic en \"Hoy\" para volver.",
+"note.duel":"Se desarrolla de lunes a sábado contra una alianza rival emparejada. Una fase temática por día; el resultado del día se determina a medianoche del servidor (00:00 GMT&minus;2), y quien gane más de las 6 fases gana la semana. No hay Duelo de Alianza los domingos.",
+"note.kvk":"Un ciclo semanal va de domingo a sábado. Los horarios de abajo se convierten automáticamente a tu zona horaria seleccionada.",
+"note.elixir":"Se realiza cada viernes, hora del servidor, con dos franjas horarias programadas.",
+"note.crystal":"Un evento individual al que te apuntas tú mismo (no es automático). Se realiza los domingos, hora del servidor, en 4 ventanas de entrada. La entrada se cierra 20 minutos después de que se abra cada ventana.",
+"note.cheese":"Se repite cada 48 horas. El horario es flexible — normalmente se reporta a las 18:30 hora del servidor, a veces con una segunda ocurrencia a las 22:00, 22:30 o 00:00. Esta sección podría necesitar reconfirmarse ahora que las alianzas se han fusionado. Introduce abajo las franjas horarias conocidas (separadas por comas) y la próxima fecha conocida.",
+"note.tbd":"Días/horarios aún no completamente confirmados para estos eventos. Cualquier líder de la alianza puede probar valores aquí — consulta la nota de abajo sobre cómo hacer permanentes los cambios.",
+"note.milestones":"Funciones que se desbloquean una sola vez a medida que el servidor envejece, en lugar de seguir un calendario recurrente. Desplázate para explorar — al cargar salta automáticamente a la posición de hoy. Las entradas pasadas aparecen atenuadas, la de hoy está resaltada.",
+"th.serverTime":"Hora del servidor","th.yourTime":"Tu hora","th.objective":"Objetivo",
+"th.day":"Día","th.phase":"Fase","th.focus":"Enfoque","th.window":"Ventana horaria del servidor",
+"btn.today":"Hoy","btn.update":"Actualizar",
+"duel.resetPrefix":"La liquidación diaria siempre es a las 00:00 hora del servidor — convertido a tu hora, eso es",
+"duel.resetSuffix":"(se desplaza un día de calendario en un sentido u otro según tu zona horaria)",
+"duel.raidNote":"La Fase 6 (Raid) es cuando puedes atacar directamente el territorio de la alianza rival para conseguir puntos.",
+"duel.tasksIntro":"Lista de tareas diarias &amp; puntos por fase (toca un día para desplegar):",
+"duel.tasksSuffix":"tareas",
+"kvk.ourKingdom":"Nuestro reino:","kvk.groupedWith":"Agrupado con (grupo de bracket/emparejamiento):",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Nivel mensual — torneo de eliminatorias:</b> los ganadores semanales del KvK avanzan a través de rondas de eliminación (Ronda 1 → Cuartos → Semifinales → Final) contra otros reinos emparejados, a lo largo de varias semanas, hasta coronar a un campeón mensual. La batalla del sábado sigue ocurriendo como se indica arriba; el torneo solo decide contra quién jugarás después.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Discrepancia reportada:</b> las reglas del juego indican que el Royal City Scramble ocurre los sábados de 12:00 a 16:00 hora del servidor, pero un jugador del reino #217 reporta que en su caso realmente cae <b>los viernes a las 12:00</b> hora del servidor. El horario puede variar según el reino/grupo — conviene comprobar qué aplica a tu reino antes de confiar en el horario del sábado de arriba.",
+"cheese.timesLabel":"Franjas horarias del servidor (separadas por comas, HH:MM)","cheese.anchorLabel":"Próxima ocurrencia conocida (fecha)",
+"cheese.localMsg":"Actualizado solo para esta vista — envía el valor confirmado para actualizarlo para todos.",
+"cheese.emptyMsg":"Introduce al menos una franja horaria del servidor y una fecha conocida arriba para ver aquí las próximas ocurrencias.",
+"tbd.fieldDay":"Día","tbd.fieldTime":"Hora del servidor (HH:MM)","tbd.fieldNotes":"Notas","tbd.notSet":"Sin definir",
+"tbd.localMsg":"Actualizado solo para esta vista — envía los valores confirmados para actualizarlos para todos.",
+"tbd.yourTimeSuffix":"tu hora",
+"milestones.era1":"Era 1 — Día de servidor 1 a 120",
+"milestones.revival":"Era del Renacimiento — comienza tras concluir la Era 1 (día de servidor exacto pendiente), con su propio conteo desde el Día 1",
+"milestones.dayPrefix":"DÍA",
+"survival.todayLabel":"Hoy: Día del ciclo","survival.previewLabel":"Vista previa: Día del ciclo",
+"label.server":"SERVIDOR","label.yourTime":"TU HORA",
+"crystal.entryWindowLabel":"(ventana de entrada)",
+"banner.cheeseTrapName":"Trampa de Queso — Basil the Rat",
+"banner.elixirName":"Elixir Scramble ({time} hora del servidor)","banner.crystalName":"Crystal Cluster Valley ({time} hora del servidor)",
+"banner.kvkRelocate":"Guerra KvK — se abre la ventana de reubicación del atacante",
+"banner.kvkScramble":"Guerra KvK — Royal City Scramble (según reglas oficiales; #217 reporta el viernes en su lugar)",
+"banner.duelRaid":"Duelo de Alianza — Fase 6: comienza el Raid"
+},
+pt: {
+"site.eyebrow":"// LAST ASYLUM PLAGUE — FICHEIRO DE OPERAÇÕES DA ALIANÇA",
+"site.title":"Calendário de Contenção",
+"site.subtitle":"Reino #217 — todos os eventos do servidor, convertidos ao vivo para a sua hora local. O relógio do servidor funciona em GMT&minus;2, desvio fixo (sem horário de verão).",
+"clock.serverTimeLabel":"Hora do servidor (GMT&minus;2)","clock.serverDayLabel":"Dia do servidor",
+"clock.serverDaySub":"Atualiza à meia-noite do servidor","clock.yourTimeLabel":"A sua hora local",
+"clock.tzLabel":"Fuso horário de exibição","clock.langLabel":"Idioma",
+"nav.survival":"Survival Battle","nav.duel":"Duelo de Aliança","nav.kvk":"Guerra KvK",
+"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Armadilha de Queijo",
+"nav.tbd":"Outros eventos","nav.milestones":"Marcos",
+"banner.title":"⚠ A acontecer nas próximas 24 horas",
+"tag.daily":"DIÁRIO","tag.weekly":"SEMANAL","tag.weeklyMonthly":"SEMANAL + MENSAL",
+"tag.recurring48":"RECORRENTE · 48H","tag.pending":"HORÁRIO POR CONFIRMAR",
+"tag.oneTime":"DESBLOQUEIOS ÚNICOS","tag.weeklyConfirmed":"SEMANAL · CONFIRMADO",
+"title.survival":"Survival Battle","title.duel":"Duelo de Aliança","title.kvk":"Guerra de Reino contra Reino",
+"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.tbd":"Outros eventos da aliança","title.milestones":"Marcos do servidor",
+"note.survival":"Ocorre todos os dias, 6 sub-objetivos numa rotação de 4 horas, repetindo-se num padrão de 7 dias. O dia atual é calculado automaticamente — não é preciso guardar nada. Clique em qualquer dia abaixo para pré-visualizar; clique em \"Hoje\" para voltar.",
+"note.duel":"Ocorre de segunda a sábado contra uma aliança rival emparelhada. Uma fase temática por dia; o resultado do dia é definido à meia-noite do servidor (00:00 GMT&minus;2), e quem vencer mais das 6 fases vence a semana. Não há Duelo de Aliança aos domingos.",
+"note.kvk":"Um ciclo semanal vai de domingo a sábado. Os horários abaixo convertem-se automaticamente para o fuso horário selecionado.",
+"note.elixir":"Ocorre todas as sextas-feiras, hora do servidor, com dois horários agendados.",
+"note.crystal":"Um evento individual ao qual se adere (não é automático). Ocorre aos domingos, hora do servidor, em 4 janelas de entrada. A entrada fecha 20 minutos depois de cada janela abrir.",
+"note.cheese":"Repete-se a cada 48 horas. O horário é variável — normalmente reportado às 18:30 hora do servidor, por vezes com uma segunda ocorrência às 22:00, 22:30 ou 00:00. Esta secção pode precisar de reconfirmação agora que as alianças se fundiram. Introduza abaixo os horários conhecidos (separados por vírgulas) e a próxima data conhecida.",
+"note.tbd":"Dias/horários ainda não totalmente confirmados para estes eventos. Qualquer líder da aliança pode experimentar valores aqui — veja a nota abaixo sobre como tornar as alterações permanentes.",
+"note.milestones":"Funcionalidades que se desbloqueiam uma única vez à medida que o servidor envelhece, em vez de seguirem um calendário recorrente. Percorra para explorar — ao carregar, salta automaticamente para a posição de hoje. As entradas passadas aparecem esbatidas, a de hoje está destacada.",
+"th.serverTime":"Hora do servidor","th.yourTime":"A sua hora","th.objective":"Objetivo",
+"th.day":"Dia","th.phase":"Fase","th.focus":"Foco","th.window":"Janela horária do servidor",
+"btn.today":"Hoje","btn.update":"Atualizar",
+"duel.resetPrefix":"O acerto diário é sempre à meia-noite do servidor — convertido para a sua hora, isso é",
+"duel.resetSuffix":"(muda um dia de calendário para um lado ou outro consoante o seu fuso horário)",
+"duel.raidNote":"A Fase 6 (Raid) é quando pode atacar diretamente o território da aliança adversária para ganhar pontos.",
+"duel.tasksIntro":"Lista de tarefas diárias &amp; pontos por fase (toque num dia para expandir):",
+"duel.tasksSuffix":"tarefas",
+"kvk.ourKingdom":"O nosso reino:","kvk.groupedWith":"Agrupado com (grupo de bracket/matchmaking):",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Camada mensal — torneio eliminatório:</b> os vencedores semanais do KvK avançam através de rondas eliminatórias (Ronda 1 → Quartos → Meias-finais → Final) contra outros reinos emparelhados, ao longo de várias semanas, até ser coroado um campeão mensal. A batalha de sábado continua a acontecer como acima; o torneio só decide contra quem se joga a seguir.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Discrepância reportada:</b> o texto oficial das regras diz que o Royal City Scramble ocorre aos sábados das 12:00 às 16:00 hora do servidor, mas um jogador do reino #217 reporta que, para eles, ocorre na verdade <b>às sextas-feiras às 12:00</b> hora do servidor. O horário pode variar consoante o reino/grupo — vale a pena confirmar o que se aplica ao seu reino antes de confiar no horário de sábado acima.",
+"cheese.timesLabel":"Horários do servidor (separados por vírgulas, HH:MM)","cheese.anchorLabel":"Próxima ocorrência conhecida (data)",
+"cheese.localMsg":"Atualizado apenas para esta vista — envie o valor confirmado para atualizar para todos.",
+"cheese.emptyMsg":"Introduza pelo menos um horário do servidor e uma data conhecida acima para ver aqui as próximas ocorrências.",
+"tbd.fieldDay":"Dia","tbd.fieldTime":"Hora do servidor (HH:MM)","tbd.fieldNotes":"Notas","tbd.notSet":"Não definido",
+"tbd.localMsg":"Atualizado apenas para esta vista — envie os valores confirmados para atualizar para todos.",
+"tbd.yourTimeSuffix":"a sua hora",
+"milestones.era1":"Era 1 — Dia de servidor 1 a 120",
+"milestones.revival":"Era do Renascimento — começa após o fim da Era 1 (dia de servidor exato por confirmar), contagem própria a partir do Dia 1",
+"milestones.dayPrefix":"DIA",
+"survival.todayLabel":"Hoje: Dia do ciclo","survival.previewLabel":"Pré-visualização: Dia do ciclo",
+"label.server":"SERVIDOR","label.yourTime":"A SUA HORA",
+"crystal.entryWindowLabel":"(janela de entrada)",
+"banner.cheeseTrapName":"Armadilha de Queijo — Basil the Rat",
+"banner.elixirName":"Elixir Scramble ({time} hora do servidor)","banner.crystalName":"Crystal Cluster Valley ({time} hora do servidor)",
+"banner.kvkRelocate":"Guerra KvK — abre a janela de realocação do atacante",
+"banner.kvkScramble":"Guerra KvK — Royal City Scramble (segundo regras oficiais; #217 reporta sexta-feira em vez disso)",
+"banner.duelRaid":"Duelo de Aliança — Fase 6: o Raid começa"
+},
+hu: {
+"site.eyebrow":"// LAST ASYLUM PLAGUE — SZÖVETSÉGI MŰVELETI DOSSZIÉ",
+"site.title":"Karantén Naptár",
+"site.subtitle":"217-es Királyság — az összes szerveresemény élőben átszámítva a helyi időre. A szerver órája GMT&minus;2 időzónában jár, fix eltolással (nyári időszámítás nélkül).",
+"clock.serverTimeLabel":"Szerveridő (GMT&minus;2)","clock.serverDayLabel":"Szervernap",
+"clock.serverDaySub":"Szerver éjfélkor frissül","clock.yourTimeLabel":"Helyi időd",
+"clock.tzLabel":"Megjelenített időzóna","clock.langLabel":"Nyelv",
+"nav.survival":"Survival Battle","nav.duel":"Szövetségi Párbaj","nav.kvk":"KvK háború",
+"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Sajtcsapda",
+"nav.tbd":"Egyéb események","nav.milestones":"Mérföldkövek",
+"banner.title":"⚠ A következő 24 órában esedékes",
+"tag.daily":"NAPONTA","tag.weekly":"HETENTE","tag.weeklyMonthly":"HETENTE + HAVONTA",
+"tag.recurring48":"ISMÉTLŐDŐ · 48 ÓRA","tag.pending":"IDŐPONT MÉG NEM VÉGLEGES",
+"tag.oneTime":"EGYSZERI FELOLDÁSOK","tag.weeklyConfirmed":"HETENTE · MEGERŐSÍTVE",
+"title.survival":"Survival Battle","title.duel":"Szövetségi Párbaj","title.kvk":"Királyság vs. Királyság háború",
+"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.tbd":"Egyéb szövetségi események","title.milestones":"Szerver mérföldkövek",
+"note.survival":"Minden nap fut, 6 részcél 4 órás forgásban, egy 7 napos mintát követve. A mai nap automatikusan kiszámolódik — nincs szükség mentésre. Kattints egy napra az előnézethez; a \"Ma\" gombra kattintva visszaugorhatsz.",
+"note.duel":"Hétfőtől szombatig fut egy kisorsolt riválás szövetség ellen. Naponta egy tematikus fázis; a napi eredmény szerver éjfélkor (00:00 GMT&minus;2) dől el, és aki a 6 fázisból többet nyer, nyeri a hetet. Vasárnap nincs Szövetségi Párbaj.",
+"note.kvk":"Egy heti ciklus vasárnaptól szombatig tart. Az alábbi időpontok automatikusan átszámolódnak a kiválasztott időzónádra.",
+"note.elixir":"Minden pénteken zajlik, szerveridő szerint, két rögzített időpontban.",
+"note.crystal":"Egyéni esemény, amelyre magad jelentkezel be (nem automatikus). Vasárnaponként zajlik, szerveridő szerint, 4 belépési időablakban. A belépés az adott ablak megnyílása után 20 perccel zárul.",
+"note.cheese":"48 óránként ismétlődik. Az időpont változó — általában 18:30-kor szerveridő szerint jelentik, néha egy második alkalommal 22:00, 22:30 vagy 00:00 órakor. Ezt a részt a szövetségek egyesülése után esetleg újra meg kell erősíteni. Add meg alább az ismert szerveridő-időpontokat (vesszővel elválasztva) és a legközelebbi ismert dátumot.",
+"note.tbd":"Ezeknél az eseményeknél a napok/időpontok még nincsenek teljesen megerősítve. Bármelyik szövetségi vezető kipróbálhat itt értékeket — a tartós módosításról lásd a lenti megjegyzést.",
+"note.milestones":"Olyan funkciók, amelyek egyszer oldódnak fel a szerver öregedésével, nem pedig ismétlődő ütemezés szerint. Görgess a böngészéshez — betöltéskor automatikusan a mai pozícióra ugrik. A korábbi bejegyzések elhalványítva, a mai kiemelve jelenik meg.",
+"th.serverTime":"Szerveridő","th.yourTime":"A te időd","th.objective":"Cél",
+"th.day":"Nap","th.phase":"Fázis","th.focus":"Fókusz","th.window":"Szerveridő-ablak",
+"btn.today":"Ma","btn.update":"Frissítés",
+"duel.resetPrefix":"A napi elszámolás mindig szerver éjfélkor történik — a te időidre átszámítva ez",
+"duel.resetSuffix":"(időzónádtól függően egy naptári nappal eltolódhat bármelyik irányba)",
+"duel.raidNote":"A 6. fázisban (Raid) közvetlenül megtámadhatod az ellenséges szövetség területét pontokért.",
+"duel.tasksIntro":"Napi feladatlista &amp; pontok fázisonként (érints meg egy napot a kibontáshoz):",
+"duel.tasksSuffix":"feladat",
+"kvk.ourKingdom":"A mi királyságunk:","kvk.groupedWith":"Csoportosítva ezekkel (bracket/matchmaking csoport):",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Havi szint — kieséses torna:</b> a heti KvK-győztesek kieséses körökön (1. kör → Negyeddöntő → Elődöntő → Döntő) keresztül jutnak tovább más kisorsolt királyságok ellen, több héten át, amíg egy havi bajnokot ki nem koronáznak. A heti szombati csata továbbra is a fent leírtak szerint zajlik; a torna csak azt dönti el, ki ellen játszol legközelebb.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Jelentett eltérés:</b> a játék hivatalos szabályszövege szerint a Royal City Scramble szombaton 12:00–16:00 között zajlik szerveridő szerint, de egy 217-es királyságbeli játékos szerint náluk valójában <b>pénteken 12:00-kor</b> esik szerveridő szerint. Az időzítés királyságonként/csoportonként eltérhet — érdemes leellenőrizni, mi vonatkozik a te királyságodra, mielőtt a fenti szombati időpontra hagyatkoznál.",
+"cheese.timesLabel":"Szerveridő-időpontok (vesszővel elválasztva, ÓÓ:PP)","cheese.anchorLabel":"Legközelebbi ismert alkalom (dátum)",
+"cheese.localMsg":"Csak ehhez a nézethez frissült — küldd el a megerősített értéket, hogy mindenkinél frissüljön.",
+"cheese.emptyMsg":"Adj meg legalább egy szerveridő-időpontot és egy ismert dátumot fent, hogy itt lásd a következő alkalmakat.",
+"tbd.fieldDay":"Nap","tbd.fieldTime":"Szerveridő (ÓÓ:PP)","tbd.fieldNotes":"Megjegyzések","tbd.notSet":"Nincs beállítva",
+"tbd.localMsg":"Csak ehhez a nézethez frissült — küldd el a megerősített értékeket, hogy mindenkinél frissüljenek.",
+"tbd.yourTimeSuffix":"a te időd",
+"milestones.era1":"1. Éra — Szervernap 1-től 120-ig",
+"milestones.revival":"Az Újjászületés Kora — az 1. Éra végeztével kezdődik (pontos szervernap egyelőre nyitott), saját 1. napos számlálással",
+"milestones.dayPrefix":"NAP",
+"survival.todayLabel":"Ma: Ciklusnap","survival.previewLabel":"Előnézet: Ciklusnap",
+"label.server":"SZERVER","label.yourTime":"A TE IDŐD",
+"crystal.entryWindowLabel":"(belépési időablak)",
+"banner.cheeseTrapName":"Sajtcsapda — Basil the Rat",
+"banner.elixirName":"Elixir Scramble ({time} szerveridő)","banner.crystalName":"Crystal Cluster Valley ({time} szerveridő)",
+"banner.kvkRelocate":"KvK háború — megnyílik a támadó áthelyezési időablaka",
+"banner.kvkScramble":"KvK háború — Royal City Scramble (a hivatalos szabályok szerint; a 217-es helyette pénteket jelent)",
+"banner.duelRaid":"Szövetségi Párbaj — 6. fázis: kezdődik a Raid"
+},
+ru: {
+"site.eyebrow":"// LAST ASYLUM PLAGUE — ДОСЬЕ ОПЕРАЦИЙ АЛЬЯНСА",
+"site.title":"Календарь карантина",
+"site.subtitle":"Королевство #217 — все события сервера, переведённые в реальном времени в ваш часовой пояс. Часы сервера работают по GMT&minus;2, фиксированное смещение (без перехода на летнее время).",
+"clock.serverTimeLabel":"Время сервера (GMT&minus;2)","clock.serverDayLabel":"День сервера",
+"clock.serverDaySub":"Обновляется в полночь по серверу","clock.yourTimeLabel":"Ваше местное время",
+"clock.tzLabel":"Часовой пояс отображения","clock.langLabel":"Язык",
+"nav.survival":"Survival Battle","nav.duel":"Дуэль альянсов","nav.kvk":"Война KvK",
+"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Сырная ловушка",
+"nav.tbd":"Другие события","nav.milestones":"Вехи",
+"banner.title":"⚠ Ожидается в ближайшие 24 часа",
+"tag.daily":"ЕЖЕДНЕВНО","tag.weekly":"ЕЖЕНЕДЕЛЬНО","tag.weeklyMonthly":"ЕЖЕНЕДЕЛЬНО + ЕЖЕМЕСЯЧНО",
+"tag.recurring48":"ПОВТОРЯЕТСЯ · 48Ч","tag.pending":"РАСПИСАНИЕ УТОЧНЯЕТСЯ",
+"tag.oneTime":"РАЗОВЫЕ ОТКРЫТИЯ","tag.weeklyConfirmed":"ЕЖЕНЕДЕЛЬНО · ПОДТВЕРЖДЕНО",
+"title.survival":"Survival Battle","title.duel":"Дуэль альянсов","title.kvk":"Война Королевство против Королевства",
+"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.tbd":"Другие события альянса","title.milestones":"Вехи сервера",
+"note.survival":"Проходит каждый день, 6 подцелей с ротацией каждые 4 часа, повторяясь по 7-дневному циклу. Текущий день рассчитывается автоматически — сохранять ничего не нужно. Нажмите на любой день ниже для предпросмотра; нажмите «Сегодня», чтобы вернуться.",
+"note.duel":"Проходит с понедельника по субботу против назначенного альянса-соперника. Каждый день своя тематическая фаза; результат дня фиксируется в полночь по серверу (00:00 GMT&minus;2), и тот, кто выиграет больше из 6 фаз, побеждает в неделе. По воскресеньям Дуэли альянсов нет.",
+"note.kvk":"Недельный цикл идёт с воскресенья по субботу. Время ниже автоматически переводится в выбранный вами часовой пояс.",
+"note.elixir":"Проходит каждую пятницу по времени сервера, в два запланированных периода.",
+"note.crystal":"Индивидуальное событие, в которое вы вступаете сами (не автоматическое). Проходит по воскресеньям, по времени сервера, в 4 окна входа. Вход закрывается через 20 минут после открытия каждого окна.",
+"note.cheese":"Повторяется каждые 48 часов. Время непостоянно — обычно сообщают о 18:30 по серверу, иногда со вторым событием в 22:00, 22:30 или 00:00. Этот раздел может потребовать повторного подтверждения после объединения альянсов. Введите ниже известные временные интервалы сервера (через запятую) и следующую известную дату.",
+"note.tbd":"Дни/время для этих событий пока не подтверждены полностью. Любой лидер альянса может попробовать здесь значения — см. примечание ниже о том, как сделать изменения постоянными.",
+"note.milestones":"Функции, открывающиеся один раз по мере старения сервера, а не по повторяющемуся расписанию. Прокрутите для просмотра — при загрузке автоматически переходит к сегодняшней позиции. Прошедшие записи затемнены, сегодняшняя выделена.",
+"th.serverTime":"Время сервера","th.yourTime":"Ваше время","th.objective":"Задача",
+"th.day":"День","th.phase":"Фаза","th.focus":"Фокус","th.window":"Временное окно сервера",
+"btn.today":"Сегодня","btn.update":"Обновить",
+"duel.resetPrefix":"Ежедневный расчёт всегда происходит в 00:00 по серверу — в переводе на ваше время это",
+"duel.resetSuffix":"(смещается на один календарный день в ту или иную сторону в зависимости от вашего часового пояса)",
+"duel.raidNote":"Фаза 6 (Рейд) — это когда вы можете напрямую атаковать территорию альянса-соперника ради очков.",
+"duel.tasksIntro":"Список ежедневных заданий &amp; очки по фазам (нажмите на день, чтобы развернуть):",
+"duel.tasksSuffix":"заданий",
+"kvk.ourKingdom":"Наше королевство:","kvk.groupedWith":"Сгруппировано с (пул сетки/подбора):",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Месячный уровень — турнирная сетка:</b> еженедельные победители KvK продвигаются через раунды на выбывание (Раунд 1 → Четвертьфинал → Полуфинал → Финал) против других назначенных королевств в течение нескольких недель, пока не будет коронован месячный чемпион. Еженедельная субботняя битва по-прежнему проходит как описано выше; турнирная сетка лишь определяет, с кем вы сыграете дальше.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Обнаружено расхождение:</b> в официальных правилах игры говорится, что Royal City Scramble проходит по субботам с 12:00 до 16:00 по серверу, но игрок из королевства #217 сообщает, что у них это фактически происходит <b>по пятницам в 12:00</b> по серверу. Время может отличаться в зависимости от королевства/группы — стоит уточнить, что применимо к вашему королевству, прежде чем полагаться на субботний слот выше.",
+"cheese.timesLabel":"Временные интервалы сервера (через запятую, ЧЧ:ММ)","cheese.anchorLabel":"Следующее известное событие (дата)",
+"cheese.localMsg":"Обновлено только для этого просмотра — отправьте подтверждённое значение, чтобы обновить для всех.",
+"cheese.emptyMsg":"Введите выше хотя бы один временной интервал сервера и известную дату, чтобы увидеть здесь ближайшие события.",
+"tbd.fieldDay":"День","tbd.fieldTime":"Время сервера (ЧЧ:ММ)","tbd.fieldNotes":"Заметки","tbd.notSet":"Не задано",
+"tbd.localMsg":"Обновлено только для этого просмотра — отправьте подтверждённые значения, чтобы обновить для всех.",
+"tbd.yourTimeSuffix":"по вашему времени",
+"milestones.era1":"Эра 1 — День сервера с 1 по 120",
+"milestones.revival":"Эра Возрождения — начинается после завершения Эры 1 (точный день сервера уточняется), собственный отсчёт с Дня 1",
+"milestones.dayPrefix":"ДЕНЬ",
+"survival.todayLabel":"Сегодня: День цикла","survival.previewLabel":"Предпросмотр: День цикла",
+"label.server":"СЕРВЕР","label.yourTime":"ВАШЕ ВРЕМЯ",
+"crystal.entryWindowLabel":"(окно входа)",
+"banner.cheeseTrapName":"Сырная ловушка — Basil the Rat",
+"banner.elixirName":"Elixir Scramble ({time} по серверу)","banner.crystalName":"Crystal Cluster Valley ({time} по серверу)",
+"banner.kvkRelocate":"Война KvK — открывается окно переселения для атакующих",
+"banner.kvkScramble":"Война KvK — Royal City Scramble (по официальным правилам; #217 сообщает о пятнице вместо этого)",
+"banner.duelRaid":"Дуэль альянсов — Фаза 6: начинается Рейд"
+},
+uk: {
+"site.eyebrow":"// LAST ASYLUM PLAGUE — ДОСЬЄ ОПЕРАЦІЙ АЛЬЯНСУ",
+"site.title":"Календар карантину",
+"site.subtitle":"Королівство #217 — усі події сервера, переведені в реальному часі у ваш часовий пояс. Годинник сервера працює за GMT&minus;2, фіксоване зміщення (без переходу на літній час).",
+"clock.serverTimeLabel":"Час сервера (GMT&minus;2)","clock.serverDayLabel":"День сервера",
+"clock.serverDaySub":"Оновлюється опівночі за сервером","clock.yourTimeLabel":"Ваш місцевий час",
+"clock.tzLabel":"Часовий пояс відображення","clock.langLabel":"Мова",
+"nav.survival":"Survival Battle","nav.duel":"Дуель альянсів","nav.kvk":"Війна KvK",
+"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Сирна пастка",
+"nav.tbd":"Інші події","nav.milestones":"Віхи",
+"banner.title":"⚠ Очікується протягом наступних 24 годин",
+"tag.daily":"ЩОДНЯ","tag.weekly":"ЩОТИЖНЯ","tag.weeklyMonthly":"ЩОТИЖНЯ + ЩОМІСЯЦЯ",
+"tag.recurring48":"ПОВТОРЮЄТЬСЯ · 48Г","tag.pending":"РОЗКЛАД УТОЧНЮЄТЬСЯ",
+"tag.oneTime":"РАЗОВІ ВІДКРИТТЯ","tag.weeklyConfirmed":"ЩОТИЖНЯ · ПІДТВЕРДЖЕНО",
+"title.survival":"Survival Battle","title.duel":"Дуель альянсів","title.kvk":"Війна Королівство проти Королівства",
+"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.tbd":"Інші події альянсу","title.milestones":"Віхи сервера",
+"note.survival":"Триває щодня, 6 підцілей із ротацією кожні 4 години, повторюючись за 7-денним циклом. Поточний день розраховується автоматично — нічого зберігати не потрібно. Натисніть на будь-який день нижче для попереднього перегляду; натисніть «Сьогодні», щоб повернутися.",
+"note.duel":"Триває з понеділка по суботу проти призначеного альянсу-суперника. Щодня своя тематична фаза; результат дня фіксується опівночі за сервером (00:00 GMT&minus;2), і хто виграє більше з 6 фаз, перемагає у тижні. У неділю Дуелі альянсів немає.",
+"note.kvk":"Тижневий цикл триває з неділі по суботу. Час нижче автоматично перераховується у обраний вами часовий пояс.",
+"note.elixir":"Відбувається щоп'ятниці за часом сервера, у два запланованих періоди.",
+"note.crystal":"Індивідуальна подія, до якої ви приєднуєтесь самі (не автоматична). Відбувається щонеділі за часом сервера, у 4 вікна входу. Вхід закривається через 20 хвилин після відкриття кожного вікна.",
+"note.cheese":"Повторюється кожні 48 годин. Час непостійний — зазвичай повідомляють про 18:30 за сервером, іноді з другою подією о 22:00, 22:30 або 00:00. Цей розділ може потребувати повторного підтвердження після об'єднання альянсів. Введіть нижче відомі часові інтервали сервера (через кому) та наступну відому дату.",
+"note.tbd":"Дні/час для цих подій ще не підтверджені повністю. Будь-який лідер альянсу може спробувати тут значення — див. примітку нижче про те, як зробити зміни постійними.",
+"note.milestones":"Функції, що відкриваються один раз у міру старіння сервера, а не за повторюваним розкладом. Прокрутіть для перегляду — при завантаженні автоматично переходить до сьогоднішньої позиції. Минулі записи затемнені, сьогоднішня виділена.",
+"th.serverTime":"Час сервера","th.yourTime":"Ваш час","th.objective":"Завдання",
+"th.day":"День","th.phase":"Фаза","th.focus":"Фокус","th.window":"Часове вікно сервера",
+"btn.today":"Сьогодні","btn.update":"Оновити",
+"duel.resetPrefix":"Щоденний розрахунок завжди відбувається о 00:00 за сервером — у перерахунку на ваш час це",
+"duel.resetSuffix":"(зміщується на один календарний день в той чи інший бік залежно від вашого часового поясу)",
+"duel.raidNote":"Фаза 6 (Рейд) — це коли ви можете напряму атакувати територію альянсу-суперника заради очок.",
+"duel.tasksIntro":"Список щоденних завдань &amp; очки за фазами (торкніться дня, щоб розгорнути):",
+"duel.tasksSuffix":"завдань",
+"kvk.ourKingdom":"Наше королівство:","kvk.groupedWith":"Згруповано з (пул сітки/підбору):",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Місячний рівень — турнірна сітка:</b> щотижневі переможці KvK просуваються через раунди на вибування (Раунд 1 → Чвертьфінал → Півфінал → Фінал) проти інших призначених королівств протягом кількох тижнів, поки не буде коронований місячний чемпіон. Щотижнева суботня битва, як і раніше, відбувається, як описано вище; турнірна сітка лише визначає, з ким ви гратимете далі.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Виявлено розбіжність:</b> в офіційних правилах гри зазначено, що Royal City Scramble відбувається по суботах з 12:00 до 16:00 за сервером, але гравець із королівства #217 повідомляє, що у них це фактично відбувається <b>по п'ятницях о 12:00</b> за сервером. Час може відрізнятися залежно від королівства/групи — варто уточнити, що застосовується до вашого королівства, перш ніж покладатися на суботній слот вище.",
+"cheese.timesLabel":"Часові інтервали сервера (через кому, ГГ:ХХ)","cheese.anchorLabel":"Наступна відома подія (дата)",
+"cheese.localMsg":"Оновлено лише для цього перегляду — надішліть підтверджене значення, щоб оновити для всіх.",
+"cheese.emptyMsg":"Введіть вище принаймні один часовий інтервал сервера та відому дату, щоб побачити тут найближчі події.",
+"tbd.fieldDay":"День","tbd.fieldTime":"Час сервера (ГГ:ХХ)","tbd.fieldNotes":"Нотатки","tbd.notSet":"Не задано",
+"tbd.localMsg":"Оновлено лише для цього перегляду — надішліть підтверджені значення, щоб оновити для всіх.",
+"tbd.yourTimeSuffix":"за вашим часом",
+"milestones.era1":"Ера 1 — День сервера з 1 по 120",
+"milestones.revival":"Ера Відродження — починається після завершення Ери 1 (точний день сервера уточнюється), власний відлік із Дня 1",
+"milestones.dayPrefix":"ДЕНЬ",
+"survival.todayLabel":"Сьогодні: День циклу","survival.previewLabel":"Попередній перегляд: День циклу",
+"label.server":"СЕРВЕР","label.yourTime":"ВАШ ЧАС",
+"crystal.entryWindowLabel":"(вікно входу)",
+"banner.cheeseTrapName":"Сирна пастка — Basil the Rat",
+"banner.elixirName":"Elixir Scramble ({time} за сервером)","banner.crystalName":"Crystal Cluster Valley ({time} за сервером)",
+"banner.kvkRelocate":"Війна KvK — відкривається вікно переселення для атакувальників",
+"banner.kvkScramble":"Війна KvK — Royal City Scramble (за офіційними правилами; #217 повідомляє про п'ятницю натомість)",
+"banner.duelRaid":"Дуель альянсів — Фаза 6: починається Рейд"
+},
+pl: {
+"site.eyebrow":"// LAST ASYLUM PLAGUE — DOKUMENTACJA OPERACJI SOJUSZU",
+"site.title":"Kalendarz Kwarantanny",
+"site.subtitle":"Królestwo #217 — wszystkie wydarzenia serwera, przeliczane na żywo na Twój czas lokalny. Zegar serwera działa w GMT&minus;2, stałe przesunięcie (bez czasu letniego).",
+"clock.serverTimeLabel":"Czas serwera (GMT&minus;2)","clock.serverDayLabel":"Dzień serwera",
+"clock.serverDaySub":"Aktualizacja o północy czasu serwera","clock.yourTimeLabel":"Twój czas lokalny",
+"clock.tzLabel":"Wyświetlana strefa czasowa","clock.langLabel":"Język",
+"nav.survival":"Survival Battle","nav.duel":"Pojedynek Sojuszy","nav.kvk":"Wojna KvK",
+"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Pułapka na Sery",
+"nav.tbd":"Inne wydarzenia","nav.milestones":"Kamienie milowe",
+"banner.title":"⚠ Nadchodzi w ciągu następnych 24 godzin",
+"tag.daily":"CODZIENNIE","tag.weekly":"CO TYDZIEŃ","tag.weeklyMonthly":"CO TYDZIEŃ + CO MIESIĄC",
+"tag.recurring48":"POWTARZA SIĘ · 48H","tag.pending":"TERMIN DO POTWIERDZENIA",
+"tag.oneTime":"JEDNORAZOWE ODBLOKOWANIA","tag.weeklyConfirmed":"CO TYDZIEŃ · POTWIERDZONE",
+"title.survival":"Survival Battle","title.duel":"Pojedynek Sojuszy","title.kvk":"Wojna Królestwo kontra Królestwo",
+"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.tbd":"Inne wydarzenia sojuszu","title.milestones":"Kamienie milowe serwera",
+"note.survival":"Odbywa się codziennie, 6 podcelów w rotacji co 4 godziny, powtarzających się w 7-dniowym wzorcu. Aktualny dzień jest obliczany automatycznie — nie trzeba niczego zapisywać. Kliknij dowolny dzień poniżej, aby zobaczyć podgląd; kliknij „Dziś”, aby wrócić.",
+"note.duel":"Trwa od poniedziałku do soboty przeciwko wylosowanemu sojuszowi rywala. Każdego dnia inna tematyczna faza; wynik dnia jest ustalany o północy czasu serwera (00:00 GMT&minus;2), a kto wygra więcej z 6 faz, wygrywa tydzień. W niedzielę nie ma Pojedynku Sojuszy.",
+"note.kvk":"Cotygodniowy cykl trwa od niedzieli do soboty. Godziny poniżej są automatycznie przeliczane na wybraną strefę czasową.",
+"note.elixir":"Odbywa się w każdy piątek, czasu serwera, w dwóch zaplanowanych terminach.",
+"note.crystal":"Indywidualne wydarzenie, do którego zapisujesz się sam (nie jest automatyczne). Odbywa się w niedziele, czasu serwera, w 4 oknach wejścia. Wejście zamyka się 20 minut po otwarciu każdego okna.",
+"note.cheese":"Powtarza się co 48 godzin. Godzina jest zmienna — zwykle zgłaszana jako 18:30 czasu serwera, czasem z drugim wystąpieniem o 22:00, 22:30 lub 00:00. Ta sekcja może wymagać ponownego potwierdzenia teraz, gdy sojusze się połączyły. Wpisz poniżej znane godziny serwera (oddzielone przecinkami) oraz najbliższą znaną datę.",
+"note.tbd":"Dni/godziny dla tych wydarzeń nie są jeszcze w pełni potwierdzone. Każdy lider sojuszu może tu wypróbować wartości — zobacz uwagę poniżej, jak utrwalić zmiany na stałe.",
+"note.milestones":"Funkcje odblokowywane jednorazowo w miarę starzenia się serwera, zamiast według powtarzalnego harmonogramu. Przewiń, aby przeglądać — po załadowaniu automatycznie przechodzi do dzisiejszej pozycji. Wcześniejsze wpisy są przyciemnione, dzisiejszy jest wyróżniony.",
+"th.serverTime":"Czas serwera","th.yourTime":"Twój czas","th.objective":"Cel",
+"th.day":"Dzień","th.phase":"Faza","th.focus":"Skupienie","th.window":"Okno czasowe serwera",
+"btn.today":"Dziś","btn.update":"Aktualizuj",
+"duel.resetPrefix":"Codzienne rozliczenie zawsze odbywa się o 00:00 czasu serwera — po przeliczeniu na Twój czas to",
+"duel.resetSuffix":"(przesuwa się o jeden dzień kalendarzowy w jedną lub drugą stronę w zależności od Twojej strefy czasowej)",
+"duel.raidNote":"Faza 6 (Rajd) to moment, w którym możesz bezpośrednio zaatakować terytorium wrogiego sojuszu, aby zdobyć punkty.",
+"duel.tasksIntro":"Lista codziennych zadań &amp; punkty za fazę (dotknij dnia, aby rozwinąć):",
+"duel.tasksSuffix":"zadań",
+"kvk.ourKingdom":"Nasze królestwo:","kvk.groupedWith":"Zgrupowane z (pula drabinki/matchmakingu):",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Warstwa miesięczna — turniej pucharowy:</b> cotygodniowi zwycięzcy KvK awansują przez rundy eliminacyjne (Runda 1 → Ćwierćfinał → Półfinał → Finał) przeciwko innym wylosowanym królestwom, przez kilka tygodni, aż zostanie koronowany mistrz miesiąca. Cotygodniowa sobotnia bitwa nadal odbywa się jak powyżej; drabinka turniejowa decyduje tylko, z kim zagrasz następnie.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Zgłoszona rozbieżność:</b> oficjalne zasady gry mówią, że Royal City Scramble odbywa się w sobotę 12:00–16:00 czasu serwera, ale gracz z królestwa #217 zgłasza, że u nich faktycznie wypada to <b>w piątek o 12:00</b> czasu serwera. Godzina może się różnić w zależności od królestwa/grupy — warto sprawdzić, co dotyczy Twojego królestwa, zanim polegniesz na sobotnim terminie powyżej.",
+"cheese.timesLabel":"Godziny serwera (oddzielone przecinkami, GG:MM)","cheese.anchorLabel":"Najbliższe znane wystąpienie (data)",
+"cheese.localMsg":"Zaktualizowano tylko dla tego widoku — wyślij potwierdzoną wartość, aby zaktualizować dla wszystkich.",
+"cheese.emptyMsg":"Wpisz powyżej co najmniej jedną godzinę serwera i znaną datę, aby zobaczyć tutaj najbliższe wystąpienia.",
+"tbd.fieldDay":"Dzień","tbd.fieldTime":"Czas serwera (GG:MM)","tbd.fieldNotes":"Notatki","tbd.notSet":"Nie ustawiono",
+"tbd.localMsg":"Zaktualizowano tylko dla tego widoku — wyślij potwierdzone wartości, aby zaktualizować dla wszystkich.",
+"tbd.yourTimeSuffix":"twój czas",
+"milestones.era1":"Era 1 — Dzień serwera od 1 do 120",
+"milestones.revival":"Era Odrodzenia — zaczyna się po zakończeniu Ery 1 (dokładny dzień serwera do ustalenia), własne liczenie od Dnia 1",
+"milestones.dayPrefix":"DZIEŃ",
+"survival.todayLabel":"Dziś: Dzień cyklu","survival.previewLabel":"Podgląd: Dzień cyklu",
+"label.server":"SERWER","label.yourTime":"TWÓJ CZAS",
+"crystal.entryWindowLabel":"(okno wejścia)",
+"banner.cheeseTrapName":"Pułapka na Sery — Basil the Rat",
+"banner.elixirName":"Elixir Scramble ({time} czasu serwera)","banner.crystalName":"Crystal Cluster Valley ({time} czasu serwera)",
+"banner.kvkRelocate":"Wojna KvK — otwiera się okno przeniesienia dla atakującego",
+"banner.kvkScramble":"Wojna KvK — Royal City Scramble (wg oficjalnych zasad; #217 zgłasza zamiast tego piątek)",
+"banner.duelRaid":"Pojedynek Sojuszy — Faza 6: zaczyna się Rajd"
+},
+fi: {
+"site.eyebrow":"// LAST ASYLUM PLAGUE — ALLIANSSIN OPERAATIOTIEDOSTO",
+"site.title":"Karanteenikalenteri",
+"site.subtitle":"Kuningaskunta #217 — kaikki palvelimen tapahtumat, muunnettuna reaaliajassa paikalliseen aikaasi. Palvelimen kello käy GMT&minus;2-ajassa, kiinteä siirtymä (ei kesäaikaa).",
+"clock.serverTimeLabel":"Palvelimen aika (GMT&minus;2)","clock.serverDayLabel":"Palvelinpäivä",
+"clock.serverDaySub":"Päivittyy palvelimen keskiyöllä","clock.yourTimeLabel":"Paikallinen aikasi",
+"clock.tzLabel":"Näytettävä aikavyöhyke","clock.langLabel":"Kieli",
+"nav.survival":"Survival Battle","nav.duel":"Alliance Duel","nav.kvk":"KvK-sota",
+"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Juustoansa",
+"nav.tbd":"Muut tapahtumat","nav.milestones":"Virstanpylväät",
+"banner.title":"⚠ Tulossa seuraavan 24 tunnin aikana",
+"tag.daily":"PÄIVITTÄIN","tag.weekly":"VIIKOITTAIN","tag.weeklyMonthly":"VIIKOITTAIN + KUUKAUSITTAIN",
+"tag.recurring48":"TOISTUU · 48H","tag.pending":"AIKATAULU AVOINNA",
+"tag.oneTime":"KERTALUONTEISET AVAUKSET","tag.weeklyConfirmed":"VIIKOITTAIN · VAHVISTETTU",
+"title.survival":"Survival Battle","title.duel":"Alliance Duel","title.kvk":"Kuningaskunta vastaan kuningaskunta -sota",
+"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.tbd":"Muut allianssin tapahtumat","title.milestones":"Palvelimen virstanpylväät",
+"note.survival":"Käynnissä joka päivä, 6 osatavoitetta 4 tunnin kierrossa, toistuen 7 päivän kaavan mukaan. Tämänhetkinen päivä lasketaan automaattisesti — mitään ei tarvitse tallentaa. Napsauta mitä tahansa päivää alla nähdäksesi esikatselun; palaa napsauttamalla \"Tänään\".",
+"note.duel":"Käynnissä maanantaista lauantaihin arvottua kilpailevaa allianssia vastaan. Yksi teemoitettu vaihe per päivä; päivän tulos ratkeaa palvelimen keskiyöllä (00:00 GMT&minus;2), ja se, joka voittaa useamman 6 vaiheesta, voittaa viikon. Sunnuntaisin ei ole Alliance Duelia.",
+"note.kvk":"Yksi viikoittainen kierto kestää sunnuntaista lauantaihin. Alla olevat ajat muunnetaan automaattisesti valitsemaasi aikavyöhykkeeseen.",
+"note.elixir":"Käynnissä joka perjantai palvelimen ajan mukaan, kahdessa aikataulutetussa ajankohdassa.",
+"note.crystal":"Yksilöllinen tapahtuma, johon ilmoittaudutaan itse (ei automaattinen). Käynnissä sunnuntaisin, palvelimen ajan mukaan, 4 sisäänpääsyikkunassa. Sisäänpääsy sulkeutuu 20 minuuttia kunkin ikkunan avautumisen jälkeen.",
+"note.cheese":"Toistuu 48 tunnin välein. Ajankohta vaihtelee — yleensä ilmoitettu kello 18:30 palvelimen aikaa, joskus toisella kerralla kello 22:00, 22:30 tai 00:00. Tämä osio saattaa vaatia uudelleenvahvistusta nyt kun allianssit ovat yhdistyneet. Syötä alle tunnetut palvelinajan ajankohdat (pilkulla erotettuna) ja seuraava tunnettu päivämäärä.",
+"note.tbd":"Näiden tapahtumien päiviä/aikoja ei ole vielä täysin vahvistettu. Kuka tahansa allianssin johtaja voi kokeilla arvoja täällä — katso alta huomautus siitä, miten muutokset saadaan pysyviksi.",
+"note.milestones":"Ominaisuuksia, jotka avautuvat kertaluontoisesti palvelimen ikääntyessä, eivät toistuvan aikataulun mukaan. Selaa vierittämällä — hyppää latauksen yhteydessä automaattisesti tämän päivän kohdalle. Aiemmat merkinnät on himmennetty, tämän päivän merkintä on korostettu.",
+"th.serverTime":"Palvelimen aika","th.yourTime":"Aikasi","th.objective":"Tavoite",
+"th.day":"Päivä","th.phase":"Vaihe","th.focus":"Painopiste","th.window":"Palvelimen aikaikkuna",
+"btn.today":"Tänään","btn.update":"Päivitä",
+"duel.resetPrefix":"Päivittäinen tilitys tapahtuu aina klo 00:00 palvelimen aikaa — sinun ajaksesi muunnettuna se on",
+"duel.resetSuffix":"(siirtyy yhden kalenteripäivän suuntaan tai toiseen aikavyöhykkeestäsi riippuen)",
+"duel.raidNote":"Vaihe 6 (Raid) on hetki, jolloin voit hyökätä suoraan vastustajan allianssin alueelle pisteiden saamiseksi.",
+"duel.tasksIntro":"Päivittäinen tehtävälista &amp; pisteet vaiheittain (napauta päivää avataksesi):",
+"duel.tasksSuffix":"tehtävää",
+"kvk.ourKingdom":"Meidän kuningaskuntamme:","kvk.groupedWith":"Ryhmitelty näiden kanssa (lohko/matchmaking-ryhmä):",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Kuukausitaso — pudotuspeliturnaus:</b> viikoittaiset KvK-voittajat etenevät pudotuspelikierrosten (Kierros 1 → Neljännesvälierät → Välierät → Finaali) kautta muita arvottuja kuningaskuntia vastaan useiden viikkojen ajan, kunnes kuukauden mestari kruunataan. Viikoittainen lauantain taistelu käydään edelleen kuten yllä; turnauskaavio vain päättää, ketä vastaan pelaat seuraavaksi.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Ilmoitettu ristiriita:</b> pelin virallisten sääntöjen mukaan Royal City Scramble käydään lauantaisin klo 12:00–16:00 palvelimen aikaa, mutta kuningaskunnan #217 pelaaja ilmoittaa, että heillä se osuu itse asiassa <b>perjantaisin klo 12:00</b> palvelimen aikaa. Ajankohta voi vaihdella kuningaskunnan/lohkon mukaan — kannattaa tarkistaa, mikä pätee omaan kuningaskuntaasi, ennen kuin luotat yllä olevaan lauantain ajankohtaan.",
+"cheese.timesLabel":"Palvelinajan ajankohdat (pilkulla erotettuna, TT:MM)","cheese.anchorLabel":"Seuraava tunnettu tapahtuma (päivämäärä)",
+"cheese.localMsg":"Päivitetty vain tähän näkymään — lähetä vahvistettu arvo, jotta se päivittyy kaikille.",
+"cheese.emptyMsg":"Syötä yllä vähintään yksi palvelinajan ajankohta ja tunnettu päivämäärä nähdäksesi tässä seuraavat tapahtumat.",
+"tbd.fieldDay":"Päivä","tbd.fieldTime":"Palvelimen aika (TT:MM)","tbd.fieldNotes":"Muistiinpanot","tbd.notSet":"Ei asetettu",
+"tbd.localMsg":"Päivitetty vain tähän näkymään — lähetä vahvistetut arvot, jotta ne päivittyvät kaikille.",
+"tbd.yourTimeSuffix":"sinun aikaasi",
+"milestones.era1":"Aikakausi 1 — Palvelinpäivä 1–120",
+"milestones.revival":"Herätyksen aikakausi — alkaa Aikakauden 1 päätyttyä (tarkka palvelinpäivä avoinna), oma laskenta Päivästä 1",
+"milestones.dayPrefix":"PÄIVÄ",
+"survival.todayLabel":"Tänään: Kiertopäivä","survival.previewLabel":"Esikatselu: Kiertopäivä",
+"label.server":"PALVELIN","label.yourTime":"SINUN AIKASI",
+"crystal.entryWindowLabel":"(sisäänpääsyikkuna)",
+"banner.cheeseTrapName":"Juustoansa — Basil the Rat",
+"banner.elixirName":"Elixir Scramble ({time} palvelimen aikaa)","banner.crystalName":"Crystal Cluster Valley ({time} palvelimen aikaa)",
+"banner.kvkRelocate":"KvK-sota — hyökkääjän siirtoikkuna avautuu",
+"banner.kvkScramble":"KvK-sota — Royal City Scramble (virallisten sääntöjen mukaan; #217 ilmoittaa perjantain sijaan)",
+"banner.duelRaid":"Alliance Duel — Vaihe 6: Raid alkaa"
+},
+et: {
+"site.eyebrow":"// LAST ASYLUM PLAGUE — ALLIANSI OPERATSIOONITOIMIK",
+"site.title":"Karantiinikalender",
+"site.subtitle":"Kuningriik #217 — kõik serveri sündmused, teisendatud reaalajas sinu kohalikku aega. Serveri kell käib GMT&minus;2 ajas, fikseeritud nihkega (suveaega ei kasutata).",
+"clock.serverTimeLabel":"Serveri aeg (GMT&minus;2)","clock.serverDayLabel":"Serveripäev",
+"clock.serverDaySub":"Uueneb serveri kesköö ajal","clock.yourTimeLabel":"Sinu kohalik aeg",
+"clock.tzLabel":"Kuvatav ajavöönd","clock.langLabel":"Keel",
+"nav.survival":"Survival Battle","nav.duel":"Alliansi Duell","nav.kvk":"KvK sõda",
+"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Juustulõks",
+"nav.tbd":"Muud sündmused","nav.milestones":"Verstapostid",
+"banner.title":"⚠ Tuleb järgmise 24 tunni jooksul",
+"tag.daily":"IGAPÄEVANE","tag.weekly":"IGANÄDALANE","tag.weeklyMonthly":"IGANÄDALANE + IGAKUINE",
+"tag.recurring48":"KORDUV · 48H","tag.pending":"AJAKAVA VEEL KINNITAMATA",
+"tag.oneTime":"ÜHEKORDSED AVAMISED","tag.weeklyConfirmed":"IGANÄDALANE · KINNITATUD",
+"title.survival":"Survival Battle","title.duel":"Alliansi Duell","title.kvk":"Kuningriik versus Kuningriik sõda",
+"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.tbd":"Muud alliansi sündmused","title.milestones":"Serveri verstapostid",
+"note.survival":"Toimub iga päev, 6 alaeesmärki 4-tunnise rotatsiooniga, korduvad 7-päevase mustri järgi. Tänane päev arvutatakse automaatselt — midagi ei ole vaja salvestada. Kliki allpool mõnel päeval, et seda eelvaadata; klõpsa \"Täna\", et tagasi hüpata.",
+"note.duel":"Toimub esmaspäevast laupäevani loositud rivaalitseva alliansi vastu. Igal päeval oma teemaline etapp; päeva tulemus fikseeritakse serveri kesköö ajal (00:00 GMT&minus;2) ja see, kes võidab rohkem kui 6 etapist, võidab nädala. Pühapäeval Alliansi Duelli ei toimu.",
+"note.kvk":"Üks iganädalane tsükkel kestab pühapäevast laupäevani. Allolevad ajad teisendatakse automaatselt sinu valitud ajavööndisse.",
+"note.elixir":"Toimub igal reedel, serveri aja järgi, kahes kavandatud ajahetkes.",
+"note.crystal":"Individuaalne sündmus, millega liitud ise (ei ole automaatne). Toimub pühapäeviti, serveri aja järgi, 4 sisenemisakna jooksul. Sisenemine sulgub 20 minutit pärast iga akna avanemist.",
+"note.cheese":"Kordub iga 48 tunni järel. Kellaaeg on muutuv — tavaliselt teatatud kell 18:30 serveri aja järgi, mõnikord teise korraga kell 22:00, 22:30 või 00:00. See jaotis võib vajada pärast alliansside ühinemist uuesti kinnitamist. Sisesta allpool teadaolevad serveri kellaajad (komadega eraldatuna) ja järgmine teadaolev kuupäev.",
+"note.tbd":"Nende sündmuste päevad/kellaajad ei ole veel täielikult kinnitatud. Iga alliansi juht saab siin väärtusi proovida — vaata allpool olevat märkust selle kohta, kuidas muudatused kõigi jaoks jäädavaks muuta.",
+"note.milestones":"Funktsioonid, mis avanevad ühekordselt vastavalt serveri vananemisele, mitte korduva ajakava alusel. Keri sirvimiseks — laadimisel hüppab automaatselt tänase päeva juurde. Möödunud kirjed on tuhmistatud, tänane on esile tõstetud.",
+"th.serverTime":"Serveri aeg","th.yourTime":"Sinu aeg","th.objective":"Eesmärk",
+"th.day":"Päev","th.phase":"Etapp","th.focus":"Fookus","th.window":"Serveri ajaaken",
+"btn.today":"Täna","btn.update":"Uuenda",
+"duel.resetPrefix":"Igapäevane arveldus toimub alati serveri kell 00:00 — sinu ajaks teisendatuna on see",
+"duel.resetSuffix":"(nihkub olenevalt ajavööndist ühe kalendripäeva võrra kumbagi suunda)",
+"duel.raidNote":"Etapp 6 (Röövretk) on hetk, mil saad otse rünnata vastasalliansi territooriumi punktide nimel.",
+"duel.tasksIntro":"Igapäevane ülesannete loend &amp; punktid etapi kohta (puuduta päeva, et avada):",
+"duel.tasksSuffix":"ülesannet",
+"kvk.ourKingdom":"Meie kuningriik:","kvk.groupedWith":"Grupeeritud koos (turniiritabeli/matchmaking'u kogum):",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Igakuine tase — väljalangemisturniir:</b> iganädalased KvK võitjad liiguvad edasi väljalangemisringide kaudu (1. ring → Veerandfinaal → Poolfinaal → Finaal) teiste loositud kuningriikide vastu mitme nädala jooksul, kuni kroonitakse kuu tšempion. Iganädalane laupäevane lahing toimub jätkuvalt nagu eespool; turniiritabel otsustab ainult, kelle vastu järgmisena mängid.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Teatatud lahknevus:</b> mängu ametlike reeglite tekst ütleb, et Royal City Scramble toimub laupäeviti kell 12:00–16:00 serveri aja järgi, kuid kuningriigi #217 mängija teatab, et see toimub tema jaoks tegelikult <b>reedeti kell 12:00</b> serveri aja järgi. Ajastus võib kuningriigiti/grupiti erineda — tasub kontrollida, mis kehtib sinu kuningriigi kohta, enne kui tugineda ülaltoodud laupäevasele ajale.",
+"cheese.timesLabel":"Serveri kellaajad (komadega eraldatud, TT:MM)","cheese.anchorLabel":"Järgmine teadaolev toimumine (kuupäev)",
+"cheese.localMsg":"Uuendatud ainult selle vaate jaoks — saada kinnitatud väärtus, et see kõigi jaoks uueneks.",
+"cheese.emptyMsg":"Sisesta ülalpool vähemalt üks serveri kellaaeg ja teadaolev kuupäev, et näha siin järgmisi toimumisi.",
+"tbd.fieldDay":"Päev","tbd.fieldTime":"Serveri aeg (TT:MM)","tbd.fieldNotes":"Märkmed","tbd.notSet":"Määramata",
+"tbd.localMsg":"Uuendatud ainult selle vaate jaoks — saada kinnitatud väärtused, et need kõigi jaoks uueneksid.",
+"tbd.yourTimeSuffix":"sinu aeg",
+"milestones.era1":"1. Ajastu — Serveripäev 1 kuni 120",
+"milestones.revival":"Taassünni Ajastu — algab pärast 1. Ajastu lõppu (täpne serveripäev veel lahtine), oma loendus Päevast 1",
+"milestones.dayPrefix":"PÄEV",
+"survival.todayLabel":"Täna: Tsükli päev","survival.previewLabel":"Eelvaade: Tsükli päev",
+"label.server":"SERVER","label.yourTime":"SINU AEG",
+"crystal.entryWindowLabel":"(sisenemisaken)",
+"banner.cheeseTrapName":"Juustulõks — Basil the Rat",
+"banner.elixirName":"Elixir Scramble ({time} serveri aja järgi)","banner.crystalName":"Crystal Cluster Valley ({time} serveri aja järgi)",
+"banner.kvkRelocate":"KvK sõda — ründaja ümberpaiknemisaken avaneb",
+"banner.kvkScramble":"KvK sõda — Royal City Scramble (ametlike reeglite järgi; #217 teatab selle asemel reedest)",
+"banner.duelRaid":"Alliansi Duell — Etapp 6: Röövretk algab"
+}
+};
+
+let currentLang = 'en';
+function t(key){
+  const val = (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) || TRANSLATIONS.en[key];
+  return val !== undefined ? val : key;
+}
+
+function detectInitialLanguage(){
+  try{
+    const stored = localStorage.getItem('lppc-lang');
+    if(stored && SUPPORTED_LANGS.includes(stored)) return stored;
+  }catch(e){}
+  const nav = (navigator.language || 'en').slice(0,2).toLowerCase();
+  return SUPPORTED_LANGS.includes(nav) ? nav : 'en';
+}
+
+function applyStaticTranslations(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    el.innerHTML = t(key);
+  });
+  document.documentElement.lang = currentLang;
+}
+
 // ============================================================
 // Config
 // ============================================================
@@ -836,6 +1566,42 @@ TIMEZONES.forEach(([val,label])=>{
 tzSelect.value = 'auto';
 
 // ============================================================
+// Populate language dropdown
+// ============================================================
+const langSelect = document.getElementById('langSelect');
+const sortedLangCodes = [...SUPPORTED_LANGS].sort((a,b)=>LANG_NATIVE_NAMES[a].localeCompare(LANG_NATIVE_NAMES[b]));
+sortedLangCodes.forEach(code=>{
+  const opt = document.createElement('option');
+  opt.value = code; opt.textContent = LANG_NATIVE_NAMES[code];
+  langSelect.appendChild(opt);
+});
+currentLang = detectInitialLanguage();
+langSelect.value = currentLang;
+
+function renderEverything(){
+  renderDayStrip();
+  renderSurvivalBattle();
+  renderKvK();
+  renderAllianceDuel();
+  renderAllianceDuelTasks();
+  renderElixirScramble();
+  renderCrystalValley();
+  renderBasilOccurrences();
+  renderTBDConversions();
+  renderMilestones();
+  renderUpcomingBanner();
+}
+
+langSelect.addEventListener('change', ()=>{
+  currentLang = langSelect.value;
+  try{ localStorage.setItem('lppc-lang', currentLang); }catch(e){}
+  applyStaticTranslations();
+  rebuildTBDGrid();
+  updateClocks();
+  renderEverything();
+});
+
+// ============================================================
 // Live clocks
 // ============================================================
 function updateClocks(){
@@ -852,8 +1618,8 @@ function updateClocks(){
   document.getElementById('localClock').textContent = localStr;
   document.getElementById('localDate').textContent = localDateStr;
 
-  const tzLabel = TIMEZONES.find(t=>t[0]===tzSelect.value);
-  document.getElementById('localTimeHeader').textContent = tzSelect.value==='auto' ? 'Your Time' : (tzLabel? tzLabel[1] : 'Local Time');
+  const tzLabelEntry = TIMEZONES.find(tzEntry=>tzEntry[0]===tzSelect.value);
+  document.getElementById('localTimeHeader').textContent = tzSelect.value==='auto' ? t('th.yourTime') : (tzLabelEntry ? tzLabelEntry[1] : t('th.yourTime'));
 }
 updateClocks();
 updateServerDayCounter();
@@ -874,7 +1640,7 @@ function renderDayStrip(){
   for(let d=1; d<=7; d++){
     const chip = document.createElement('div');
     chip.className = 'day-chip' + (d===displayedDay ? ' active':'');
-    chip.textContent = 'Day ' + d + (d===liveDay ? ' •':'');
+    chip.textContent = t('th.day') + ' ' + d + (d===liveDay ? ' •':'');
     chip.title = d===liveDay ? "Today's cycle day" : '';
     chip.onclick = ()=>{
       viewingDay = d;
@@ -884,8 +1650,8 @@ function renderDayStrip(){
     strip.appendChild(chip);
   }
   document.getElementById('liveDayLabel').textContent = viewingDay && viewingDay !== liveDay
-    ? `Previewing Cycle Day ${viewingDay}`
-    : `Today: Cycle Day ${liveDay}`;
+    ? `${t('survival.previewLabel')} ${viewingDay}`
+    : `${t('survival.todayLabel')} ${liveDay}`;
 }
 
 document.getElementById('jumpToday').addEventListener('click', ()=>{
@@ -951,27 +1717,27 @@ function renderMilestones(){
 
   const eraDivider = document.createElement('div');
   eraDivider.className = 'milestone-era-divider';
-  eraDivider.textContent = 'Era 1 — Server Day 1 to 120';
+  eraDivider.textContent = t('milestones.era1');
   container.appendChild(eraDivider);
 
   let todayRow = null;
   MILESTONES_ERA1.forEach(m=>{
     const row = document.createElement('div');
     row.className = 'milestone-row' + (m.day < liveDay ? ' past' : m.day === liveDay ? ' today' : '');
-    row.innerHTML = `<div class="milestone-day">DAY ${m.day}</div><div class="milestone-name">${m.name}</div>`;
+    row.innerHTML = `<div class="milestone-day">${t('milestones.dayPrefix')} ${m.day}</div><div class="milestone-name">${m.name}</div>`;
     container.appendChild(row);
     if(m.day === liveDay && !todayRow) todayRow = row;
   });
 
   const revivalDivider = document.createElement('div');
   revivalDivider.className = 'milestone-era-divider';
-  revivalDivider.textContent = 'Era of Revival — begins after Era 1 concludes (exact server day TBD), own Day 1 count';
+  revivalDivider.textContent = t('milestones.revival');
   container.appendChild(revivalDivider);
 
   MILESTONES_ERA_REVIVAL.forEach(m=>{
     const row = document.createElement('div');
     row.className = 'milestone-row';
-    row.innerHTML = `<div class="milestone-day">DAY ${m.day}</div><div class="milestone-name">${m.name}</div>`;
+    row.innerHTML = `<div class="milestone-day">${t('milestones.dayPrefix')} ${m.day}</div><div class="milestone-name">${m.name}</div>`;
     container.appendChild(row);
   });
 
@@ -1029,7 +1795,7 @@ function renderKvK(){
     }
 
     row.innerHTML = `
-      <div class="kvk-when">${phase.label} ${phase.time}<br><span style="color:var(--text)">${convertedStr}</span></div>
+      <div class="kvk-when">${WEEKDAY_FULL[currentLang][phase.day]} ${phase.time}<br><span style="color:var(--text)">${convertedStr}</span></div>
       <div class="kvk-what">${phase.text}</div>
     `;
     container.appendChild(row);
@@ -1043,12 +1809,12 @@ function renderElixirScramble(){
   const tbody = document.getElementById('elixirBody');
   tbody.innerHTML = '';
   const tz = getSelectedTZ();
-  ELIXIR_SCRAMBLE_CONFIG.times.forEach(t=>{
-    const [hh,mm] = t.split(':').map(Number);
+  ELIXIR_SCRAMBLE_CONFIG.times.forEach(slotTime=>{
+    const [hh,mm] = slotTime.split(':').map(Number);
     const d = nextDateForWeekdayServer(ELIXIR_SCRAMBLE_CONFIG.weekday, hh, mm);
     const conv = convertServerDateTime(d, tz);
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td class="time">${ELIXIR_SCRAMBLE_CONFIG.weekdayName} ${t}</td><td class="time">${conv.dateStr} ${conv.timeStr}</td>`;
+    tr.innerHTML = `<td class="time">${WEEKDAY_FULL[currentLang][ELIXIR_SCRAMBLE_CONFIG.weekday]} ${slotTime}</td><td class="time">${conv.dateStr} ${conv.timeStr}</td>`;
     tbody.appendChild(tr);
   });
 }
@@ -1068,7 +1834,7 @@ function renderCrystalValley(){
     const closeDate = new Date(d.getTime() + CRYSTAL_VALLEY_CONFIG.entryClosesAfterMin*60000);
     const closeConv = convertServerDateTime(closeDate, tz);
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td class="time">${CRYSTAL_VALLEY_CONFIG.weekdayName} ${w}</td><td class="time">${conv.dateStr} ${conv.timeStr}&ndash;${closeConv.timeStr} <span style="color:var(--muted);font-size:11px;">(entry window)</span></td>`;
+    tr.innerHTML = `<td class="time">${WEEKDAY_FULL[currentLang][CRYSTAL_VALLEY_CONFIG.weekday]} ${w}</td><td class="time">${conv.dateStr} ${conv.timeStr}&ndash;${closeConv.timeStr} <span style="color:var(--muted);font-size:11px;">${t('crystal.entryWindowLabel')}</span></td>`;
     tbody.appendChild(tr);
   });
 }
@@ -1090,7 +1856,7 @@ function renderAllianceDuel(){
   tbody.innerHTML = '';
   ALLIANCE_DUEL_PHASES.forEach(p=>{
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${p.day}</td><td class="time">${p.phase}</td><td>${p.focus}</td>`;
+    tr.innerHTML = `<td>${WEEKDAY_FULL[currentLang][p.dayIdx]}</td><td class="time">${t('th.phase')} ${p.dayIdx}</td><td>${p.focus}</td>`;
     tbody.appendChild(tr);
   });
 
@@ -1098,7 +1864,7 @@ function renderAllianceDuel(){
   const resetDate = nextDateForWeekdayServer(0, 0, 0); // server 00:00, any day, just need the time-of-day conversion
   const conv = convertServerDateTime(resetDate, tz);
   document.getElementById('adResetTime').textContent = conv.timeStr;
-  document.getElementById('adResetDay').textContent = '(shifts by one calendar day either side of server midnight depending on your timezone)';
+  document.getElementById('adResetDay').textContent = t('duel.resetSuffix');
 }
 
 // Daily task list & point values, per phase day (from in-game "Today's Theme" screens)
@@ -1210,10 +1976,12 @@ function renderAllianceDuelTasks(){
   container.innerHTML = '';
   for(let day=1; day<=6; day++){
     const info = ALLIANCE_DUEL_TASKS[day];
+    const phaseInfo = ALLIANCE_DUEL_PHASES[day-1];
+    const label = `${WEEKDAY_FULL[currentLang][day]} — ${t('th.phase')} ${day}: ${phaseInfo.focus}`;
     const details = document.createElement('details');
     details.className = 'ad-day-accordion';
     const summary = document.createElement('summary');
-    summary.innerHTML = `<span>${info.label}</span><span class="ad-day-tag">${info.tasks.length} tasks</span>`;
+    summary.innerHTML = `<span>${label}</span><span class="ad-day-tag">${info.tasks.length} ${t('duel.tasksSuffix')}</span>`;
     details.appendChild(summary);
     info.tasks.forEach(([name, reward])=>{
       const row = document.createElement('div');
@@ -1234,7 +2002,7 @@ function initBasil(){
 document.getElementById('basilSave').addEventListener('click', ()=>{
   renderBasilOccurrences();
   const msg = document.getElementById('basilMsg');
-  msg.textContent = 'Updated for this view only — send the confirmed value to update it for everyone.';
+  msg.textContent = t('cheese.localMsg');
   setTimeout(()=>msg.textContent='', 4000);
 });
 
@@ -1263,7 +2031,7 @@ function renderBasilOccurrences(){
     const p = document.createElement('div');
     p.className = 'section-note';
     p.style.margin = '0';
-    p.textContent = 'Enter at least one server-time slot and a next-known date above to see upcoming occurrences here.';
+    p.textContent = t('cheese.emptyMsg');
     list.appendChild(p);
     return;
   }
@@ -1284,8 +2052,8 @@ function renderBasilOccurrences(){
     const row = document.createElement('div');
     row.className = 'occ-row';
     row.innerHTML = `
-      <div class="occ-time">${serverStr} <span class="occ-label">SERVER</span></div>
-      <div class="occ-time">${conv.dateStr} ${conv.timeStr} <span class="occ-label">YOUR TIME</span></div>
+      <div class="occ-time">${serverStr} <span class="occ-label">${t('label.server')}</span></div>
+      <div class="occ-time">${conv.dateStr} ${conv.timeStr} <span class="occ-label">${t('label.yourTime')}</span></div>
     `;
     list.appendChild(row);
   });
@@ -1304,30 +2072,42 @@ const TBD_EVENTS = [
   {key:'undead', name:'Undead Siege'}
 ];
 
-function initTBD(){
-  const stored = TBD_EVENTS_CONFIG;
+function currentTBDValues(){
+  const result = {};
+  TBD_EVENTS.forEach(ev=>{
+    const daySel = document.getElementById(`day-${ev.key}`);
+    const timeInput = document.getElementById(`time-${ev.key}`);
+    const notesInput = document.getElementById(`notes-${ev.key}`);
+    if(daySel){
+      result[ev.key] = { day: daySel.value, time: timeInput.value, notes: notesInput.value };
+    }
+  });
+  return result;
+}
+
+function buildTBDGrid(dataSource){
   const grid = document.getElementById('tbdGrid');
   grid.innerHTML = '';
 
   TBD_EVENTS.forEach(ev=>{
-    const data = stored[ev.key] || {day:'', time:'', notes:''};
+    const data = dataSource[ev.key] || {day:'', time:'', notes:''};
     const card = document.createElement('div');
     card.className = 'tbd-card';
     card.innerHTML = `
       <h3><span class="status-dot ${data.day && data.time ? 'set':''}" id="dot-${ev.key}"></span>${ev.name}</h3>
       <div class="field">
-        <label>Day</label>
+        <label>${t('tbd.fieldDay')}</label>
         <select id="day-${ev.key}">
-          <option value="">Not set</option>
-          ${DAY_NAMES.map(dn=>`<option value="${dn}" ${data.day===dn?'selected':''}>${dn}</option>`).join('')}
+          <option value="">${t('tbd.notSet')}</option>
+          ${DAY_NAMES.map((dn,idx)=>`<option value="${dn}" ${data.day===dn?'selected':''}>${WEEKDAY_ABBR[currentLang][idx]}</option>`).join('')}
         </select>
       </div>
       <div class="field">
-        <label>Server time (HH:MM)</label>
+        <label>${t('tbd.fieldTime')}</label>
         <input type="time" id="time-${ev.key}" value="${data.time||''}">
       </div>
       <div class="field">
-        <label>Notes</label>
+        <label>${t('tbd.fieldNotes')}</label>
         <input type="text" id="notes-${ev.key}" value="${data.notes||''}" placeholder="e.g. duration, phases">
       </div>
       <div class="converted" id="conv-${ev.key}"></div>
@@ -1336,6 +2116,14 @@ function initTBD(){
   });
 
   renderTBDConversions();
+}
+
+function initTBD(){
+  buildTBDGrid(TBD_EVENTS_CONFIG);
+}
+
+function rebuildTBDGrid(){
+  buildTBDGrid(currentTBDValues());
 }
 
 function renderTBDConversions(){
@@ -1351,7 +2139,7 @@ function renderTBDConversions(){
       const [hh,mm] = timeInput.value.split(':').map(Number);
       const d = nextDateForWeekdayServer(dayIdx, hh, mm);
       const conv = convertServerDateTime(d, tz);
-      convEl.textContent = `→ ${conv.dateStr} ${conv.timeStr} your time`;
+      convEl.textContent = `→ ${conv.dateStr} ${conv.timeStr} ${t('tbd.yourTimeSuffix')}`;
       dot.classList.add('set');
     } else {
       convEl.textContent = '';
@@ -1363,7 +2151,7 @@ function renderTBDConversions(){
 document.getElementById('tbdSave').addEventListener('click', ()=>{
   renderTBDConversions();
   const msg = document.getElementById('tbdMsg');
-  msg.textContent = 'Updated for this view only — send confirmed values to update it for everyone.';
+  msg.textContent = t('tbd.localMsg');
   setTimeout(()=>msg.textContent='', 4000);
 });
 
@@ -1403,26 +2191,26 @@ function renderUpcomingBanner(){
 
   // Cheese Trap
   const basilNext = nextCheeseTrapOccurrence();
-  if(basilNext) candidates.push({name:'Cheese Trap — Basil the Rat', date:basilNext});
+  if(basilNext) candidates.push({name:t('banner.cheeseTrapName'), date:basilNext});
 
   // Elixir Scramble (both slots)
-  ELIXIR_SCRAMBLE_CONFIG.times.forEach(t=>{
-    const [hh,mm] = t.split(':').map(Number);
-    candidates.push({name:`Elixir Scramble (${t} server)`, date: nextFutureWeeklyServerTime(ELIXIR_SCRAMBLE_CONFIG.weekday, hh, mm)});
+  ELIXIR_SCRAMBLE_CONFIG.times.forEach(slotTime=>{
+    const [hh,mm] = slotTime.split(':').map(Number);
+    candidates.push({name: t('banner.elixirName').replace('{time}', slotTime), date: nextFutureWeeklyServerTime(ELIXIR_SCRAMBLE_CONFIG.weekday, hh, mm)});
   });
 
   // Crystal Cluster Valley (4 windows, Sunday)
   CRYSTAL_VALLEY_CONFIG.windows.forEach(w=>{
     const [hh,mm] = w.split('-')[0].split(':').map(Number);
-    candidates.push({name:`Crystal Cluster Valley (${w} server)`, date: nextFutureWeeklyServerTime(CRYSTAL_VALLEY_CONFIG.weekday, hh, mm)});
+    candidates.push({name: t('banner.crystalName').replace('{time}', w), date: nextFutureWeeklyServerTime(CRYSTAL_VALLEY_CONFIG.weekday, hh, mm)});
   });
 
   // KvK: attacker relocate window + Royal City Scramble
-  candidates.push({name:'KvK War — Attacker relocate window opens', date: nextFutureWeeklyServerTime(6, 0, 5)});
-  candidates.push({name:'KvK War — Royal City Scramble (per official rules; #217 reports Friday instead)', date: nextFutureWeeklyServerTime(6, 12, 0)});
+  candidates.push({name:t('banner.kvkRelocate'), date: nextFutureWeeklyServerTime(6, 0, 5)});
+  candidates.push({name:t('banner.kvkScramble'), date: nextFutureWeeklyServerTime(6, 12, 0)});
 
   // Alliance Duel Raid phase (Saturday, server 00:00)
-  candidates.push({name:'Alliance Duel — Phase 6: Raid begins', date: nextFutureWeeklyServerTime(6, 0, 0)});
+  candidates.push({name:t('banner.duelRaid'), date: nextFutureWeeklyServerTime(6, 0, 0)});
 
   // TBD events with day+time currently set (viewer-entered or pre-filled, e.g. Canyon Conquest)
   TBD_EVENTS.forEach(ev=>{
@@ -1460,6 +2248,7 @@ function renderUpcomingBanner(){
 
 
 (function init(){
+  applyStaticTranslations();
   renderDayStrip();
   renderSurvivalBattle();
   renderKvK();
