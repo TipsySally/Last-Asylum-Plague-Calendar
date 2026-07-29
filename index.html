@@ -402,6 +402,15 @@
     .kvk-phase{grid-template-columns:1fr;}
     .kvk-when{border-right:none;border-bottom:1px solid var(--line);}
   }
+
+.transcribed-note{
+  display:block; margin:10px auto 0; max-width:70ch;
+  padding:7px 12px; border-left:2px solid var(--amber);
+  background:rgba(255,255,255,.03);
+  font-size:.78rem; line-height:1.45; text-align:left;
+  color:var(--muted); opacity:.9;
+}
+.transcribed-note b{ color:var(--amber); font-weight:600; }
 </style>
 </head>
 <body>
@@ -411,6 +420,7 @@
     <p class="eyebrow stamp-font" data-i18n="site.eyebrow">// LAST ASYLUM PLAGUE — ALLIANCE OPS FILE</p>
     <h1 data-i18n="site.title">Containment Calendar</h1>
     <p class="subtitle" data-i18n="site.subtitle">Kingdom #217 — all server events, converted live to your local time. Server clock runs GMT&minus;2, fixed offset (no DST).</p>
+    <p class="transcribed-note" id="transcribedNote" hidden></p>
 
     <div class="clock-row">
       <div class="clock-box">
@@ -562,7 +572,7 @@
   <section id="sec-cheese">
     <div class="section-head">
       <span class="section-tag recur" data-i18n="tag.recurring48">RECURRING · 48H</span>
-      <h2>Cheese Trap — "Basil the Rat"</h2>
+      <h2 data-i18n="title.cheese">Cheese Trap — "Basil the Rat"</h2>
     </div>
     <p class="section-note" data-i18n="note.cheese">Repeats every 48 hours. Timing is flexible — reported as usually 18:30 server time, sometimes with a second occurrence at 22:00, 22:30, or 00:00. This section's schedule may need re-confirming now that alliances have merged. Enter any known server-time slots (comma-separated) and the next known occurrence date below.</p>
 
@@ -660,8 +670,17 @@ const WEEKDAY_ABBR = {
 // in English on purpose, since there's no official localized string to
 // match against and guessing could mislead players comparing to their
 // actual in-game client.
+//
+// Verified so far (see GAME_TERMS): en, de, fr, nl, es, pt, pl, ru — all
+// languages that have an official game client.
+// Hungarian (hu), Ukrainian (uk), Finnish (fi) and Estonian (et) have no
+// official game client, so there is no in-game string to match — English
+// in-game terms are the correct end state for those four, not an
+// outstanding gap. (The game does ship Turkish plus several Asian
+// languages, which this page does not currently offer.)
 const TRANSLATIONS = {
 en: {
+"note.transcribed":"<b>Note:</b> the game has no English-language issue here — this notice only appears for languages the game does not ship.",
 "site.eyebrow":"// LAST ASYLUM PLAGUE — ALLIANCE OPS FILE",
 "site.title":"Containment Calendar",
 "site.subtitle":"Kingdom #217 — all server events, converted live to your local time. Server clock runs GMT&minus;2, fixed offset (no DST).",
@@ -680,6 +699,7 @@ en: {
 "tag.oneTime":"ONE-TIME UNLOCKS","tag.weeklyConfirmed":"WEEKLY · CONFIRMED",
 "title.survival":"Survival Battle","title.duel":"Alliance Duel","title.kvk":"Kingdom vs Kingdom War",
 "title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.cheese":"Cheese Trap — \"Basil the Rat\"",
 "title.tbd":"Other Alliance Events","title.milestones":"Server Milestones",
 "note.survival":"Runs every day, 6 sub-objectives on a 4-hour rotation, cycling across a 7-day pattern. The live day is calculated automatically — no saving needed. Click any day below to preview it; click \"Today\" to jump back.",
 "note.duel":"Runs Monday–Saturday against a matched rival alliance. One themed phase per day; each day's result settles at server midnight (00:00 GMT&minus;2), and whoever wins more of the 6 phases wins the week. No Alliance Duel activity on Sunday.",
@@ -719,21 +739,23 @@ en: {
 "banner.duelRaid":"Alliance Duel — Phase 6: Raid begins"
 },
 de: {
+"note.transcribed":"<b>Note:</b> the game has no English-language issue here — this notice only appears for languages the game does not ship.",
 "site.eyebrow":"// LAST ASYLUM PLAGUE — ALLIANCE-EINSATZAKTE",
 "site.title":"Seuchen-Kalender",
 "site.subtitle":"Königreich #217 — alle Server-Events, live in deine Ortszeit umgerechnet. Serveruhr läuft auf GMT&minus;2, feste Verschiebung (keine Sommerzeit).",
 "clock.serverTimeLabel":"Serverzeit (GMT&minus;2)","clock.serverDayLabel":"Servertag",
 "clock.serverDaySub":"Aktualisiert um Mitternacht (Server)","clock.yourTimeLabel":"Deine Ortszeit",
 "clock.tzLabel":"Anzeige-Zeitzone","clock.langLabel":"Sprache",
-"nav.survival":"Survival Battle","nav.duel":"Allianz-Duell","nav.kvk":"KvK-Krieg",
-"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Käsefalle",
+"nav.survival":"Überlebenskampf","nav.duel":"Allianz-Duell","nav.kvk":"Königreichskrieg",
+"nav.elixir":"Elixir-Gerangel","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Käsefalle",
 "nav.tbd":"Weitere Events","nav.milestones":"Meilensteine",
 "banner.title":"⚠ In den nächsten 24 Stunden",
 "tag.daily":"TÄGLICH","tag.weekly":"WÖCHENTLICH","tag.weeklyMonthly":"WÖCHENTLICH + MONATLICH",
 "tag.recurring48":"WIEDERKEHREND · 48 STD","tag.pending":"ZEITPLAN OFFEN",
 "tag.oneTime":"EINMALIGE FREISCHALTUNGEN","tag.weeklyConfirmed":"WÖCHENTLICH · BESTÄTIGT",
-"title.survival":"Survival Battle","title.duel":"Allianz-Duell","title.kvk":"Königreich-gegen-Königreich-Krieg",
-"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.survival":"Überlebenskampf","title.duel":"Allianz-Duell","title.kvk":"Königreichskrieg",
+"title.elixir":"Elixir-Gerangel","title.crystal":"Crystal Cluster Valley",
+"title.cheese":"Käsefalle — Basil the Rat",
 "title.tbd":"Weitere Allianz-Events","title.milestones":"Server-Meilensteine",
 "note.survival":"Läuft jeden Tag, 6 Unterziele in einer 4-Stunden-Rotation, die sich über ein 7-Tage-Muster wiederholt. Der aktuelle Tag wird automatisch berechnet — kein Speichern nötig. Klicke auf einen Tag, um ihn als Vorschau zu sehen; klicke auf „Heute“, um zurückzuspringen.",
 "note.duel":"Läuft Montag bis Samstag gegen eine zugeloste gegnerische Allianz. Jeden Tag eine eigene Phase; das Tagesergebnis wird um Serverzeit-Mitternacht (00:00 GMT&minus;2) festgelegt, und wer mehr der 6 Phasen gewinnt, gewinnt die Woche. Sonntags findet kein Allianz-Duell statt.",
@@ -748,12 +770,12 @@ de: {
 "btn.today":"Heute","btn.update":"Aktualisieren",
 "duel.resetPrefix":"Die tägliche Abrechnung erfolgt immer um Serverzeit 00:00 Uhr — umgerechnet in deine Zeit ist das",
 "duel.resetSuffix":"(verschiebt sich je nach Zeitzone um einen Kalendertag in die eine oder andere Richtung)",
-"duel.raidNote":"In Phase 6 (Raid) kannst du das Gebiet der gegnerischen Allianz direkt angreifen, um Punkte zu erzielen.",
+"duel.raidNote":"In Phase 6 (Überfall) kannst du das Gebiet der gegnerischen Allianz direkt angreifen, um Punkte zu erzielen.",
 "duel.tasksIntro":"Tägliche Aufgabenliste &amp; Punkte pro Phase (auf einen Tag tippen zum Aufklappen):",
 "duel.tasksSuffix":"Aufgaben",
 "kvk.ourKingdom":"Unser Königreich:","kvk.groupedWith":"Gruppiert mit (Bracket/Matchmaking-Pool):",
 "kvk.monthlyNote":"<b style=\"color:var(--amber)\">Monatliche Ebene — Turnierbaum:</b> die wöchentlichen KvK-Gewinner steigen durch Ausscheidungsrunden (Runde 1 → Viertelfinale → Halbfinale → Finale) gegen andere zugeloste Königreiche auf, über mehrere Wochen hinweg, bis ein Monatssieger gekrönt wird. Die wöchentliche Samstagsschlacht findet weiterhin wie oben statt; der Turnierbaum entscheidet nur, gegen wen als Nächstes.",
-"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Gemeldete Abweichung:</b> laut den Spielregeln findet das Royal City Scramble samstags 12:00–16:00 Uhr Serverzeit statt, aber ein Spieler in Königreich #217 berichtet, dass es bei ihm tatsächlich <b>freitags um 12:00 Uhr</b> Serverzeit stattfindet. Die Zeit kann je nach Königreich/Turnierbaum variieren — es lohnt sich zu prüfen, was für euer Königreich gilt, bevor ihr euch auf den Samstagstermin oben verlasst.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Gemeldete Abweichung:</b> laut den Spielregeln findet der Königsstadtkampf samstags 12:00–16:00 Uhr Serverzeit statt, aber ein Spieler in Königreich #217 berichtet, dass es bei ihm tatsächlich <b>freitags um 12:00 Uhr</b> Serverzeit stattfindet. Die Zeit kann je nach Königreich/Turnierbaum variieren — es lohnt sich zu prüfen, was für euer Königreich gilt, bevor ihr euch auf den Samstagstermin oben verlasst.",
 "cheese.timesLabel":"Serverzeit-Fenster (durch Komma getrennt, HH:MM)","cheese.anchorLabel":"Nächstes bekanntes Vorkommen (Datum)",
 "cheese.localMsg":"Nur für diese Ansicht aktualisiert — sende den bestätigten Wert, damit er für alle übernommen wird.",
 "cheese.emptyMsg":"Gib oben mindestens ein Serverzeit-Fenster und ein bekanntes Datum ein, um hier die nächsten Termine zu sehen.",
@@ -767,30 +789,32 @@ de: {
 "label.server":"SERVER","label.yourTime":"DEINE ZEIT",
 "crystal.entryWindowLabel":"(Eintrittsfenster)",
 "banner.cheeseTrapName":"Käsefalle — Basil the Rat",
-"banner.elixirName":"Elixir Scramble ({time} Server)","banner.crystalName":"Crystal Cluster Valley ({time} Server)",
-"banner.kvkRelocate":"KvK-Krieg — Verlegungsfenster für Angreifer öffnet",
-"banner.kvkScramble":"KvK-Krieg — Royal City Scramble (laut offiziellen Regeln; #217 meldet stattdessen Freitag)",
+"banner.elixirName":"Elixir-Gerangel ({time} Server)","banner.crystalName":"Crystal Cluster Valley ({time} Server)",
+"banner.kvkRelocate":"Königreichskrieg — Verlegungsfenster für Angreifer öffnet",
+"banner.kvkScramble":"Königreichskrieg — Königsstadtkampf (laut offiziellen Regeln; #217 meldet stattdessen Freitag)",
 "banner.duelRaid":"Allianz-Duell — Phase 6: Raid beginnt"
 },
 nl: {
+"note.transcribed":"<b>Note:</b> the game has no English-language issue here — this notice only appears for languages the game does not ship.",
 "site.eyebrow":"// LAST ASYLUM PLAGUE — ALLIANTIE-OPERATIEDOSSIER",
 "site.title":"Quarantainekalender",
 "site.subtitle":"Koninkrijk #217 — alle servergebeurtenissen, live omgerekend naar jouw lokale tijd. Serverklok loopt op GMT&minus;2, vaste verschuiving (geen zomertijd).",
 "clock.serverTimeLabel":"Servertijd (GMT&minus;2)","clock.serverDayLabel":"Serverdag",
 "clock.serverDaySub":"Wordt bijgewerkt om middernacht (server)","clock.yourTimeLabel":"Jouw lokale tijd",
 "clock.tzLabel":"Weergavetijdzone","clock.langLabel":"Taal",
-"nav.survival":"Survival Battle","nav.duel":"Alliantie-Duel","nav.kvk":"KvK-oorlog",
-"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Kaasval",
+"nav.survival":"Overlevingsstrijd","nav.duel":"Alliantieduel","nav.kvk":"Koninkrijksstrijd",
+"nav.elixir":"Elixerstrijd","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Kaasval",
 "nav.tbd":"Overige events","nav.milestones":"Mijlpalen",
 "banner.title":"⚠ Binnen de komende 24 uur",
 "tag.daily":"DAGELIJKS","tag.weekly":"WEKELIJKS","tag.weeklyMonthly":"WEKELIJKS + MAANDELIJKS",
 "tag.recurring48":"TERUGKEREND · 48U","tag.pending":"TIJDSTIP NOG ONBEKEND",
 "tag.oneTime":"EENMALIGE ONTGRENDELINGEN","tag.weeklyConfirmed":"WEKELIJKS · BEVESTIGD",
-"title.survival":"Survival Battle","title.duel":"Alliantie-Duel","title.kvk":"Koninkrijk-tegen-Koninkrijk-oorlog",
-"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.survival":"Overlevingsstrijd","title.duel":"Alliantieduel","title.kvk":"Koninkrijksstrijd",
+"title.elixir":"Elixerstrijd","title.crystal":"Crystal Cluster Valley",
+"title.cheese":"Kaasval — \"Basil the Rat\"",
 "title.tbd":"Overige alliantie-events","title.milestones":"Servermijlpalen",
 "note.survival":"Loopt elke dag, 6 subdoelen in een rotatie van 4 uur, over een patroon van 7 dagen. De actuele dag wordt automatisch berekend — niets hoeft opgeslagen te worden. Klik op een dag om die te bekijken; klik op \"Vandaag\" om terug te springen.",
-"note.duel":"Loopt van maandag t/m zaterdag tegen een gekoppelde rivaliserende alliantie. Elke dag een eigen fase; het dagresultaat wordt vastgesteld om middernacht servertijd (00:00 GMT&minus;2), en wie de meeste van de 6 fases wint, wint de week. Op zondag is er geen Alliantie-Duel.",
+"note.duel":"Loopt van maandag t/m zaterdag tegen een gekoppelde rivaliserende alliantie. Elke dag een eigen fase; het dagresultaat wordt vastgesteld om middernacht servertijd (00:00 GMT&minus;2), en wie de meeste van de 6 fases wint, wint de week. Op zondag is er geen Alliantieduel.",
 "note.kvk":"Eén wekelijkse cyclus loopt van zondag t/m zaterdag. Onderstaande tijden worden automatisch omgerekend naar jouw gekozen tijdzone.",
 "note.elixir":"Vindt elke vrijdag plaats, servertijd, met twee vaste tijdstippen.",
 "note.crystal":"Een individueel event waar je zelf voor kiest (niet automatisch). Vindt plaats op zondag, servertijd, verdeeld over 4 toegangsvensters. Deelname sluit 20 minuten nadat elk venster opent.",
@@ -806,8 +830,8 @@ nl: {
 "duel.tasksIntro":"Dagelijkse takenlijst &amp; punten per fase (tik op een dag om uit te klappen):",
 "duel.tasksSuffix":"taken",
 "kvk.ourKingdom":"Ons koninkrijk:","kvk.groupedWith":"Gegroepeerd met (bracket/matchmaking-pool):",
-"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Maandelijkse laag — toernooiboom:</b> de wekelijkse KvK-winnaars gaan via uitschakelingsrondes (Ronde 1 → Kwartfinale → Halve finale → Finale) tegen andere gekoppelde koninkrijken, over meerdere weken, tot er een maandkampioen wordt gekroond. Het wekelijkse gevecht op zaterdag blijft gewoon zoals hierboven plaatsvinden; de toernooiboom bepaalt alleen tegen wie je daarna speelt.",
-"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Gemelde afwijking:</b> volgens de spelregels vindt de Royal City Scramble plaats op zaterdag 12:00–16:00 servertijd, maar een speler in koninkrijk #217 meldt dat het bij hen daadwerkelijk op <b>vrijdag om 12:00</b> servertijd valt. De timing kan verschillen per koninkrijk/toernooigroep — controleer dit voor je eigen koninkrijk voordat je op het zaterdagtijdstip hierboven vertrouwt.",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Maandelijkse laag — toernooiboom:</b> de wekelijkse winnaars van de Koninkrijksstrijd gaan via uitschakelingsrondes (Ronde 1 → Kwartfinale → Halve finale → Finale) tegen andere gekoppelde koninkrijken, over meerdere weken, tot er een maandkampioen wordt gekroond. Het wekelijkse gevecht op zaterdag blijft gewoon zoals hierboven plaatsvinden; de toernooiboom bepaalt alleen tegen wie je daarna speelt.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Gemelde afwijking:</b> volgens de spelregels vindt de Strijd om de Koningsstad plaats op zaterdag 12:00–16:00 servertijd, maar een speler in koninkrijk #217 meldt dat het bij hen daadwerkelijk op <b>vrijdag om 12:00</b> servertijd valt. De timing kan verschillen per koninkrijk/toernooigroep — controleer dit voor je eigen koninkrijk voordat je op het zaterdagtijdstip hierboven vertrouwt.",
 "cheese.timesLabel":"Servertijd-tijdstippen (komma-gescheiden, UU:MM)","cheese.anchorLabel":"Eerstvolgende bekende voorval (datum)",
 "cheese.localMsg":"Alleen bijgewerkt voor deze weergave — stuur de bevestigde waarde door om het voor iedereen bij te werken.",
 "cheese.emptyMsg":"Vul hierboven minstens één servertijd-tijdstip en een bekende datum in om hier de eerstvolgende momenten te zien.",
@@ -821,30 +845,32 @@ nl: {
 "label.server":"SERVER","label.yourTime":"JOUW TIJD",
 "crystal.entryWindowLabel":"(toegangsvenster)",
 "banner.cheeseTrapName":"Kaasval — Basil the Rat",
-"banner.elixirName":"Elixir Scramble ({time} servertijd)","banner.crystalName":"Crystal Cluster Valley ({time} servertijd)",
-"banner.kvkRelocate":"KvK-oorlog — verplaatsingsvenster voor aanvaller opent",
-"banner.kvkScramble":"KvK-oorlog — Royal City Scramble (volgens officiële regels; #217 meldt vrijdag)",
-"banner.duelRaid":"Alliantie-Duel — Fase 6: Raid begint"
+"banner.elixirName":"Elixerstrijd ({time} servertijd)","banner.crystalName":"Crystal Cluster Valley ({time} servertijd)",
+"banner.kvkRelocate":"Koninkrijksstrijd — verplaatsingsvenster voor aanvaller opent",
+"banner.kvkScramble":"Koninkrijksstrijd — Strijd om de Koningsstad (volgens officiële regels; #217 meldt vrijdag)",
+"banner.duelRaid":"Alliantieduel — Fase 6: Raid begint"
 },
 fr: {
+"note.transcribed":"<b>Note:</b> the game has no English-language issue here — this notice only appears for languages the game does not ship.",
 "site.eyebrow":"// LAST ASYLUM PLAGUE — DOSSIER D'OPÉRATIONS D'ALLIANCE",
 "site.title":"Calendrier de Confinement",
 "site.subtitle":"Royaume #217 — tous les événements du serveur, convertis en direct dans votre heure locale. L'horloge du serveur tourne en GMT&minus;2, décalage fixe (pas d'heure d'été).",
 "clock.serverTimeLabel":"Heure serveur (GMT&minus;2)","clock.serverDayLabel":"Jour serveur",
 "clock.serverDaySub":"Mise à jour à minuit serveur","clock.yourTimeLabel":"Votre heure locale",
 "clock.tzLabel":"Fuseau horaire d'affichage","clock.langLabel":"Langue",
-"nav.survival":"Survival Battle","nav.duel":"Duel d'Alliance","nav.kvk":"Guerre KvK",
-"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Piège à Fromage",
+"nav.survival":"Combat de survie","nav.duel":"Duel d'alliances","nav.kvk":"Guerre du royaume",
+"nav.elixir":"Ruée à l'élixir","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Piège à fromage",
 "nav.tbd":"Autres événements","nav.milestones":"Jalons",
 "banner.title":"⚠ À venir dans les prochaines 24 heures",
 "tag.daily":"QUOTIDIEN","tag.weekly":"HEBDOMADAIRE","tag.weeklyMonthly":"HEBDOMADAIRE + MENSUEL",
 "tag.recurring48":"RÉCURRENT · 48H","tag.pending":"HORAIRE À CONFIRMER",
 "tag.oneTime":"DÉBLOCAGES UNIQUES","tag.weeklyConfirmed":"HEBDOMADAIRE · CONFIRMÉ",
-"title.survival":"Survival Battle","title.duel":"Duel d'Alliance","title.kvk":"Guerre Royaume contre Royaume",
-"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.survival":"Combat de survie","title.duel":"Duel d'alliances","title.kvk":"Guerre du royaume",
+"title.elixir":"Ruée à l'élixir","title.crystal":"Crystal Cluster Valley",
+"title.cheese":"Piège à fromage — Basil the Rat",
 "title.tbd":"Autres événements d'alliance","title.milestones":"Jalons du serveur",
 "note.survival":"Se déroule chaque jour, 6 sous-objectifs sur une rotation de 4 heures, selon un cycle de 7 jours. Le jour actuel est calculé automatiquement — aucune sauvegarde nécessaire. Cliquez sur un jour ci-dessous pour le prévisualiser ; cliquez sur « Aujourd'hui » pour revenir.",
-"note.duel":"Se déroule du lundi au samedi contre une alliance rivale attribuée. Une phase thématique par jour ; le résultat du jour est arrêté à minuit serveur (00:00 GMT&minus;2), et celui qui remporte le plus des 6 phases gagne la semaine. Pas de Duel d'Alliance le dimanche.",
+"note.duel":"Se déroule du lundi au samedi contre une alliance rivale attribuée. Une phase thématique par jour ; le résultat du jour est arrêté à minuit serveur (00:00 GMT&minus;2), et celui qui remporte le plus des 6 phases gagne la semaine. Pas de Duel d'alliances le dimanche.",
 "note.kvk":"Un cycle hebdomadaire se déroule du dimanche au samedi. Les horaires ci-dessous se convertissent automatiquement dans le fuseau horaire choisi.",
 "note.elixir":"Se déroule chaque vendredi, heure serveur, avec deux créneaux programmés.",
 "note.crystal":"Un événement individuel auquel on s'inscrit soi-même (pas automatique). A lieu le dimanche, heure serveur, sur 4 fenêtres d'entrée. L'entrée se ferme 20 minutes après l'ouverture de chaque fenêtre.",
@@ -861,7 +887,7 @@ fr: {
 "duel.tasksSuffix":"tâches",
 "kvk.ourKingdom":"Notre royaume :","kvk.groupedWith":"Groupé avec (poule de bracket/matchmaking) :",
 "kvk.monthlyNote":"<b style=\"color:var(--amber)\">Palier mensuel — tournoi à élimination :</b> les vainqueurs hebdomadaires du KvK avancent à travers des tours d'élimination (Tour 1 → Quarts → Demi-finales → Finale) contre d'autres royaumes attribués, sur plusieurs semaines, jusqu'à ce qu'un champion mensuel soit couronné. La bataille du samedi a toujours lieu comme indiqué ci-dessus ; le tournoi détermine seulement contre qui vous jouerez ensuite.",
-"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Écart signalé :</b> le texte des règles du jeu indique que le Royal City Scramble a lieu le samedi de 12h00 à 16h00 heure serveur, mais un joueur du royaume #217 signale que, chez lui, cela tombe en réalité <b>le vendredi à 12h00</b> heure serveur. L'horaire peut varier selon le royaume/le tournoi — mieux vaut vérifier ce qui s'applique à votre royaume avant de se fier au créneau du samedi ci-dessus.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Écart signalé :</b> le texte des règles du jeu indique que le Tumulte dans la Cité royale a lieu le samedi de 12h00 à 16h00 heure serveur, mais un joueur du royaume #217 signale que, chez lui, cela tombe en réalité <b>le vendredi à 12h00</b> heure serveur. L'horaire peut varier selon le royaume/le tournoi — mieux vaut vérifier ce qui s'applique à votre royaume avant de se fier au créneau du samedi ci-dessus.",
 "cheese.timesLabel":"Créneaux horaires serveur (séparés par des virgules, HH:MM)","cheese.anchorLabel":"Prochaine occurrence connue (date)",
 "cheese.localMsg":"Mis à jour pour cette vue uniquement — envoyez la valeur confirmée pour la mettre à jour pour tout le monde.",
 "cheese.emptyMsg":"Saisissez au moins un créneau horaire serveur et une date connue ci-dessus pour voir les prochaines occurrences ici.",
@@ -874,31 +900,33 @@ fr: {
 "survival.todayLabel":"Aujourd'hui : Jour du cycle","survival.previewLabel":"Aperçu : Jour du cycle",
 "label.server":"SERVEUR","label.yourTime":"VOTRE HEURE",
 "crystal.entryWindowLabel":"(fenêtre d'entrée)",
-"banner.cheeseTrapName":"Piège à Fromage — Basil the Rat",
-"banner.elixirName":"Elixir Scramble ({time} heure serveur)","banner.crystalName":"Crystal Cluster Valley ({time} heure serveur)",
-"banner.kvkRelocate":"Guerre KvK — ouverture de la fenêtre de relocalisation de l'attaquant",
-"banner.kvkScramble":"Guerre KvK — Royal City Scramble (selon les règles officielles ; #217 signale le vendredi à la place)",
-"banner.duelRaid":"Duel d'Alliance — Phase 6 : le Raid commence"
+"banner.cheeseTrapName":"Piège à fromage — Basil the Rat",
+"banner.elixirName":"Ruée à l'élixir ({time} heure serveur)","banner.crystalName":"Crystal Cluster Valley ({time} heure serveur)",
+"banner.kvkRelocate":"Guerre du royaume — ouverture de la fenêtre de relocalisation de l'attaquant",
+"banner.kvkScramble":"Guerre du royaume — Tumulte dans la Cité royale (selon les règles officielles ; #217 signale le vendredi à la place)",
+"banner.duelRaid":"Duel d'alliances — Phase 6 : le Raid commence"
 },
 es: {
+"note.transcribed":"<b>Note:</b> the game has no English-language issue here — this notice only appears for languages the game does not ship.",
 "site.eyebrow":"// LAST ASYLUM PLAGUE — ARCHIVO DE OPERACIONES DE ALIANZA",
 "site.title":"Calendario de Contención",
 "site.subtitle":"Reino #217 — todos los eventos del servidor, convertidos en vivo a tu hora local. El reloj del servidor funciona en GMT&minus;2, desfase fijo (sin horario de verano).",
 "clock.serverTimeLabel":"Hora del servidor (GMT&minus;2)","clock.serverDayLabel":"Día del servidor",
 "clock.serverDaySub":"Se actualiza a medianoche del servidor","clock.yourTimeLabel":"Tu hora local",
 "clock.tzLabel":"Zona horaria de visualización","clock.langLabel":"Idioma",
-"nav.survival":"Survival Battle","nav.duel":"Duelo de Alianza","nav.kvk":"Guerra KvK",
-"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Trampa de Queso",
+"nav.survival":"Batalla de supervivencia","nav.duel":"Duelo de alianzas","nav.kvk":"Guerra del reino",
+"nav.elixir":"Disputa de Elixir","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Trampa de queso",
 "nav.tbd":"Otros eventos","nav.milestones":"Hitos",
 "banner.title":"⚠ Próximamente en las próximas 24 horas",
 "tag.daily":"DIARIO","tag.weekly":"SEMANAL","tag.weeklyMonthly":"SEMANAL + MENSUAL",
 "tag.recurring48":"RECURRENTE · 48H","tag.pending":"HORARIO PENDIENTE",
 "tag.oneTime":"DESBLOQUEOS ÚNICOS","tag.weeklyConfirmed":"SEMANAL · CONFIRMADO",
-"title.survival":"Survival Battle","title.duel":"Duelo de Alianza","title.kvk":"Guerra de Reino contra Reino",
-"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.survival":"Batalla de supervivencia","title.duel":"Duelo de alianzas","title.kvk":"Guerra del reino",
+"title.elixir":"Disputa de Elixir","title.crystal":"Crystal Cluster Valley",
+"title.cheese":"Trampa de queso — \"Basil the Rat\"",
 "title.tbd":"Otros eventos de la alianza","title.milestones":"Hitos del servidor",
 "note.survival":"Se ejecuta todos los días, 6 subobjetivos en una rotación de 4 horas, repitiéndose en un patrón de 7 días. El día actual se calcula automáticamente — no hace falta guardar nada. Haz clic en cualquier día para previsualizarlo; haz clic en \"Hoy\" para volver.",
-"note.duel":"Se desarrolla de lunes a sábado contra una alianza rival emparejada. Una fase temática por día; el resultado del día se determina a medianoche del servidor (00:00 GMT&minus;2), y quien gane más de las 6 fases gana la semana. No hay Duelo de Alianza los domingos.",
+"note.duel":"Se desarrolla de lunes a sábado contra una alianza rival emparejada. Una fase temática por día; el resultado del día se determina a medianoche del servidor (00:00 GMT&minus;2), y quien gane más de las 6 fases gana la semana. No hay Duelo de alianzas los domingos.",
 "note.kvk":"Un ciclo semanal va de domingo a sábado. Los horarios de abajo se convierten automáticamente a tu zona horaria seleccionada.",
 "note.elixir":"Se realiza cada viernes, hora del servidor, con dos franjas horarias programadas.",
 "note.crystal":"Un evento individual al que te apuntas tú mismo (no es automático). Se realiza los domingos, hora del servidor, en 4 ventanas de entrada. La entrada se cierra 20 minutos después de que se abra cada ventana.",
@@ -914,8 +942,8 @@ es: {
 "duel.tasksIntro":"Lista de tareas diarias &amp; puntos por fase (toca un día para desplegar):",
 "duel.tasksSuffix":"tareas",
 "kvk.ourKingdom":"Nuestro reino:","kvk.groupedWith":"Agrupado con (grupo de bracket/emparejamiento):",
-"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Nivel mensual — torneo de eliminatorias:</b> los ganadores semanales del KvK avanzan a través de rondas de eliminación (Ronda 1 → Cuartos → Semifinales → Final) contra otros reinos emparejados, a lo largo de varias semanas, hasta coronar a un campeón mensual. La batalla del sábado sigue ocurriendo como se indica arriba; el torneo solo decide contra quién jugarás después.",
-"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Discrepancia reportada:</b> las reglas del juego indican que el Royal City Scramble ocurre los sábados de 12:00 a 16:00 hora del servidor, pero un jugador del reino #217 reporta que en su caso realmente cae <b>los viernes a las 12:00</b> hora del servidor. El horario puede variar según el reino/grupo — conviene comprobar qué aplica a tu reino antes de confiar en el horario del sábado de arriba.",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Nivel mensual — torneo de eliminatorias:</b> los ganadores semanales de la Guerra del reino avanzan a través de rondas de eliminación (Ronda 1 → Cuartos → Semifinales → Final) contra otros reinos emparejados, a lo largo de varias semanas, hasta coronar a un campeón mensual. La batalla del sábado sigue ocurriendo como se indica arriba; el torneo solo decide contra quién jugarás después.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Discrepancia reportada:</b> las reglas del juego indican que el Alboroto en la Ciudad Real ocurre los sábados de 12:00 a 16:00 hora del servidor, pero un jugador del reino #217 reporta que en su caso realmente cae <b>los viernes a las 12:00</b> hora del servidor. El horario puede variar según el reino/grupo — conviene comprobar qué aplica a tu reino antes de confiar en el horario del sábado de arriba.",
 "cheese.timesLabel":"Franjas horarias del servidor (separadas por comas, HH:MM)","cheese.anchorLabel":"Próxima ocurrencia conocida (fecha)",
 "cheese.localMsg":"Actualizado solo para esta vista — envía el valor confirmado para actualizarlo para todos.",
 "cheese.emptyMsg":"Introduce al menos una franja horaria del servidor y una fecha conocida arriba para ver aquí las próximas ocurrencias.",
@@ -928,31 +956,33 @@ es: {
 "survival.todayLabel":"Hoy: Día del ciclo","survival.previewLabel":"Vista previa: Día del ciclo",
 "label.server":"SERVIDOR","label.yourTime":"TU HORA",
 "crystal.entryWindowLabel":"(ventana de entrada)",
-"banner.cheeseTrapName":"Trampa de Queso — Basil the Rat",
-"banner.elixirName":"Elixir Scramble ({time} hora del servidor)","banner.crystalName":"Crystal Cluster Valley ({time} hora del servidor)",
-"banner.kvkRelocate":"Guerra KvK — se abre la ventana de reubicación del atacante",
-"banner.kvkScramble":"Guerra KvK — Royal City Scramble (según reglas oficiales; #217 reporta el viernes en su lugar)",
-"banner.duelRaid":"Duelo de Alianza — Fase 6: comienza el Raid"
+"banner.cheeseTrapName":"Trampa de queso — Basil the Rat",
+"banner.elixirName":"Disputa de Elixir ({time} hora del servidor)","banner.crystalName":"Crystal Cluster Valley ({time} hora del servidor)",
+"banner.kvkRelocate":"Guerra del reino — se abre la ventana de reubicación del atacante",
+"banner.kvkScramble":"Guerra del reino — Alboroto en la Ciudad Real (según reglas oficiales; #217 reporta el viernes en su lugar)",
+"banner.duelRaid":"Duelo de alianzas — Fase 6: comienza la Incursión"
 },
 pt: {
+"note.transcribed":"<b>Note:</b> the game has no English-language issue here — this notice only appears for languages the game does not ship.",
 "site.eyebrow":"// LAST ASYLUM PLAGUE — FICHEIRO DE OPERAÇÕES DA ALIANÇA",
 "site.title":"Calendário de Contenção",
 "site.subtitle":"Reino #217 — todos os eventos do servidor, convertidos ao vivo para a sua hora local. O relógio do servidor funciona em GMT&minus;2, desvio fixo (sem horário de verão).",
 "clock.serverTimeLabel":"Hora do servidor (GMT&minus;2)","clock.serverDayLabel":"Dia do servidor",
 "clock.serverDaySub":"Atualiza à meia-noite do servidor","clock.yourTimeLabel":"A sua hora local",
 "clock.tzLabel":"Fuso horário de exibição","clock.langLabel":"Idioma",
-"nav.survival":"Survival Battle","nav.duel":"Duelo de Aliança","nav.kvk":"Guerra KvK",
-"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Armadilha de Queijo",
+"nav.survival":"Batalha de Sobrevivência","nav.duel":"Duelo da Aliança","nav.kvk":"Guerra do Reino",
+"nav.elixir":"Luta pelo Elixir","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Armadilha de Queijo",
 "nav.tbd":"Outros eventos","nav.milestones":"Marcos",
 "banner.title":"⚠ A acontecer nas próximas 24 horas",
 "tag.daily":"DIÁRIO","tag.weekly":"SEMANAL","tag.weeklyMonthly":"SEMANAL + MENSAL",
 "tag.recurring48":"RECORRENTE · 48H","tag.pending":"HORÁRIO POR CONFIRMAR",
 "tag.oneTime":"DESBLOQUEIOS ÚNICOS","tag.weeklyConfirmed":"SEMANAL · CONFIRMADO",
-"title.survival":"Survival Battle","title.duel":"Duelo de Aliança","title.kvk":"Guerra de Reino contra Reino",
-"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.survival":"Batalha de Sobrevivência","title.duel":"Duelo da Aliança","title.kvk":"Guerra do Reino",
+"title.elixir":"Luta pelo Elixir","title.crystal":"Crystal Cluster Valley",
+"title.cheese":"Armadilha de Queijo — \"Basil the Rat\"",
 "title.tbd":"Outros eventos da aliança","title.milestones":"Marcos do servidor",
 "note.survival":"Ocorre todos os dias, 6 sub-objetivos numa rotação de 4 horas, repetindo-se num padrão de 7 dias. O dia atual é calculado automaticamente — não é preciso guardar nada. Clique em qualquer dia abaixo para pré-visualizar; clique em \"Hoje\" para voltar.",
-"note.duel":"Ocorre de segunda a sábado contra uma aliança rival emparelhada. Uma fase temática por dia; o resultado do dia é definido à meia-noite do servidor (00:00 GMT&minus;2), e quem vencer mais das 6 fases vence a semana. Não há Duelo de Aliança aos domingos.",
+"note.duel":"Ocorre de segunda a sábado contra uma aliança rival emparelhada. Uma fase temática por dia; o resultado do dia é definido à meia-noite do servidor (00:00 GMT&minus;2), e quem vencer mais das 6 fases vence a semana. Não há Duelo da Aliança aos domingos.",
 "note.kvk":"Um ciclo semanal vai de domingo a sábado. Os horários abaixo convertem-se automaticamente para o fuso horário selecionado.",
 "note.elixir":"Ocorre todas as sextas-feiras, hora do servidor, com dois horários agendados.",
 "note.crystal":"Um evento individual ao qual se adere (não é automático). Ocorre aos domingos, hora do servidor, em 4 janelas de entrada. A entrada fecha 20 minutos depois de cada janela abrir.",
@@ -968,8 +998,8 @@ pt: {
 "duel.tasksIntro":"Lista de tarefas diárias &amp; pontos por fase (toque num dia para expandir):",
 "duel.tasksSuffix":"tarefas",
 "kvk.ourKingdom":"O nosso reino:","kvk.groupedWith":"Agrupado com (grupo de bracket/matchmaking):",
-"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Camada mensal — torneio eliminatório:</b> os vencedores semanais do KvK avançam através de rondas eliminatórias (Ronda 1 → Quartos → Meias-finais → Final) contra outros reinos emparelhados, ao longo de várias semanas, até ser coroado um campeão mensal. A batalha de sábado continua a acontecer como acima; o torneio só decide contra quem se joga a seguir.",
-"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Discrepância reportada:</b> o texto oficial das regras diz que o Royal City Scramble ocorre aos sábados das 12:00 às 16:00 hora do servidor, mas um jogador do reino #217 reporta que, para eles, ocorre na verdade <b>às sextas-feiras às 12:00</b> hora do servidor. O horário pode variar consoante o reino/grupo — vale a pena confirmar o que se aplica ao seu reino antes de confiar no horário de sábado acima.",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Camada mensal — torneio eliminatório:</b> os vencedores semanais da Guerra do Reino avançam através de rondas eliminatórias (Ronda 1 → Quartos → Meias-finais → Final) contra outros reinos emparelhados, ao longo de várias semanas, até ser coroado um campeão mensal. A batalha de sábado continua a acontecer como acima; o torneio só decide contra quem se joga a seguir.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Discrepância reportada:</b> o texto oficial das regras diz que o Tumulto na Capital ocorre aos sábados das 12:00 às 16:00 hora do servidor, mas um jogador do reino #217 reporta que, para eles, ocorre na verdade <b>às sextas-feiras às 12:00</b> hora do servidor. O horário pode variar consoante o reino/grupo — vale a pena confirmar o que se aplica ao seu reino antes de confiar no horário de sábado acima.",
 "cheese.timesLabel":"Horários do servidor (separados por vírgulas, HH:MM)","cheese.anchorLabel":"Próxima ocorrência conhecida (data)",
 "cheese.localMsg":"Atualizado apenas para esta vista — envie o valor confirmado para atualizar para todos.",
 "cheese.emptyMsg":"Introduza pelo menos um horário do servidor e uma data conhecida acima para ver aqui as próximas ocorrências.",
@@ -983,12 +1013,13 @@ pt: {
 "label.server":"SERVIDOR","label.yourTime":"A SUA HORA",
 "crystal.entryWindowLabel":"(janela de entrada)",
 "banner.cheeseTrapName":"Armadilha de Queijo — Basil the Rat",
-"banner.elixirName":"Elixir Scramble ({time} hora do servidor)","banner.crystalName":"Crystal Cluster Valley ({time} hora do servidor)",
-"banner.kvkRelocate":"Guerra KvK — abre a janela de realocação do atacante",
-"banner.kvkScramble":"Guerra KvK — Royal City Scramble (segundo regras oficiais; #217 reporta sexta-feira em vez disso)",
-"banner.duelRaid":"Duelo de Aliança — Fase 6: o Raid começa"
+"banner.elixirName":"Luta pelo Elixir ({time} hora do servidor)","banner.crystalName":"Crystal Cluster Valley ({time} hora do servidor)",
+"banner.kvkRelocate":"Guerra do Reino — abre a janela de realocação do atacante",
+"banner.kvkScramble":"Guerra do Reino — Tumulto na Capital (segundo regras oficiais; #217 reporta sexta-feira em vez disso)",
+"banner.duelRaid":"Duelo da Aliança — Fase 6: começa a Incursão"
 },
 hu: {
+"note.transcribed":"<b>Megjegyzés:</b> a játék nem érhető el magyarul, ezért az alábbi játékbeli megnevezések <b>saját fordítások</b>, nem a játékból átvett szövegek. Az angol eredeti mindenhol zárójelben szerepel, mert a te játékod nagy valószínűséggel angolul fut — mindig az angol szöveg alapján keress a játékban.",
 "site.eyebrow":"// LAST ASYLUM PLAGUE — SZÖVETSÉGI MŰVELETI DOSSZIÉ",
 "site.title":"Karantén Naptár",
 "site.subtitle":"217-es Királyság — az összes szerveresemény élőben átszámítva a helyi időre. A szerver órája GMT&minus;2 időzónában jár, fix eltolással (nyári időszámítás nélkül).",
@@ -1004,6 +1035,7 @@ hu: {
 "tag.oneTime":"EGYSZERI FELOLDÁSOK","tag.weeklyConfirmed":"HETENTE · MEGERŐSÍTVE",
 "title.survival":"Survival Battle","title.duel":"Szövetségi Párbaj","title.kvk":"Királyság vs. Királyság háború",
 "title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.cheese":"Cheese Trap — \"Basil the Rat\"",
 "title.tbd":"Egyéb szövetségi események","title.milestones":"Szerver mérföldkövek",
 "note.survival":"Minden nap fut, 6 részcél 4 órás forgásban, egy 7 napos mintát követve. A mai nap automatikusan kiszámolódik — nincs szükség mentésre. Kattints egy napra az előnézethez; a \"Ma\" gombra kattintva visszaugorhatsz.",
 "note.duel":"Hétfőtől szombatig fut egy kisorsolt riválás szövetség ellen. Naponta egy tematikus fázis; a napi eredmény szerver éjfélkor (00:00 GMT&minus;2) dől el, és aki a 6 fázisból többet nyer, nyeri a hetet. Vasárnap nincs Szövetségi Párbaj.",
@@ -1043,21 +1075,23 @@ hu: {
 "banner.duelRaid":"Szövetségi Párbaj — 6. fázis: kezdődik a Raid"
 },
 ru: {
+"note.transcribed":"<b>Note:</b> the game has no English-language issue here — this notice only appears for languages the game does not ship.",
 "site.eyebrow":"// LAST ASYLUM PLAGUE — ДОСЬЕ ОПЕРАЦИЙ АЛЬЯНСА",
 "site.title":"Календарь карантина",
 "site.subtitle":"Королевство #217 — все события сервера, переведённые в реальном времени в ваш часовой пояс. Часы сервера работают по GMT&minus;2, фиксированное смещение (без перехода на летнее время).",
 "clock.serverTimeLabel":"Время сервера (GMT&minus;2)","clock.serverDayLabel":"День сервера",
 "clock.serverDaySub":"Обновляется в полночь по серверу","clock.yourTimeLabel":"Ваше местное время",
 "clock.tzLabel":"Часовой пояс отображения","clock.langLabel":"Язык",
-"nav.survival":"Survival Battle","nav.duel":"Дуэль альянсов","nav.kvk":"Война KvK",
-"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Сырная ловушка",
+"nav.survival":"Битва на выживание","nav.duel":"Дуэль альянсов","nav.kvk":"Война королевств",
+"nav.elixir":"Гонка за эликсиром","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Сырная ловушка",
 "nav.tbd":"Другие события","nav.milestones":"Вехи",
 "banner.title":"⚠ Ожидается в ближайшие 24 часа",
 "tag.daily":"ЕЖЕДНЕВНО","tag.weekly":"ЕЖЕНЕДЕЛЬНО","tag.weeklyMonthly":"ЕЖЕНЕДЕЛЬНО + ЕЖЕМЕСЯЧНО",
 "tag.recurring48":"ПОВТОРЯЕТСЯ · 48Ч","tag.pending":"РАСПИСАНИЕ УТОЧНЯЕТСЯ",
 "tag.oneTime":"РАЗОВЫЕ ОТКРЫТИЯ","tag.weeklyConfirmed":"ЕЖЕНЕДЕЛЬНО · ПОДТВЕРЖДЕНО",
-"title.survival":"Survival Battle","title.duel":"Дуэль альянсов","title.kvk":"Война Королевство против Королевства",
-"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.survival":"Битва на выживание","title.duel":"Дуэль альянсов","title.kvk":"Война королевств",
+"title.elixir":"Гонка за эликсиром","title.crystal":"Crystal Cluster Valley",
+"title.cheese":"Сырная ловушка — \"Basil the Rat\"",
 "title.tbd":"Другие события альянса","title.milestones":"Вехи сервера",
 "note.survival":"Проходит каждый день, 6 подцелей с ротацией каждые 4 часа, повторяясь по 7-дневному циклу. Текущий день рассчитывается автоматически — сохранять ничего не нужно. Нажмите на любой день ниже для предпросмотра; нажмите «Сегодня», чтобы вернуться.",
 "note.duel":"Проходит с понедельника по субботу против назначенного альянса-соперника. Каждый день своя тематическая фаза; результат дня фиксируется в полночь по серверу (00:00 GMT&minus;2), и тот, кто выиграет больше из 6 фаз, побеждает в неделе. По воскресеньям Дуэли альянсов нет.",
@@ -1076,8 +1110,8 @@ ru: {
 "duel.tasksIntro":"Список ежедневных заданий &amp; очки по фазам (нажмите на день, чтобы развернуть):",
 "duel.tasksSuffix":"заданий",
 "kvk.ourKingdom":"Наше королевство:","kvk.groupedWith":"Сгруппировано с (пул сетки/подбора):",
-"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Месячный уровень — турнирная сетка:</b> еженедельные победители KvK продвигаются через раунды на выбывание (Раунд 1 → Четвертьфинал → Полуфинал → Финал) против других назначенных королевств в течение нескольких недель, пока не будет коронован месячный чемпион. Еженедельная субботняя битва по-прежнему проходит как описано выше; турнирная сетка лишь определяет, с кем вы сыграете дальше.",
-"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Обнаружено расхождение:</b> в официальных правилах игры говорится, что Royal City Scramble проходит по субботам с 12:00 до 16:00 по серверу, но игрок из королевства #217 сообщает, что у них это фактически происходит <b>по пятницам в 12:00</b> по серверу. Время может отличаться в зависимости от королевства/группы — стоит уточнить, что применимо к вашему королевству, прежде чем полагаться на субботний слот выше.",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Месячный уровень — турнирная сетка:</b> еженедельные победители Войны королевств продвигаются через раунды на выбывание (Раунд 1 → Четвертьфинал → Полуфинал → Финал) против других назначенных королевств в течение нескольких недель, пока не будет коронован месячный чемпион. Еженедельная субботняя битва по-прежнему проходит как описано выше; турнирная сетка лишь определяет, с кем вы сыграете дальше.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Обнаружено расхождение:</b> в официальных правилах игры говорится, что Королевский переполох проходит по субботам с 12:00 до 16:00 по серверу, но игрок из королевства #217 сообщает, что у них это фактически происходит <b>по пятницам в 12:00</b> по серверу. Время может отличаться в зависимости от королевства/группы — стоит уточнить, что применимо к вашему королевству, прежде чем полагаться на субботний слот выше.",
 "cheese.timesLabel":"Временные интервалы сервера (через запятую, ЧЧ:ММ)","cheese.anchorLabel":"Следующее известное событие (дата)",
 "cheese.localMsg":"Обновлено только для этого просмотра — отправьте подтверждённое значение, чтобы обновить для всех.",
 "cheese.emptyMsg":"Введите выше хотя бы один временной интервал сервера и известную дату, чтобы увидеть здесь ближайшие события.",
@@ -1091,12 +1125,13 @@ ru: {
 "label.server":"СЕРВЕР","label.yourTime":"ВАШЕ ВРЕМЯ",
 "crystal.entryWindowLabel":"(окно входа)",
 "banner.cheeseTrapName":"Сырная ловушка — Basil the Rat",
-"banner.elixirName":"Elixir Scramble ({time} по серверу)","banner.crystalName":"Crystal Cluster Valley ({time} по серверу)",
-"banner.kvkRelocate":"Война KvK — открывается окно переселения для атакующих",
-"banner.kvkScramble":"Война KvK — Royal City Scramble (по официальным правилам; #217 сообщает о пятнице вместо этого)",
+"banner.elixirName":"Гонка за эликсиром ({time} по серверу)","banner.crystalName":"Crystal Cluster Valley ({time} по серверу)",
+"banner.kvkRelocate":"Война королевств — открывается окно переселения для атакующих",
+"banner.kvkScramble":"Война королевств — Королевский переполох (по официальным правилам; #217 сообщает о пятнице вместо этого)",
 "banner.duelRaid":"Дуэль альянсов — Фаза 6: начинается Рейд"
 },
 uk: {
+"note.transcribed":"<b>Примітка:</b> гра не має української версії, тому наведені нижче ігрові назви — це <b>власний переклад</b>, а не рядки з клієнта. Англійський оригінал скрізь подано в дужках, бо ваша гра майже напевно працює англійською — орієнтуйтеся саме на англійський текст.",
 "site.eyebrow":"// LAST ASYLUM PLAGUE — ДОСЬЄ ОПЕРАЦІЙ АЛЬЯНСУ",
 "site.title":"Календар карантину",
 "site.subtitle":"Королівство #217 — усі події сервера, переведені в реальному часі у ваш часовий пояс. Годинник сервера працює за GMT&minus;2, фіксоване зміщення (без переходу на літній час).",
@@ -1112,6 +1147,7 @@ uk: {
 "tag.oneTime":"РАЗОВІ ВІДКРИТТЯ","tag.weeklyConfirmed":"ЩОТИЖНЯ · ПІДТВЕРДЖЕНО",
 "title.survival":"Survival Battle","title.duel":"Дуель альянсів","title.kvk":"Війна Королівство проти Королівства",
 "title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.cheese":"Cheese Trap — \"Basil the Rat\"",
 "title.tbd":"Інші події альянсу","title.milestones":"Віхи сервера",
 "note.survival":"Триває щодня, 6 підцілей із ротацією кожні 4 години, повторюючись за 7-денним циклом. Поточний день розраховується автоматично — нічого зберігати не потрібно. Натисніть на будь-який день нижче для попереднього перегляду; натисніть «Сьогодні», щоб повернутися.",
 "note.duel":"Триває з понеділка по суботу проти призначеного альянсу-суперника. Щодня своя тематична фаза; результат дня фіксується опівночі за сервером (00:00 GMT&minus;2), і хто виграє більше з 6 фаз, перемагає у тижні. У неділю Дуелі альянсів немає.",
@@ -1151,21 +1187,23 @@ uk: {
 "banner.duelRaid":"Дуель альянсів — Фаза 6: починається Рейд"
 },
 pl: {
+"note.transcribed":"<b>Note:</b> the game has no English-language issue here — this notice only appears for languages the game does not ship.",
 "site.eyebrow":"// LAST ASYLUM PLAGUE — DOKUMENTACJA OPERACJI SOJUSZU",
 "site.title":"Kalendarz Kwarantanny",
 "site.subtitle":"Królestwo #217 — wszystkie wydarzenia serwera, przeliczane na żywo na Twój czas lokalny. Zegar serwera działa w GMT&minus;2, stałe przesunięcie (bez czasu letniego).",
 "clock.serverTimeLabel":"Czas serwera (GMT&minus;2)","clock.serverDayLabel":"Dzień serwera",
 "clock.serverDaySub":"Aktualizacja o północy czasu serwera","clock.yourTimeLabel":"Twój czas lokalny",
 "clock.tzLabel":"Wyświetlana strefa czasowa","clock.langLabel":"Język",
-"nav.survival":"Survival Battle","nav.duel":"Pojedynek Sojuszy","nav.kvk":"Wojna KvK",
-"nav.elixir":"Elixir Scramble","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Pułapka na Sery",
+"nav.survival":"Bitwa o Przetrwanie","nav.duel":"Pojedynek Sojuszy","nav.kvk":"Wojna Królestw",
+"nav.elixir":"Starcie o Eliksir","nav.crystal":"Crystal Cluster Valley","nav.cheese":"Pułapka Serowa",
 "nav.tbd":"Inne wydarzenia","nav.milestones":"Kamienie milowe",
 "banner.title":"⚠ Nadchodzi w ciągu następnych 24 godzin",
 "tag.daily":"CODZIENNIE","tag.weekly":"CO TYDZIEŃ","tag.weeklyMonthly":"CO TYDZIEŃ + CO MIESIĄC",
 "tag.recurring48":"POWTARZA SIĘ · 48H","tag.pending":"TERMIN DO POTWIERDZENIA",
 "tag.oneTime":"JEDNORAZOWE ODBLOKOWANIA","tag.weeklyConfirmed":"CO TYDZIEŃ · POTWIERDZONE",
-"title.survival":"Survival Battle","title.duel":"Pojedynek Sojuszy","title.kvk":"Wojna Królestwo kontra Królestwo",
-"title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.survival":"Bitwa o Przetrwanie","title.duel":"Pojedynek Sojuszy","title.kvk":"Wojna Królestw",
+"title.elixir":"Starcie o Eliksir","title.crystal":"Crystal Cluster Valley",
+"title.cheese":"Pułapka Serowa — \"Basil the Rat\"",
 "title.tbd":"Inne wydarzenia sojuszu","title.milestones":"Kamienie milowe serwera",
 "note.survival":"Odbywa się codziennie, 6 podcelów w rotacji co 4 godziny, powtarzających się w 7-dniowym wzorcu. Aktualny dzień jest obliczany automatycznie — nie trzeba niczego zapisywać. Kliknij dowolny dzień poniżej, aby zobaczyć podgląd; kliknij „Dziś”, aby wrócić.",
 "note.duel":"Trwa od poniedziałku do soboty przeciwko wylosowanemu sojuszowi rywala. Każdego dnia inna tematyczna faza; wynik dnia jest ustalany o północy czasu serwera (00:00 GMT&minus;2), a kto wygra więcej z 6 faz, wygrywa tydzień. W niedzielę nie ma Pojedynku Sojuszy.",
@@ -1184,8 +1222,8 @@ pl: {
 "duel.tasksIntro":"Lista codziennych zadań &amp; punkty za fazę (dotknij dnia, aby rozwinąć):",
 "duel.tasksSuffix":"zadań",
 "kvk.ourKingdom":"Nasze królestwo:","kvk.groupedWith":"Zgrupowane z (pula drabinki/matchmakingu):",
-"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Warstwa miesięczna — turniej pucharowy:</b> cotygodniowi zwycięzcy KvK awansują przez rundy eliminacyjne (Runda 1 → Ćwierćfinał → Półfinał → Finał) przeciwko innym wylosowanym królestwom, przez kilka tygodni, aż zostanie koronowany mistrz miesiąca. Cotygodniowa sobotnia bitwa nadal odbywa się jak powyżej; drabinka turniejowa decyduje tylko, z kim zagrasz następnie.",
-"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Zgłoszona rozbieżność:</b> oficjalne zasady gry mówią, że Royal City Scramble odbywa się w sobotę 12:00–16:00 czasu serwera, ale gracz z królestwa #217 zgłasza, że u nich faktycznie wypada to <b>w piątek o 12:00</b> czasu serwera. Godzina może się różnić w zależności od królestwa/grupy — warto sprawdzić, co dotyczy Twojego królestwa, zanim polegniesz na sobotnim terminie powyżej.",
+"kvk.monthlyNote":"<b style=\"color:var(--amber)\">Warstwa miesięczna — turniej pucharowy:</b> cotygodniowi zwycięzcy Wojny Królestw awansują przez rundy eliminacyjne (Runda 1 → Ćwierćfinał → Półfinał → Finał) przeciwko innym wylosowanym królestwom, przez kilka tygodni, aż zostanie koronowany mistrz miesiąca. Cotygodniowa sobotnia bitwa nadal odbywa się jak powyżej; drabinka turniejowa decyduje tylko, z kim zagrasz następnie.",
+"kvk.discrepancyNote":"<b style=\"color:var(--red-bright)\">⚠ Zgłoszona rozbieżność:</b> oficjalne zasady gry mówią, że Awantura w Królewskim Mieście odbywa się w sobotę 12:00–16:00 czasu serwera, ale gracz z królestwa #217 zgłasza, że u nich faktycznie wypada to <b>w piątek o 12:00</b> czasu serwera. Godzina może się różnić w zależności od królestwa/grupy — warto sprawdzić, co dotyczy Twojego królestwa, zanim polegniesz na sobotnim terminie powyżej.",
 "cheese.timesLabel":"Godziny serwera (oddzielone przecinkami, GG:MM)","cheese.anchorLabel":"Najbliższe znane wystąpienie (data)",
 "cheese.localMsg":"Zaktualizowano tylko dla tego widoku — wyślij potwierdzoną wartość, aby zaktualizować dla wszystkich.",
 "cheese.emptyMsg":"Wpisz powyżej co najmniej jedną godzinę serwera i znaną datę, aby zobaczyć tutaj najbliższe wystąpienia.",
@@ -1198,13 +1236,14 @@ pl: {
 "survival.todayLabel":"Dziś: Dzień cyklu","survival.previewLabel":"Podgląd: Dzień cyklu",
 "label.server":"SERWER","label.yourTime":"TWÓJ CZAS",
 "crystal.entryWindowLabel":"(okno wejścia)",
-"banner.cheeseTrapName":"Pułapka na Sery — Basil the Rat",
-"banner.elixirName":"Elixir Scramble ({time} czasu serwera)","banner.crystalName":"Crystal Cluster Valley ({time} czasu serwera)",
-"banner.kvkRelocate":"Wojna KvK — otwiera się okno przeniesienia dla atakującego",
-"banner.kvkScramble":"Wojna KvK — Royal City Scramble (wg oficjalnych zasad; #217 zgłasza zamiast tego piątek)",
-"banner.duelRaid":"Pojedynek Sojuszy — Faza 6: zaczyna się Rajd"
+"banner.cheeseTrapName":"Pułapka Serowa — Basil the Rat",
+"banner.elixirName":"Starcie o Eliksir ({time} czasu serwera)","banner.crystalName":"Crystal Cluster Valley ({time} czasu serwera)",
+"banner.kvkRelocate":"Wojna Królestw — otwiera się okno przeniesienia dla atakującego",
+"banner.kvkScramble":"Wojna Królestw — Awantura w Królewskim Mieście (wg oficjalnych zasad; #217 zgłasza zamiast tego piątek)",
+"banner.duelRaid":"Pojedynek Sojuszy — Faza 6: zaczyna się Najazd"
 },
 fi: {
+"note.transcribed":"<b>Huomio:</b> peliä ei ole saatavilla suomeksi, joten alla olevat pelin sisäiset nimet ovat <b>oma käännös</b>, eivät pelistä poimittuja tekstejä. Englanninkielinen alkuperäisteksti on aina suluissa, koska pelisi on lähes varmasti englanniksi — etsi pelistä aina englanninkielisellä nimellä.",
 "site.eyebrow":"// LAST ASYLUM PLAGUE — ALLIANSSIN OPERAATIOTIEDOSTO",
 "site.title":"Karanteenikalenteri",
 "site.subtitle":"Kuningaskunta #217 — kaikki palvelimen tapahtumat, muunnettuna reaaliajassa paikalliseen aikaasi. Palvelimen kello käy GMT&minus;2-ajassa, kiinteä siirtymä (ei kesäaikaa).",
@@ -1220,6 +1259,7 @@ fi: {
 "tag.oneTime":"KERTALUONTEISET AVAUKSET","tag.weeklyConfirmed":"VIIKOITTAIN · VAHVISTETTU",
 "title.survival":"Survival Battle","title.duel":"Alliance Duel","title.kvk":"Kuningaskunta vastaan kuningaskunta -sota",
 "title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.cheese":"Cheese Trap — \"Basil the Rat\"",
 "title.tbd":"Muut allianssin tapahtumat","title.milestones":"Palvelimen virstanpylväät",
 "note.survival":"Käynnissä joka päivä, 6 osatavoitetta 4 tunnin kierrossa, toistuen 7 päivän kaavan mukaan. Tämänhetkinen päivä lasketaan automaattisesti — mitään ei tarvitse tallentaa. Napsauta mitä tahansa päivää alla nähdäksesi esikatselun; palaa napsauttamalla \"Tänään\".",
 "note.duel":"Käynnissä maanantaista lauantaihin arvottua kilpailevaa allianssia vastaan. Yksi teemoitettu vaihe per päivä; päivän tulos ratkeaa palvelimen keskiyöllä (00:00 GMT&minus;2), ja se, joka voittaa useamman 6 vaiheesta, voittaa viikon. Sunnuntaisin ei ole Alliance Duelia.",
@@ -1259,6 +1299,7 @@ fi: {
 "banner.duelRaid":"Alliance Duel — Vaihe 6: Raid alkaa"
 },
 et: {
+"note.transcribed":"<b>Märkus:</b> mängul puudub eestikeelne versioon, seega allolevad mängusisesed nimetused on <b>omatõlge</b>, mitte mängust võetud tekstid. Ingliskeelne originaal on alati sulgudes, sest sinu mäng töötab peaaegu kindlasti inglise keeles — otsi mängust alati ingliskeelse nime järgi.",
 "site.eyebrow":"// LAST ASYLUM PLAGUE — ALLIANSI OPERATSIOONITOIMIK",
 "site.title":"Karantiinikalender",
 "site.subtitle":"Kuningriik #217 — kõik serveri sündmused, teisendatud reaalajas sinu kohalikku aega. Serveri kell käib GMT&minus;2 ajas, fikseeritud nihkega (suveaega ei kasutata).",
@@ -1274,6 +1315,7 @@ et: {
 "tag.oneTime":"ÜHEKORDSED AVAMISED","tag.weeklyConfirmed":"IGANÄDALANE · KINNITATUD",
 "title.survival":"Survival Battle","title.duel":"Alliansi Duell","title.kvk":"Kuningriik versus Kuningriik sõda",
 "title.elixir":"Elixir Scramble","title.crystal":"Crystal Cluster Valley",
+"title.cheese":"Cheese Trap — \"Basil the Rat\"",
 "title.tbd":"Muud alliansi sündmused","title.milestones":"Serveri verstapostid",
 "note.survival":"Toimub iga päev, 6 alaeesmärki 4-tunnise rotatsiooniga, korduvad 7-päevase mustri järgi. Tänane päev arvutatakse automaatselt — midagi ei ole vaja salvestada. Kliki allpool mõnel päeval, et seda eelvaadata; klõpsa \"Täna\", et tagasi hüpata.",
 "note.duel":"Toimub esmaspäevast laupäevani loositud rivaalitseva alliansi vastu. Igal päeval oma teemaline etapp; päeva tulemus fikseeritakse serveri kesköö ajal (00:00 GMT&minus;2) ja see, kes võidab rohkem kui 6 etapist, võidab nädala. Pühapäeval Alliansi Duelli ei toimu.",
@@ -1314,6 +1356,1288 @@ et: {
 }
 };
 
+// ============================================================
+// GAME_TERMS — literal in-game proper nouns (objective names, task
+// names, phase focus names, event names). Unlike TRANSLATIONS above,
+// these are only filled in for languages where we have screenshot
+// confirmation of the actual in-game string. Everything else falls
+// back to English rather than guessing.
+// ============================================================
+const GAME_TERMS = {
+  hu: {
+    // TRANSCRIBED, NOT VERIFIED. Hungarian has no official game client, so
+    // there is no in-game string to match. These are plain translations of
+    // the English originals, provided so players who aren't confident in
+    // English can follow along. Every value keeps the English original in
+    // parentheses, because every user of this language is necessarily on a
+    // foreign client — most likely English — and needs it to match against.
+    // Do NOT promote these to "confirmed": if a client ever ships, replace
+    // them wholesale from screenshots.
+    transcribed: true,
+    sbObjectives: {
+      "Build Territory": "Terület fejlesztése (Build Territory)",
+      "Train Soldiers": "Katonák kiképzése (Train Soldiers)",
+      "Technology Research": "Technológiai kutatás (Technology Research)",
+      "Enhance Raven": "Holló megerősítése (Enhance Raven)",
+      "Enhance Heroes": "Hősök megerősítése (Enhance Heroes)"
+    },
+    duelFocus: [
+      "Holló megerősítése (Enhance Raven)",
+      "Terület fejlesztése (Territory Development)",
+      "Technológiai kutatás (Tech Research)",
+      "Hősök fejlődése (Hero Growth)",
+      "Háborús előkészület (War Preparation)",
+      "Rajtaütés az ellenségen (Raid the Enemy)"
+    ],
+    kvkPhaseText: [
+      "<b>Megkezdődik a pontgyűjtés.</b> A királyságok a Szövetségi Párbaj, a Démonkirály, az Elixírharc, a Túlélési Csata ranglistái stb. révén versenyeznek Királyságpontokért.",
+      "<b>Pontok összesítése.</b> A több pontot szerző királyság lesz a támadó, a kevesebbet szerző a védő (döntetlen esetén → a szerversorrendben előrébb álló királyság támad).",
+      "A gyűjtési szakasz véget ér. A támadó és a védő szerepe véglegessé válik.",
+      "A támadó átköltözhet a védő királyságába.",
+      "<b>Megszűnik a Királyi Város és a tornyok védelme.</b> Megkezdődik a harci szakasz.",
+      "<b>Királyvárosi Zűrzavar</b> — a fő csataablak. Itt dől el a győztes.",
+      "Az esemény véget ér. A ranglisták véglegesednek, a jutalmakat postán küldik ki, és mindenki visszakerül a saját királyságába."
+    ],
+    tbdEventNames: {
+      undead: "Élőholtak ostroma (Undead Siege)"
+    },
+    taskNames: {
+      "Consume 1 Stamina": "1 energia elhasználása (Consume 1 Stamina)",
+      "Complete Falcon Quest once": "1 sólyomküldetés teljesítése (Complete Falcon Quest once)",
+      "Use 660 Antitoxin": "660 ellenméreg felhasználása (Use 660 Antitoxin)",
+      "Buy a pack containing Diamonds [1 Diamond]": "Gyémántot tartalmazó csomag vásárlása [1 gyémánt] (Buy a pack containing Diamonds [1 Diamond])",
+      "Gather 100 Grain": "100 gabona gyűjtése (Gather 100 Grain)",
+      "Gather 100 Timber": "100 fa gyűjtése (Gather 100 Timber)",
+      "Gather 60 Herbs": "60 gyógynövény gyűjtése (Gather 60 Herbs)",
+      "Consume 1 Raven Fruit": "1 hollógyümölcs elhasználása (Consume 1 Raven Fruit)",
+      "Consume 1 Raven Essence": "1 hollóeszencia elhasználása (Consume 1 Raven Essence)",
+      "Use 1m Construction Speedup": "1 perces építésgyorsító használata (Use 1m Construction Speedup)",
+      "Increase 1 Building Might": "Épület ereje +1 (Increase 1 Building Might)",
+      "Execute 1 UR Covert Operation": "1 UR titkos művelet végrehajtása (Execute 1 UR Covert Operation)",
+      "Dispatch a UR Caravan": "UR karaván küldése (Dispatch a UR Caravan)",
+      "Recruit survivor once": "Túlélő toborzása egyszer (Recruit survivor once)",
+      "Use 1m Research Speedup": "1 perces kutatásgyorsító használata (Use 1m Research Speedup)",
+      "Consume 1 Study Scroll": "1 tanulmányi tekercs elhasználása (Consume 1 Study Scroll)",
+      "Increase 1 Tech Might": "Technológiai erő +1 (Increase 1 Tech Might)",
+      "Recruit heroes once": "Hősök toborzása egyszer (Recruit heroes once)",
+      "Consume 1 UR Hero Shard": "1 UR hősszilánk elhasználása (Consume 1 UR Hero Shard)",
+      "Consume 1 SSR Hero Shard": "1 SSR hősszilánk elhasználása (Consume 1 SSR Hero Shard)",
+      "Consume 1 SR Hero Shard": "1 SR hősszilánk elhasználása (Consume 1 SR Hero Shard)",
+      "Use 1 Skill Badge": "1 képességjelvény használata (Use 1 Skill Badge)",
+      "Use 1m Training Boost": "1 perces kiképzésgyorsító használata (Use 1m Training Boost)",
+      "Use 1m Healing Speedup": "1 perces gyógyításgyorsító használata (Use 1m Healing Speedup)",
+      "For each Lv.1 Raven Gear Chest opened": "1. szintű hollófelszerelés-láda kinyitásáért (For each Lv.1 Raven Gear Chest opened)",
+      "For each Lv.2 Raven Gear Chest opened": "2. szintű hollófelszerelés-láda kinyitásáért (For each Lv.2 Raven Gear Chest opened)",
+      "For each Lv.3 Raven Gear Chest opened": "3. szintű hollófelszerelés-láda kinyitásáért (For each Lv.3 Raven Gear Chest opened)",
+      "For each Lv.4 Raven Gear Chest opened": "4. szintű hollófelszerelés-láda kinyitásáért (For each Lv.4 Raven Gear Chest opened)",
+      "For each Lv.5 Raven Gear Chest opened": "5. szintű hollófelszerelés-láda kinyitásáért (For each Lv.5 Raven Gear Chest opened)",
+      "For each Lv.6 Raven Gear Chest opened": "6. szintű hollófelszerelés-láda kinyitásáért (For each Lv.6 Raven Gear Chest opened)",
+      "For each Lv.7 Raven Gear Chest opened": "7. szintű hollófelszerelés-láda kinyitásáért (For each Lv.7 Raven Gear Chest opened)",
+      "Train 1 Lv.1 soldier": "1 db 1. szintű katona kiképzése (Train 1 Lv.1 soldier)",
+      "Train 1 Lv.2 soldier": "1 db 2. szintű katona kiképzése (Train 1 Lv.2 soldier)",
+      "Train 1 Lv.3 soldier": "1 db 3. szintű katona kiképzése (Train 1 Lv.3 soldier)",
+      "Train 1 Lv.4 soldier": "1 db 4. szintű katona kiképzése (Train 1 Lv.4 soldier)",
+      "Train 1 Lv.5 soldier": "1 db 5. szintű katona kiképzése (Train 1 Lv.5 soldier)",
+      "Train 1 Lv.6 soldier": "1 db 6. szintű katona kiképzése (Train 1 Lv.6 soldier)",
+      "Train 1 Lv.7 soldier": "1 db 7. szintű katona kiképzése (Train 1 Lv.7 soldier)",
+      "Train 1 Lv.8 soldier": "1 db 8. szintű katona kiképzése (Train 1 Lv.8 soldier)",
+      "Train 1 Lv.9 soldier": "1 db 9. szintű katona kiképzése (Train 1 Lv.9 soldier)",
+      "Train 1 Lv.10 soldier": "1 db 10. szintű katona kiképzése (Train 1 Lv.10 soldier)",
+      "For each Lv.1 soldier defeated (specific match)": "Minden legyőzött 1. szintű katonáért (adott csatában) (For each Lv.1 soldier defeated (specific match))",
+      "For each Lv.2 soldier defeated (specific match)": "Minden legyőzött 2. szintű katonáért (adott csatában) (For each Lv.2 soldier defeated (specific match))",
+      "For each Lv.3 soldier defeated (specific match)": "Minden legyőzött 3. szintű katonáért (adott csatában) (For each Lv.3 soldier defeated (specific match))",
+      "For each Lv.4 soldier defeated (specific match)": "Minden legyőzött 4. szintű katonáért (adott csatában) (For each Lv.4 soldier defeated (specific match))",
+      "For each Lv.5 soldier defeated (specific match)": "Minden legyőzött 5. szintű katonáért (adott csatában) (For each Lv.5 soldier defeated (specific match))",
+      "For each Lv.6 soldier defeated (specific match)": "Minden legyőzött 6. szintű katonáért (adott csatában) (For each Lv.6 soldier defeated (specific match))",
+      "For each Lv.7 soldier defeated (specific match)": "Minden legyőzött 7. szintű katonáért (adott csatában) (For each Lv.7 soldier defeated (specific match))",
+      "For each Lv.8 soldier defeated (specific match)": "Minden legyőzött 8. szintű katonáért (adott csatában) (For each Lv.8 soldier defeated (specific match))",
+      "For each Lv.9 soldier defeated (specific match)": "Minden legyőzött 9. szintű katonáért (adott csatában) (For each Lv.9 soldier defeated (specific match))",
+      "For each Lv.10 soldier defeated (specific match)": "Minden legyőzött 10. szintű katonáért (adott csatában) (For each Lv.10 soldier defeated (specific match))",
+      "For each Lv.1 soldier defeated": "Minden legyőzött 1. szintű katonáért (For each Lv.1 soldier defeated)",
+      "For each Lv.2 soldier defeated": "Minden legyőzött 2. szintű katonáért (For each Lv.2 soldier defeated)",
+      "For each Lv.3 soldier defeated": "Minden legyőzött 3. szintű katonáért (For each Lv.3 soldier defeated)",
+      "For each Lv.4 soldier defeated": "Minden legyőzött 4. szintű katonáért (For each Lv.4 soldier defeated)",
+      "For each Lv.5 soldier defeated": "Minden legyőzött 5. szintű katonáért (For each Lv.5 soldier defeated)",
+      "For each Lv.6 soldier defeated": "Minden legyőzött 6. szintű katonáért (For each Lv.6 soldier defeated)",
+      "For each Lv.7 soldier defeated": "Minden legyőzött 7. szintű katonáért (For each Lv.7 soldier defeated)",
+      "For each Lv.8 soldier defeated": "Minden legyőzött 8. szintű katonáért (For each Lv.8 soldier defeated)",
+      "For each Lv.9 soldier defeated": "Minden legyőzött 9. szintű katonáért (For each Lv.9 soldier defeated)",
+      "For each Lv.10 soldier defeated": "Minden legyőzött 10. szintű katonáért (For each Lv.10 soldier defeated)",
+      "For each Lv.1 soldier lost": "Minden elvesztett 1. szintű katonáért (For each Lv.1 soldier lost)",
+      "For each Lv.2 soldier lost": "Minden elvesztett 2. szintű katonáért (For each Lv.2 soldier lost)",
+      "For each Lv.3 soldier lost": "Minden elvesztett 3. szintű katonáért (For each Lv.3 soldier lost)",
+      "For each Lv.4 soldier lost": "Minden elvesztett 4. szintű katonáért (For each Lv.4 soldier lost)",
+      "For each Lv.5 soldier lost": "Minden elvesztett 5. szintű katonáért (For each Lv.5 soldier lost)",
+      "For each Lv.6 soldier lost": "Minden elvesztett 6. szintű katonáért (For each Lv.6 soldier lost)",
+      "For each Lv.7 soldier lost": "Minden elvesztett 7. szintű katonáért (For each Lv.7 soldier lost)",
+      "For each Lv.8 soldier lost": "Minden elvesztett 8. szintű katonáért (For each Lv.8 soldier lost)",
+      "For each Lv.9 soldier lost": "Minden elvesztett 9. szintű katonáért (For each Lv.9 soldier lost)",
+      "For each Lv.10 soldier lost": "Minden elvesztett 10. szintű katonáért (For each Lv.10 soldier lost)"
+    }
+  },
+  uk: {
+    // TRANSCRIBED, NOT VERIFIED. Ukrainian has no official game client, so
+    // there is no in-game string to match. These are plain translations of
+    // the English originals, provided so players who aren't confident in
+    // English can follow along. Every value keeps the English original in
+    // parentheses, because every user of this language is necessarily on a
+    // foreign client — most likely English — and needs it to match against.
+    // Do NOT promote these to "confirmed": if a client ever ships, replace
+    // them wholesale from screenshots.
+    transcribed: true,
+    sbObjectives: {
+      "Build Territory": "Розвиток володінь (Build Territory)",
+      "Train Soldiers": "Навчання військ (Train Soldiers)",
+      "Technology Research": "Дослідження технологій (Technology Research)",
+      "Enhance Raven": "Посилення крука (Enhance Raven)",
+      "Enhance Heroes": "Посилення героїв (Enhance Heroes)"
+    },
+    duelFocus: [
+      "Посилення крука (Enhance Raven)",
+      "Розвиток володінь (Territory Development)",
+      "Дослідження технологій (Tech Research)",
+      "Розвиток героїв (Hero Growth)",
+      "Підготовка до війни (War Preparation)",
+      "Рейд на ворога (Raid the Enemy)"
+    ],
+    kvkPhaseText: [
+      "<b>Починається накопичення очок.</b> Королівства змагаються через Дуель альянсів, Короля Демонів, Гонку за еліксиром, рейтинги Битви на виживання тощо, щоб заробити Очки королівства.",
+      "<b>Підрахунок очок.</b> Королівство з найбільшою кількістю очок стає нападником, з найменшою — захисником (за нічиєї → нападає королівство, що йде раніше в порядку серверів).",
+      "Фаза накопичення завершується. Ролі нападника й захисника зафіксовано.",
+      "Нападник може переселитися до королівства захисника.",
+      "<b>Спадає захист Королівського міста та веж.</b> Починається фаза боротьби.",
+      "<b>Королівський переполох</b> — основне вікно битви. Саме тут визначається переможець.",
+      "Подія завершується. Рейтинги фіксуються, нагороди надсилаються поштою, і всі повертаються до свого рідного королівства."
+    ],
+    tbdEventNames: {
+      undead: "Облога нежиті (Undead Siege)"
+    },
+    taskNames: {
+      "Consume 1 Stamina": "Витратити 1 енергію (Consume 1 Stamina)",
+      "Complete Falcon Quest once": "Виконати 1 завдання сокола (Complete Falcon Quest once)",
+      "Use 660 Antitoxin": "Використати 660 протиотрути (Use 660 Antitoxin)",
+      "Buy a pack containing Diamonds [1 Diamond]": "Купити набір, що містить алмази [1 алмаз] (Buy a pack containing Diamonds [1 Diamond])",
+      "Gather 100 Grain": "Зібрати 100 зерна (Gather 100 Grain)",
+      "Gather 100 Timber": "Зібрати 100 деревини (Gather 100 Timber)",
+      "Gather 60 Herbs": "Зібрати 60 трав (Gather 60 Herbs)",
+      "Consume 1 Raven Fruit": "Витратити 1 воронячий плід (Consume 1 Raven Fruit)",
+      "Consume 1 Raven Essence": "Витратити 1 воронячу есенцію (Consume 1 Raven Essence)",
+      "Use 1m Construction Speedup": "Використати прискорення будівництва (1 хв) (Use 1m Construction Speedup)",
+      "Increase 1 Building Might": "Підвищити міць будівлі на 1 (Increase 1 Building Might)",
+      "Execute 1 UR Covert Operation": "Провести 1 секретну операцію UR (Execute 1 UR Covert Operation)",
+      "Dispatch a UR Caravan": "Відправити UR караван (Dispatch a UR Caravan)",
+      "Recruit survivor once": "Найняти вцілілого один раз (Recruit survivor once)",
+      "Use 1m Research Speedup": "Використати прискорення досліджень (1 хв) (Use 1m Research Speedup)",
+      "Consume 1 Study Scroll": "Використати 1 сувій навчання (Consume 1 Study Scroll)",
+      "Increase 1 Tech Might": "Підвищити технологічну міць на 1 (Increase 1 Tech Might)",
+      "Recruit heroes once": "Найняти героїв один раз (Recruit heroes once)",
+      "Consume 1 UR Hero Shard": "Витратити 1 фрагмент UR героя (Consume 1 UR Hero Shard)",
+      "Consume 1 SSR Hero Shard": "Витратити 1 фрагмент SSR героя (Consume 1 SSR Hero Shard)",
+      "Consume 1 SR Hero Shard": "Витратити 1 фрагмент SR героя (Consume 1 SR Hero Shard)",
+      "Use 1 Skill Badge": "Використати 1 значок навички (Use 1 Skill Badge)",
+      "Use 1m Training Boost": "Використати прискорення тренування (1 хв) (Use 1m Training Boost)",
+      "Use 1m Healing Speedup": "Використати прискорення лікування (1 хв) (Use 1m Healing Speedup)",
+      "For each Lv.1 Raven Gear Chest opened": "За кожну відкриту скриню спорядження крука рів. 1 (For each Lv.1 Raven Gear Chest opened)",
+      "For each Lv.2 Raven Gear Chest opened": "За кожну відкриту скриню спорядження крука рів. 2 (For each Lv.2 Raven Gear Chest opened)",
+      "For each Lv.3 Raven Gear Chest opened": "За кожну відкриту скриню спорядження крука рів. 3 (For each Lv.3 Raven Gear Chest opened)",
+      "For each Lv.4 Raven Gear Chest opened": "За кожну відкриту скриню спорядження крука рів. 4 (For each Lv.4 Raven Gear Chest opened)",
+      "For each Lv.5 Raven Gear Chest opened": "За кожну відкриту скриню спорядження крука рів. 5 (For each Lv.5 Raven Gear Chest opened)",
+      "For each Lv.6 Raven Gear Chest opened": "За кожну відкриту скриню спорядження крука рів. 6 (For each Lv.6 Raven Gear Chest opened)",
+      "For each Lv.7 Raven Gear Chest opened": "За кожну відкриту скриню спорядження крука рів. 7 (For each Lv.7 Raven Gear Chest opened)",
+      "Train 1 Lv.1 soldier": "Навчити 1 солдата рів. 1 (Train 1 Lv.1 soldier)",
+      "Train 1 Lv.2 soldier": "Навчити 1 солдата рів. 2 (Train 1 Lv.2 soldier)",
+      "Train 1 Lv.3 soldier": "Навчити 1 солдата рів. 3 (Train 1 Lv.3 soldier)",
+      "Train 1 Lv.4 soldier": "Навчити 1 солдата рів. 4 (Train 1 Lv.4 soldier)",
+      "Train 1 Lv.5 soldier": "Навчити 1 солдата рів. 5 (Train 1 Lv.5 soldier)",
+      "Train 1 Lv.6 soldier": "Навчити 1 солдата рів. 6 (Train 1 Lv.6 soldier)",
+      "Train 1 Lv.7 soldier": "Навчити 1 солдата рів. 7 (Train 1 Lv.7 soldier)",
+      "Train 1 Lv.8 soldier": "Навчити 1 солдата рів. 8 (Train 1 Lv.8 soldier)",
+      "Train 1 Lv.9 soldier": "Навчити 1 солдата рів. 9 (Train 1 Lv.9 soldier)",
+      "Train 1 Lv.10 soldier": "Навчити 1 солдата рів. 10 (Train 1 Lv.10 soldier)",
+      "For each Lv.1 soldier defeated (specific match)": "За кожного переможеного солдата рів. 1 (у певному бою) (For each Lv.1 soldier defeated (specific match))",
+      "For each Lv.2 soldier defeated (specific match)": "За кожного переможеного солдата рів. 2 (у певному бою) (For each Lv.2 soldier defeated (specific match))",
+      "For each Lv.3 soldier defeated (specific match)": "За кожного переможеного солдата рів. 3 (у певному бою) (For each Lv.3 soldier defeated (specific match))",
+      "For each Lv.4 soldier defeated (specific match)": "За кожного переможеного солдата рів. 4 (у певному бою) (For each Lv.4 soldier defeated (specific match))",
+      "For each Lv.5 soldier defeated (specific match)": "За кожного переможеного солдата рів. 5 (у певному бою) (For each Lv.5 soldier defeated (specific match))",
+      "For each Lv.6 soldier defeated (specific match)": "За кожного переможеного солдата рів. 6 (у певному бою) (For each Lv.6 soldier defeated (specific match))",
+      "For each Lv.7 soldier defeated (specific match)": "За кожного переможеного солдата рів. 7 (у певному бою) (For each Lv.7 soldier defeated (specific match))",
+      "For each Lv.8 soldier defeated (specific match)": "За кожного переможеного солдата рів. 8 (у певному бою) (For each Lv.8 soldier defeated (specific match))",
+      "For each Lv.9 soldier defeated (specific match)": "За кожного переможеного солдата рів. 9 (у певному бою) (For each Lv.9 soldier defeated (specific match))",
+      "For each Lv.10 soldier defeated (specific match)": "За кожного переможеного солдата рів. 10 (у певному бою) (For each Lv.10 soldier defeated (specific match))",
+      "For each Lv.1 soldier defeated": "За кожного переможеного солдата рів. 1 (For each Lv.1 soldier defeated)",
+      "For each Lv.2 soldier defeated": "За кожного переможеного солдата рів. 2 (For each Lv.2 soldier defeated)",
+      "For each Lv.3 soldier defeated": "За кожного переможеного солдата рів. 3 (For each Lv.3 soldier defeated)",
+      "For each Lv.4 soldier defeated": "За кожного переможеного солдата рів. 4 (For each Lv.4 soldier defeated)",
+      "For each Lv.5 soldier defeated": "За кожного переможеного солдата рів. 5 (For each Lv.5 soldier defeated)",
+      "For each Lv.6 soldier defeated": "За кожного переможеного солдата рів. 6 (For each Lv.6 soldier defeated)",
+      "For each Lv.7 soldier defeated": "За кожного переможеного солдата рів. 7 (For each Lv.7 soldier defeated)",
+      "For each Lv.8 soldier defeated": "За кожного переможеного солдата рів. 8 (For each Lv.8 soldier defeated)",
+      "For each Lv.9 soldier defeated": "За кожного переможеного солдата рів. 9 (For each Lv.9 soldier defeated)",
+      "For each Lv.10 soldier defeated": "За кожного переможеного солдата рів. 10 (For each Lv.10 soldier defeated)",
+      "For each Lv.1 soldier lost": "За кожного втраченого солдата рів. 1 (For each Lv.1 soldier lost)",
+      "For each Lv.2 soldier lost": "За кожного втраченого солдата рів. 2 (For each Lv.2 soldier lost)",
+      "For each Lv.3 soldier lost": "За кожного втраченого солдата рів. 3 (For each Lv.3 soldier lost)",
+      "For each Lv.4 soldier lost": "За кожного втраченого солдата рів. 4 (For each Lv.4 soldier lost)",
+      "For each Lv.5 soldier lost": "За кожного втраченого солдата рів. 5 (For each Lv.5 soldier lost)",
+      "For each Lv.6 soldier lost": "За кожного втраченого солдата рів. 6 (For each Lv.6 soldier lost)",
+      "For each Lv.7 soldier lost": "За кожного втраченого солдата рів. 7 (For each Lv.7 soldier lost)",
+      "For each Lv.8 soldier lost": "За кожного втраченого солдата рів. 8 (For each Lv.8 soldier lost)",
+      "For each Lv.9 soldier lost": "За кожного втраченого солдата рів. 9 (For each Lv.9 soldier lost)",
+      "For each Lv.10 soldier lost": "За кожного втраченого солдата рів. 10 (For each Lv.10 soldier lost)"
+    }
+  },
+  fi: {
+    // TRANSCRIBED, NOT VERIFIED. Finnish has no official game client, so
+    // there is no in-game string to match. These are plain translations of
+    // the English originals, provided so players who aren't confident in
+    // English can follow along. Every value keeps the English original in
+    // parentheses, because every user of this language is necessarily on a
+    // foreign client — most likely English — and needs it to match against.
+    // Do NOT promote these to "confirmed": if a client ever ships, replace
+    // them wholesale from screenshots.
+    transcribed: true,
+    sbObjectives: {
+      "Build Territory": "Alueen kehittäminen (Build Territory)",
+      "Train Soldiers": "Sotilaiden kouluttaminen (Train Soldiers)",
+      "Technology Research": "Teknologiatutkimus (Technology Research)",
+      "Enhance Raven": "Korpin vahvistaminen (Enhance Raven)",
+      "Enhance Heroes": "Sankarien vahvistaminen (Enhance Heroes)"
+    },
+    duelFocus: [
+      "Korpin vahvistaminen (Enhance Raven)",
+      "Alueen kehittäminen (Territory Development)",
+      "Teknologiatutkimus (Tech Research)",
+      "Sankarien kasvu (Hero Growth)",
+      "Sotavalmistelu (War Preparation)",
+      "Hyökkäys viholliseen (Raid the Enemy)"
+    ],
+    kvkPhaseText: [
+      "<b>Pisteiden keruu alkaa.</b> Valtakunnat kilpailevat Liittokaksintaistelun, Demonikuninkaan, Eliksiirikilvan, Selviytymistaistelun sijoitusten ym. kautta ansaitakseen valtakuntapisteitä.",
+      "<b>Pisteet lasketaan.</b> Eniten pisteitä saanut valtakunta on hyökkääjä ja vähiten saanut puolustaja (tasatilanteessa → hyökkää se valtakunta, joka on palvelinjärjestyksessä aiemmin).",
+      "Keruuvaihe päättyy. Hyökkääjän ja puolustajan roolit lyödään lukkoon.",
+      "Hyökkääjä voi siirtyä puolustajan valtakuntaan.",
+      "<b>Kuninkaankaupungin ja tornien suoja katoaa.</b> Taisteluvaihe alkaa.",
+      "<b>Kuninkaankaupungin kahakka</b> — pääasiallinen taisteluikkuna. Voittaja ratkeaa täällä.",
+      "Tapahtuma päättyy. Sijoitukset lyödään lukkoon, palkinnot lähetetään postitse, ja kaikki siirretään takaisin omaan valtakuntaansa."
+    ],
+    tbdEventNames: {
+      undead: "Epäkuolleiden piiritys (Undead Siege)"
+    },
+    taskNames: {
+      "Consume 1 Stamina": "Kuluta 1 kestävyyttä (Consume 1 Stamina)",
+      "Complete Falcon Quest once": "Suorita haukkatehtävä kerran (Complete Falcon Quest once)",
+      "Use 660 Antitoxin": "Käytä 660 vastamyrkkyä (Use 660 Antitoxin)",
+      "Buy a pack containing Diamonds [1 Diamond]": "Osta timantteja sisältävä paketti [1 timantti] (Buy a pack containing Diamonds [1 Diamond])",
+      "Gather 100 Grain": "Kerää 100 viljaa (Gather 100 Grain)",
+      "Gather 100 Timber": "Kerää 100 puuta (Gather 100 Timber)",
+      "Gather 60 Herbs": "Kerää 60 yrttiä (Gather 60 Herbs)",
+      "Consume 1 Raven Fruit": "Kuluta 1 korpinhedelmä (Consume 1 Raven Fruit)",
+      "Consume 1 Raven Essence": "Kuluta 1 korpinesanssi (Consume 1 Raven Essence)",
+      "Use 1m Construction Speedup": "Käytä 1 min rakennusnopeutinta (Use 1m Construction Speedup)",
+      "Increase 1 Building Might": "Kasvata rakennusvoimaa 1:llä (Increase 1 Building Might)",
+      "Execute 1 UR Covert Operation": "Suorita 1 UR-salaoperaatio (Execute 1 UR Covert Operation)",
+      "Dispatch a UR Caravan": "Lähetä UR-karavaani (Dispatch a UR Caravan)",
+      "Recruit survivor once": "Värvää selviytyjä kerran (Recruit survivor once)",
+      "Use 1m Research Speedup": "Käytä 1 min tutkimusnopeutinta (Use 1m Research Speedup)",
+      "Consume 1 Study Scroll": "Kuluta 1 opiskelukäärö (Consume 1 Study Scroll)",
+      "Increase 1 Tech Might": "Kasvata teknologiavoimaa 1:llä (Increase 1 Tech Might)",
+      "Recruit heroes once": "Värvää sankareita kerran (Recruit heroes once)",
+      "Consume 1 UR Hero Shard": "Kuluta 1 UR-sankarinsiru (Consume 1 UR Hero Shard)",
+      "Consume 1 SSR Hero Shard": "Kuluta 1 SSR-sankarinsiru (Consume 1 SSR Hero Shard)",
+      "Consume 1 SR Hero Shard": "Kuluta 1 SR-sankarinsiru (Consume 1 SR Hero Shard)",
+      "Use 1 Skill Badge": "Käytä 1 taitomerkki (Use 1 Skill Badge)",
+      "Use 1m Training Boost": "Käytä 1 min koulutusnopeutinta (Use 1m Training Boost)",
+      "Use 1m Healing Speedup": "Käytä 1 min parannusnopeutinta (Use 1m Healing Speedup)",
+      "For each Lv.1 Raven Gear Chest opened": "Jokaisesta avatusta tason 1 korpinvarustearkusta (For each Lv.1 Raven Gear Chest opened)",
+      "For each Lv.2 Raven Gear Chest opened": "Jokaisesta avatusta tason 2 korpinvarustearkusta (For each Lv.2 Raven Gear Chest opened)",
+      "For each Lv.3 Raven Gear Chest opened": "Jokaisesta avatusta tason 3 korpinvarustearkusta (For each Lv.3 Raven Gear Chest opened)",
+      "For each Lv.4 Raven Gear Chest opened": "Jokaisesta avatusta tason 4 korpinvarustearkusta (For each Lv.4 Raven Gear Chest opened)",
+      "For each Lv.5 Raven Gear Chest opened": "Jokaisesta avatusta tason 5 korpinvarustearkusta (For each Lv.5 Raven Gear Chest opened)",
+      "For each Lv.6 Raven Gear Chest opened": "Jokaisesta avatusta tason 6 korpinvarustearkusta (For each Lv.6 Raven Gear Chest opened)",
+      "For each Lv.7 Raven Gear Chest opened": "Jokaisesta avatusta tason 7 korpinvarustearkusta (For each Lv.7 Raven Gear Chest opened)",
+      "Train 1 Lv.1 soldier": "Kouluta 1 tason 1 sotilas (Train 1 Lv.1 soldier)",
+      "Train 1 Lv.2 soldier": "Kouluta 1 tason 2 sotilas (Train 1 Lv.2 soldier)",
+      "Train 1 Lv.3 soldier": "Kouluta 1 tason 3 sotilas (Train 1 Lv.3 soldier)",
+      "Train 1 Lv.4 soldier": "Kouluta 1 tason 4 sotilas (Train 1 Lv.4 soldier)",
+      "Train 1 Lv.5 soldier": "Kouluta 1 tason 5 sotilas (Train 1 Lv.5 soldier)",
+      "Train 1 Lv.6 soldier": "Kouluta 1 tason 6 sotilas (Train 1 Lv.6 soldier)",
+      "Train 1 Lv.7 soldier": "Kouluta 1 tason 7 sotilas (Train 1 Lv.7 soldier)",
+      "Train 1 Lv.8 soldier": "Kouluta 1 tason 8 sotilas (Train 1 Lv.8 soldier)",
+      "Train 1 Lv.9 soldier": "Kouluta 1 tason 9 sotilas (Train 1 Lv.9 soldier)",
+      "Train 1 Lv.10 soldier": "Kouluta 1 tason 10 sotilas (Train 1 Lv.10 soldier)",
+      "For each Lv.1 soldier defeated (specific match)": "Jokaisesta kukistetusta tason 1 sotilaasta (tietyssä ottelussa) (For each Lv.1 soldier defeated (specific match))",
+      "For each Lv.2 soldier defeated (specific match)": "Jokaisesta kukistetusta tason 2 sotilaasta (tietyssä ottelussa) (For each Lv.2 soldier defeated (specific match))",
+      "For each Lv.3 soldier defeated (specific match)": "Jokaisesta kukistetusta tason 3 sotilaasta (tietyssä ottelussa) (For each Lv.3 soldier defeated (specific match))",
+      "For each Lv.4 soldier defeated (specific match)": "Jokaisesta kukistetusta tason 4 sotilaasta (tietyssä ottelussa) (For each Lv.4 soldier defeated (specific match))",
+      "For each Lv.5 soldier defeated (specific match)": "Jokaisesta kukistetusta tason 5 sotilaasta (tietyssä ottelussa) (For each Lv.5 soldier defeated (specific match))",
+      "For each Lv.6 soldier defeated (specific match)": "Jokaisesta kukistetusta tason 6 sotilaasta (tietyssä ottelussa) (For each Lv.6 soldier defeated (specific match))",
+      "For each Lv.7 soldier defeated (specific match)": "Jokaisesta kukistetusta tason 7 sotilaasta (tietyssä ottelussa) (For each Lv.7 soldier defeated (specific match))",
+      "For each Lv.8 soldier defeated (specific match)": "Jokaisesta kukistetusta tason 8 sotilaasta (tietyssä ottelussa) (For each Lv.8 soldier defeated (specific match))",
+      "For each Lv.9 soldier defeated (specific match)": "Jokaisesta kukistetusta tason 9 sotilaasta (tietyssä ottelussa) (For each Lv.9 soldier defeated (specific match))",
+      "For each Lv.10 soldier defeated (specific match)": "Jokaisesta kukistetusta tason 10 sotilaasta (tietyssä ottelussa) (For each Lv.10 soldier defeated (specific match))",
+      "For each Lv.1 soldier defeated": "Jokaisesta kukistetusta tason 1 sotilaasta (For each Lv.1 soldier defeated)",
+      "For each Lv.2 soldier defeated": "Jokaisesta kukistetusta tason 2 sotilaasta (For each Lv.2 soldier defeated)",
+      "For each Lv.3 soldier defeated": "Jokaisesta kukistetusta tason 3 sotilaasta (For each Lv.3 soldier defeated)",
+      "For each Lv.4 soldier defeated": "Jokaisesta kukistetusta tason 4 sotilaasta (For each Lv.4 soldier defeated)",
+      "For each Lv.5 soldier defeated": "Jokaisesta kukistetusta tason 5 sotilaasta (For each Lv.5 soldier defeated)",
+      "For each Lv.6 soldier defeated": "Jokaisesta kukistetusta tason 6 sotilaasta (For each Lv.6 soldier defeated)",
+      "For each Lv.7 soldier defeated": "Jokaisesta kukistetusta tason 7 sotilaasta (For each Lv.7 soldier defeated)",
+      "For each Lv.8 soldier defeated": "Jokaisesta kukistetusta tason 8 sotilaasta (For each Lv.8 soldier defeated)",
+      "For each Lv.9 soldier defeated": "Jokaisesta kukistetusta tason 9 sotilaasta (For each Lv.9 soldier defeated)",
+      "For each Lv.10 soldier defeated": "Jokaisesta kukistetusta tason 10 sotilaasta (For each Lv.10 soldier defeated)",
+      "For each Lv.1 soldier lost": "Jokaisesta menetetystä tason 1 sotilaasta (For each Lv.1 soldier lost)",
+      "For each Lv.2 soldier lost": "Jokaisesta menetetystä tason 2 sotilaasta (For each Lv.2 soldier lost)",
+      "For each Lv.3 soldier lost": "Jokaisesta menetetystä tason 3 sotilaasta (For each Lv.3 soldier lost)",
+      "For each Lv.4 soldier lost": "Jokaisesta menetetystä tason 4 sotilaasta (For each Lv.4 soldier lost)",
+      "For each Lv.5 soldier lost": "Jokaisesta menetetystä tason 5 sotilaasta (For each Lv.5 soldier lost)",
+      "For each Lv.6 soldier lost": "Jokaisesta menetetystä tason 6 sotilaasta (For each Lv.6 soldier lost)",
+      "For each Lv.7 soldier lost": "Jokaisesta menetetystä tason 7 sotilaasta (For each Lv.7 soldier lost)",
+      "For each Lv.8 soldier lost": "Jokaisesta menetetystä tason 8 sotilaasta (For each Lv.8 soldier lost)",
+      "For each Lv.9 soldier lost": "Jokaisesta menetetystä tason 9 sotilaasta (For each Lv.9 soldier lost)",
+      "For each Lv.10 soldier lost": "Jokaisesta menetetystä tason 10 sotilaasta (For each Lv.10 soldier lost)"
+    }
+  },
+  et: {
+    // TRANSCRIBED, NOT VERIFIED. Estonian has no official game client, so
+    // there is no in-game string to match. These are plain translations of
+    // the English originals, provided so players who aren't confident in
+    // English can follow along. Every value keeps the English original in
+    // parentheses, because every user of this language is necessarily on a
+    // foreign client — most likely English — and needs it to match against.
+    // Do NOT promote these to "confirmed": if a client ever ships, replace
+    // them wholesale from screenshots.
+    transcribed: true,
+    sbObjectives: {
+      "Build Territory": "Territooriumi arendamine (Build Territory)",
+      "Train Soldiers": "Sõdurite väljaõpe (Train Soldiers)",
+      "Technology Research": "Tehnoloogiauuringud (Technology Research)",
+      "Enhance Raven": "Ronga tugevdamine (Enhance Raven)",
+      "Enhance Heroes": "Kangelaste tugevdamine (Enhance Heroes)"
+    },
+    duelFocus: [
+      "Ronga tugevdamine (Enhance Raven)",
+      "Territooriumi arendamine (Territory Development)",
+      "Tehnoloogiauuringud (Tech Research)",
+      "Kangelaste kasv (Hero Growth)",
+      "Sõjaks valmistumine (War Preparation)",
+      "Rünnak vaenlasele (Raid the Enemy)"
+    ],
+    kvkPhaseText: [
+      "<b>Algab punktide kogumine.</b> Kuningriigid võistlevad Liidu duelli, Deemonikuninga, Eliksiirivõidujooksu, Ellujäämislahingu edetabelite jms kaudu, et teenida kuningriigi punkte.",
+      "<b>Punktide kokkulugemine.</b> Enim punkte saanud kuningriik saab ründajaks ja vähim saanud kaitsjaks (viigi korral → ründab serverijärjestuses eespool olev kuningriik).",
+      "Kogumisfaas lõpeb. Ründaja ja kaitsja rollid on paigas.",
+      "Ründaja saab ümber asuda kaitsja kuningriiki.",
+      "<b>Kuningalinna ja tornide kaitse langeb.</b> Algab lahingufaas.",
+      "<b>Kuningalinna rüselus</b> — peamine lahinguaken. Siin selgub võitja.",
+      "Sündmus lõpeb. Edetabelid fikseeritakse, auhinnad saadetakse postiga ja kõik viiakse tagasi oma kuningriiki."
+    ],
+    tbdEventNames: {
+      undead: "Kooljate piiramine (Undead Siege)"
+    },
+    taskNames: {
+      "Consume 1 Stamina": "Kuluta 1 vastupidavust (Consume 1 Stamina)",
+      "Complete Falcon Quest once": "Täida kullimissioon üks kord (Complete Falcon Quest once)",
+      "Use 660 Antitoxin": "Kasuta 660 vastumürki (Use 660 Antitoxin)",
+      "Buy a pack containing Diamonds [1 Diamond]": "Osta teemante sisaldav pakk [1 teemant] (Buy a pack containing Diamonds [1 Diamond])",
+      "Gather 100 Grain": "Kogu 100 vilja (Gather 100 Grain)",
+      "Gather 100 Timber": "Kogu 100 puitu (Gather 100 Timber)",
+      "Gather 60 Herbs": "Kogu 60 ravimtaime (Gather 60 Herbs)",
+      "Consume 1 Raven Fruit": "Kuluta 1 ronga vili (Consume 1 Raven Fruit)",
+      "Consume 1 Raven Essence": "Kuluta 1 ronga essents (Consume 1 Raven Essence)",
+      "Use 1m Construction Speedup": "Kasuta 1 min ehituskiirendit (Use 1m Construction Speedup)",
+      "Increase 1 Building Might": "Suurenda hoone võimsust 1 võrra (Increase 1 Building Might)",
+      "Execute 1 UR Covert Operation": "Vii läbi 1 UR-salaoperatsioon (Execute 1 UR Covert Operation)",
+      "Dispatch a UR Caravan": "Saada UR-karavan (Dispatch a UR Caravan)",
+      "Recruit survivor once": "Värba ellujäänu üks kord (Recruit survivor once)",
+      "Use 1m Research Speedup": "Kasuta 1 min uuringukiirendit (Use 1m Research Speedup)",
+      "Consume 1 Study Scroll": "Kuluta 1 õpperull (Consume 1 Study Scroll)",
+      "Increase 1 Tech Might": "Suurenda tehnoloogia võimsust 1 võrra (Increase 1 Tech Might)",
+      "Recruit heroes once": "Värba kangelasi üks kord (Recruit heroes once)",
+      "Consume 1 UR Hero Shard": "Kuluta 1 UR-kangelase kild (Consume 1 UR Hero Shard)",
+      "Consume 1 SSR Hero Shard": "Kuluta 1 SSR-kangelase kild (Consume 1 SSR Hero Shard)",
+      "Consume 1 SR Hero Shard": "Kuluta 1 SR-kangelase kild (Consume 1 SR Hero Shard)",
+      "Use 1 Skill Badge": "Kasuta 1 oskusmärki (Use 1 Skill Badge)",
+      "Use 1m Training Boost": "Kasuta 1 min treeningukiirendit (Use 1m Training Boost)",
+      "Use 1m Healing Speedup": "Kasuta 1 min ravikiirendit (Use 1m Healing Speedup)",
+      "For each Lv.1 Raven Gear Chest opened": "Iga avatud 1. taseme ronga varustuskirstu eest (For each Lv.1 Raven Gear Chest opened)",
+      "For each Lv.2 Raven Gear Chest opened": "Iga avatud 2. taseme ronga varustuskirstu eest (For each Lv.2 Raven Gear Chest opened)",
+      "For each Lv.3 Raven Gear Chest opened": "Iga avatud 3. taseme ronga varustuskirstu eest (For each Lv.3 Raven Gear Chest opened)",
+      "For each Lv.4 Raven Gear Chest opened": "Iga avatud 4. taseme ronga varustuskirstu eest (For each Lv.4 Raven Gear Chest opened)",
+      "For each Lv.5 Raven Gear Chest opened": "Iga avatud 5. taseme ronga varustuskirstu eest (For each Lv.5 Raven Gear Chest opened)",
+      "For each Lv.6 Raven Gear Chest opened": "Iga avatud 6. taseme ronga varustuskirstu eest (For each Lv.6 Raven Gear Chest opened)",
+      "For each Lv.7 Raven Gear Chest opened": "Iga avatud 7. taseme ronga varustuskirstu eest (For each Lv.7 Raven Gear Chest opened)",
+      "Train 1 Lv.1 soldier": "Treeni 1 1. taseme sõdur (Train 1 Lv.1 soldier)",
+      "Train 1 Lv.2 soldier": "Treeni 1 2. taseme sõdur (Train 1 Lv.2 soldier)",
+      "Train 1 Lv.3 soldier": "Treeni 1 3. taseme sõdur (Train 1 Lv.3 soldier)",
+      "Train 1 Lv.4 soldier": "Treeni 1 4. taseme sõdur (Train 1 Lv.4 soldier)",
+      "Train 1 Lv.5 soldier": "Treeni 1 5. taseme sõdur (Train 1 Lv.5 soldier)",
+      "Train 1 Lv.6 soldier": "Treeni 1 6. taseme sõdur (Train 1 Lv.6 soldier)",
+      "Train 1 Lv.7 soldier": "Treeni 1 7. taseme sõdur (Train 1 Lv.7 soldier)",
+      "Train 1 Lv.8 soldier": "Treeni 1 8. taseme sõdur (Train 1 Lv.8 soldier)",
+      "Train 1 Lv.9 soldier": "Treeni 1 9. taseme sõdur (Train 1 Lv.9 soldier)",
+      "Train 1 Lv.10 soldier": "Treeni 1 10. taseme sõdur (Train 1 Lv.10 soldier)",
+      "For each Lv.1 soldier defeated (specific match)": "Iga alistatud 1. taseme sõduri eest (kindlas lahingus) (For each Lv.1 soldier defeated (specific match))",
+      "For each Lv.2 soldier defeated (specific match)": "Iga alistatud 2. taseme sõduri eest (kindlas lahingus) (For each Lv.2 soldier defeated (specific match))",
+      "For each Lv.3 soldier defeated (specific match)": "Iga alistatud 3. taseme sõduri eest (kindlas lahingus) (For each Lv.3 soldier defeated (specific match))",
+      "For each Lv.4 soldier defeated (specific match)": "Iga alistatud 4. taseme sõduri eest (kindlas lahingus) (For each Lv.4 soldier defeated (specific match))",
+      "For each Lv.5 soldier defeated (specific match)": "Iga alistatud 5. taseme sõduri eest (kindlas lahingus) (For each Lv.5 soldier defeated (specific match))",
+      "For each Lv.6 soldier defeated (specific match)": "Iga alistatud 6. taseme sõduri eest (kindlas lahingus) (For each Lv.6 soldier defeated (specific match))",
+      "For each Lv.7 soldier defeated (specific match)": "Iga alistatud 7. taseme sõduri eest (kindlas lahingus) (For each Lv.7 soldier defeated (specific match))",
+      "For each Lv.8 soldier defeated (specific match)": "Iga alistatud 8. taseme sõduri eest (kindlas lahingus) (For each Lv.8 soldier defeated (specific match))",
+      "For each Lv.9 soldier defeated (specific match)": "Iga alistatud 9. taseme sõduri eest (kindlas lahingus) (For each Lv.9 soldier defeated (specific match))",
+      "For each Lv.10 soldier defeated (specific match)": "Iga alistatud 10. taseme sõduri eest (kindlas lahingus) (For each Lv.10 soldier defeated (specific match))",
+      "For each Lv.1 soldier defeated": "Iga alistatud 1. taseme sõduri eest (For each Lv.1 soldier defeated)",
+      "For each Lv.2 soldier defeated": "Iga alistatud 2. taseme sõduri eest (For each Lv.2 soldier defeated)",
+      "For each Lv.3 soldier defeated": "Iga alistatud 3. taseme sõduri eest (For each Lv.3 soldier defeated)",
+      "For each Lv.4 soldier defeated": "Iga alistatud 4. taseme sõduri eest (For each Lv.4 soldier defeated)",
+      "For each Lv.5 soldier defeated": "Iga alistatud 5. taseme sõduri eest (For each Lv.5 soldier defeated)",
+      "For each Lv.6 soldier defeated": "Iga alistatud 6. taseme sõduri eest (For each Lv.6 soldier defeated)",
+      "For each Lv.7 soldier defeated": "Iga alistatud 7. taseme sõduri eest (For each Lv.7 soldier defeated)",
+      "For each Lv.8 soldier defeated": "Iga alistatud 8. taseme sõduri eest (For each Lv.8 soldier defeated)",
+      "For each Lv.9 soldier defeated": "Iga alistatud 9. taseme sõduri eest (For each Lv.9 soldier defeated)",
+      "For each Lv.10 soldier defeated": "Iga alistatud 10. taseme sõduri eest (For each Lv.10 soldier defeated)",
+      "For each Lv.1 soldier lost": "Iga kaotatud 1. taseme sõduri eest (For each Lv.1 soldier lost)",
+      "For each Lv.2 soldier lost": "Iga kaotatud 2. taseme sõduri eest (For each Lv.2 soldier lost)",
+      "For each Lv.3 soldier lost": "Iga kaotatud 3. taseme sõduri eest (For each Lv.3 soldier lost)",
+      "For each Lv.4 soldier lost": "Iga kaotatud 4. taseme sõduri eest (For each Lv.4 soldier lost)",
+      "For each Lv.5 soldier lost": "Iga kaotatud 5. taseme sõduri eest (For each Lv.5 soldier lost)",
+      "For each Lv.6 soldier lost": "Iga kaotatud 6. taseme sõduri eest (For each Lv.6 soldier lost)",
+      "For each Lv.7 soldier lost": "Iga kaotatud 7. taseme sõduri eest (For each Lv.7 soldier lost)",
+      "For each Lv.8 soldier lost": "Iga kaotatud 8. taseme sõduri eest (For each Lv.8 soldier lost)",
+      "For each Lv.9 soldier lost": "Iga kaotatud 9. taseme sõduri eest (For each Lv.9 soldier lost)",
+      "For each Lv.10 soldier lost": "Iga kaotatud 10. taseme sõduri eest (For each Lv.10 soldier lost)"
+    }
+  },
+  ru: {
+    // ALL FIVE CONFIRMED from the in-game Календарь screen (День 4
+    // rotation, 2026-07-29). All nominal here. Raven is localised to
+    // "ворон" ("ворона" in the genitive).
+    // NOTE: the live event panel header shortens Technology Research to
+    // just "Технологии"; the Календарь form is used here because this
+    // section is a schedule table.
+    sbObjectives: {
+      "Build Territory": "Развитие владений",
+      "Train Soldiers": "Обучение войск",
+      "Technology Research": "Исследование технологий",
+      "Enhance Raven": "Усиление ворона",
+      "Enhance Heroes": "Усиление героев"
+    },
+    // CONFIRMED: Phase 3 = "Исследование технологий" — Russian reuses the
+    // Календарь string here.
+    // Phase 1 "Усиление ворона" is the confirmed Календарь rendering of the
+    // same English source and matches this list's nominal style — DERIVED
+    // but well grounded. Phases 2, 4, 5, 6 are DERIVED from vocabulary
+    // confirmed elsewhere: владений, героев, Подготовка (KvK prep screen),
+    // Рейд (the Duel tab bar) and врага ("Мощь врага").
+    // index 0 = Monday (Phase 1) .. index 5 = Saturday (Phase 6)
+    duelFocus: [
+      "Усиление ворона",
+      "Развитие владений",
+      "Исследование технологий",
+      "Развитие героев",
+      "Подготовка к войне",
+      "Рейд на врага"
+    ],
+    kvkPhaseText: [
+      "<b>Начинается накопление очков.</b> Королевства соревнуются через Дуэль альянсов, Короля Демонов, Гонку за эликсиром, рейтинги Битвы на выживание и т. д., чтобы заработать Очки королевства.",
+      "<b>Подсчёт очков.</b> Королевство с наибольшим числом очков становится атакующим, с наименьшим — обороняющимся (при равенстве → атакует королевство, идущее раньше в порядке серверов).",
+      "Фаза накопления завершается. Роли атакующего и обороняющегося зафиксированы.",
+      "Атакующий может переселиться в королевство обороняющегося.",
+      "<b>Спадает защита Королевского города и башен.</b> Начинается фаза борьбы.",
+      "<b>Королевский переполох</b> — основное окно битвы. Именно здесь определяется победитель.",
+      "Событие завершается. Рейтинги фиксируются, награды рассылаются по почте, и все возвращаются в своё родное королевство."
+    ],
+    tbdEventNames: {
+      undead: "Осада нежити"
+    },
+    taskNames: {
+      "Consume 1 Stamina": "Расход 1 энергии",
+      "Complete Falcon Quest once": "Выполнить 1 задание сокола",
+      "Use 660 Antitoxin": "Использовать 660 противоядия",
+      "Buy a pack containing Diamonds [1 Diamond]": "Купить набор, содержащий алмазы [1 Алмаз]",
+      "Gather 100 Grain": "Собрать 100 зерна",
+      "Gather 100 Timber": "Собрать 100 древесины",
+      "Gather 60 Herbs": "Собрать 60 трав",
+      "Consume 1 Raven Fruit": "Требуется 1 вороний плод",
+      "Consume 1 Raven Essence": "Требуется 1 воронья эссенция",
+      "Use 1m Construction Speedup": "Использовать ускорение строительства (1м)",
+      "Increase 1 Building Might": "Повысить мощь здания на 1",
+      "Execute 1 UR Covert Operation": "Провести 1 секретную операцию UR",
+      "Dispatch a UR Caravan": "Отправьте UR караван.",
+      "Recruit survivor once": "Наем выжившего.",
+      "Use 1m Research Speedup": "Использовать ускорение исследований (1м)",
+      "Consume 1 Study Scroll": "Использовать 1 Свиток обучения",
+      "Increase 1 Tech Might": "Повысить технологическую мощь на 1",
+      // Hero shards: the client uses a different verb on the UR row and
+      // capitalises "Героя" only on the SR row. Transcribed verbatim.
+      "Recruit heroes once": "Нанять героев один раз",
+      "Consume 1 UR Hero Shard": "Потратить 1 фрагмент UR героя",
+      "Consume 1 SSR Hero Shard": "Использовать 1 фрагмент SSR героя",
+      "Consume 1 SR Hero Shard": "Использовать 1 фрагмент SR Героя",
+      "Use 1 Skill Badge": "Использовать 1 значок навыка",
+      "Use 1m Training Boost": "Применить ускорение тренировки (1 мин)",
+      "Use 1m Healing Speedup": "Использовать ускорение лечения (1 мин)",
+      "For each Lv.1 Raven Gear Chest opened": "За каждый открытый сундук снаряжения ворона ур. 1",
+      "For each Lv.2 Raven Gear Chest opened": "За каждый открытый сундук снаряжения ворона ур. 2",
+      "For each Lv.3 Raven Gear Chest opened": "За каждый открытый сундук снаряжения ворона ур. 3",
+      "For each Lv.4 Raven Gear Chest opened": "За каждый открытый сундук снаряжения ворона ур. 4",
+      "For each Lv.5 Raven Gear Chest opened": "За каждый открытый сундук снаряжения ворона ур. 5",
+      "For each Lv.6 Raven Gear Chest opened": "За каждый открытый сундук снаряжения ворона ур. 6",
+      "For each Lv.7 Raven Gear Chest opened": "За каждый открытый сундук снаряжения ворона ур. 7",
+      "Train 1 Lv.1 soldier": "Обучить 1 солдата ур. 1",
+      "Train 1 Lv.2 soldier": "Обучить 1 солдата ур. 2",
+      "Train 1 Lv.3 soldier": "Обучить 1 солдата ур. 3",
+      "Train 1 Lv.4 soldier": "Обучить 1 солдата ур. 4",
+      "Train 1 Lv.5 soldier": "Обучить 1 солдата ур. 5",
+      "Train 1 Lv.6 soldier": "Обучить 1 солдата ур. 6",
+      "Train 1 Lv.7 soldier": "Обучить 1 солдата ур. 7",
+      "Train 1 Lv.8 soldier": "Обучить 1 солдата ур. 8",
+      "Train 1 Lv.9 soldier": "Обучить 1 солдата ур. 9",
+      "Train 1 Lv.10 soldier": "Обучить 1 солдата ур. 10",
+      // "defeated (specific match)" is NOT a regular pattern in Russian.
+      // The client mixes two participles (уничтоженного / побежденного) AND
+      // two word orders ("ур. N" / "N ур.") with no discernible rule. Only
+      // the six rows visible in the screenshots are entered here, verbatim.
+      // Lv.4-7 were not captured and are deliberately left to the English
+      // fallback rather than pattern-filled.
+      "For each Lv.1 soldier defeated (specific match)": "За каждого уничтоженного солдата ур. 1 (в определенном бою)",
+      "For each Lv.2 soldier defeated (specific match)": "За каждого уничтоженного солдата ур. 2 (в определенном бою)",
+      "For each Lv.3 soldier defeated (specific match)": "За каждого побежденного солдата 3 ур. (в определенном бою)",
+      "For each Lv.8 soldier defeated (specific match)": "За каждого побежденного солдата ур. 8 (в определенном бою)",
+      "For each Lv.9 soldier defeated (specific match)": "За каждого побежденного солдата 9 ур. (в определенном бою)",
+      "For each Lv.10 soldier defeated (specific match)": "За каждого побежденного солдата 10 ур. (в определенном бою)",
+      "For each Lv.1 soldier defeated": "За каждого побежденного солдата ур. 1",
+      "For each Lv.2 soldier defeated": "За каждого побежденного солдата ур. 2",
+      "For each Lv.3 soldier defeated": "За каждого побежденного солдата ур. 3",
+      "For each Lv.4 soldier defeated": "За каждого побежденного солдата ур. 4",
+      "For each Lv.5 soldier defeated": "За каждого побежденного солдата ур. 5",
+      "For each Lv.6 soldier defeated": "За каждого побежденного солдата ур. 6",
+      "For each Lv.7 soldier defeated": "За каждого побежденного солдата ур. 7",
+      "For each Lv.8 soldier defeated": "За каждого побежденного солдата ур. 8",
+      "For each Lv.9 soldier defeated": "За каждого побежденного солдата ур. 9",
+      "For each Lv.10 soldier defeated": "За каждого побежденного солдата ур. 10",
+      "For each Lv.1 soldier lost": "За каждого павшего солдата ур. 1",
+      "For each Lv.2 soldier lost": "За каждого павшего солдата ур. 2",
+      "For each Lv.3 soldier lost": "За каждого павшего солдата ур. 3",
+      "For each Lv.4 soldier lost": "За каждого павшего солдата ур. 4",
+      "For each Lv.5 soldier lost": "За каждого павшего солдата ур. 5",
+      "For each Lv.6 soldier lost": "За каждого павшего солдата ур. 6",
+      "For each Lv.7 soldier lost": "За каждого павшего солдата ур. 7",
+      "For each Lv.8 soldier lost": "За каждого павшего солдата ур. 8",
+      "For each Lv.9 soldier lost": "За каждого павшего солдата ур. 9",
+      "For each Lv.10 soldier lost": "За каждого павшего солдата ур. 10"
+    }
+  },
+  pt: {
+    // ALL FIVE CONFIRMED from the in-game Calendário screen (Dia 4
+    // rotation, 2026-07-29).
+    // NOTE the client uses TWO DIFFERENT VERBS for the single English word
+    // "Enhance" within this one list — "Aprimore o Corvo" but "Melhore os
+    // Heróis". Never carry one across to the other.
+    // NOTE also that Technology Research has two forms in Portuguese: the
+    // nominal "Pesquisa de Tecnologia" here on the Calendário, and the
+    // imperative "Pesquise Tecnologias" on both the live event panel and
+    // the Alliance Duel phase screen. The Calendário form is used here
+    // because this section is a schedule table.
+    sbObjectives: {
+      "Build Territory": "Construa no Território",
+      "Train Soldiers": "Treine Soldados",
+      "Technology Research": "Pesquisa de Tecnologia",
+      "Enhance Raven": "Aprimore o Corvo",
+      "Enhance Heroes": "Melhore os Heróis"
+    },
+    // CONFIRMED: Phase 3 = "Pesquise Tecnologias" — the imperative form,
+    // matching the live event panel rather than the Calendário.
+    // Phase 1 is DERIVED: "Aprimore o Corvo" is the confirmed Calendário
+    // rendering of the same English source ("Enhance Raven"), and it is a
+    // verb phrase, which suits this list's imperative Phase 3. It is still
+    // a different screen, so treat as unverified.
+    // Phases 2, 4, 5, 6 are DERIVED from vocabulary confirmed elsewhere in
+    // the same screenshots: Território ("Nível de Território Necessário"),
+    // Heróis, Preparação ("Fase de Preparação") and Incursão (the Duel tab
+    // bar renders Raid as "Incursão"). They are written as noun phrases,
+    // mirroring their English sources — but the one confirmed entry in this
+    // list is imperative, so the FORM of these four is genuinely uncertain.
+    // index 0 = Monday (Phase 1) .. index 5 = Saturday (Phase 6)
+    duelFocus: [
+      "Aprimore o Corvo",
+      "Desenvolvimento do Território",
+      "Pesquise Tecnologias",
+      "Crescimento de Heróis",
+      "Preparação de Guerra",
+      "Incursão ao Inimigo"
+    ],
+    kvkPhaseText: [
+      "<b>Começa a acumulação de pontos.</b> Os reinos competem através do Duelo da Aliança, do Rei Demônio, da Luta pelo Elixir, das classificações da Batalha de Sobrevivência, etc. para ganhar Pontos do Reino.",
+      "<b>Contagem de pontos.</b> O reino com mais pontos passa a atacante e o de menos a defensor (em caso de empate → ataca o reino que vem primeiro na ordem do servidor).",
+      "Termina a fase de acumulação. Os papéis de atacante e defensor ficam fixados.",
+      "O atacante pode realocar-se para o reino do defensor.",
+      "<b>Cai a proteção da Cidade Real e das Torres.</b> Começa a fase de disputa.",
+      "<b>Tumulto na Capital</b> — a janela de batalha principal. É aqui que se decide o vencedor.",
+      "O evento termina. As classificações ficam fixadas, as recompensas são enviadas por correio e todos são realocados de volta ao seu reino de origem."
+    ],
+    tbdEventNames: {
+      undead: "Cerco dos Mortos-Vivos"
+    },
+    taskNames: {
+      "Consume 1 Stamina": "Consuma 1 de Vigor",
+      "Complete Falcon Quest once": "Complete a Miss\u00e3o Falc\u00e3o 1 vez",
+      "Use 660 Antitoxin": "Use 660 de Antitoxina",
+      "Buy a pack containing Diamonds [1 Diamond]": "Compre um pacote contendo Diamantes [1 Diamante]",
+      "Gather 100 Grain": "Colete 100 de Comida",
+      "Gather 100 Timber": "Colete 100 de Madeira",
+      "Gather 60 Herbs": "Colete 60 de Ervas",
+      "Consume 1 Raven Fruit": "Consuma 1 Fruto do Corvo",
+      "Consume 1 Raven Essence": "Consuma 1 Ess\u00eancia do Corvo",
+      "Use 1m Construction Speedup": "Use Acelerar Constru\u00e7\u00e3o - 1min",
+      "Increase 1 Building Might": "Aumente o Poder de 1 Edif\u00edcio",
+      "Execute 1 UR Covert Operation": "Execute 1 Opera\u00e7\u00e3o Secreta UR",
+      "Dispatch a UR Caravan": "Envie uma Caravana UR",
+      "Recruit survivor once": "Recrute sobreviventes uma vez",
+      "Use 1m Research Speedup": "Use Acelerar Pesquisa - 1min",
+      "Consume 1 Study Scroll": "Consumir 1 Pergaminho de Estudo",
+      "Increase 1 Tech Might": "Aumente o Poder de 1 Tecnologia",
+      "For each Lv.1 Raven Gear Chest opened": "Para cada Ba\u00fa de Equipamento do Corvo Nv.1 aberto",
+      "For each Lv.2 Raven Gear Chest opened": "Para cada Ba\u00fa de Equipamento do Corvo Nv.2 aberto",
+      "For each Lv.3 Raven Gear Chest opened": "Para cada Ba\u00fa de Equipamento do Corvo Nv.3 aberto",
+      "For each Lv.4 Raven Gear Chest opened": "Para cada Ba\u00fa de Equipamento do Corvo Nv.4 aberto",
+      "For each Lv.5 Raven Gear Chest opened": "Para cada Ba\u00fa de Equipamento do Corvo Nv.5 aberto",
+      "For each Lv.6 Raven Gear Chest opened": "Para cada Ba\u00fa de Equipamento do Corvo Nv.6 aberto",
+      "For each Lv.7 Raven Gear Chest opened": "Para cada Ba\u00fa de Equipamento do Corvo Nv.7 aberto",
+      "Recruit heroes once": "Recrute her\u00f3is uma vez",
+      "Consume 1 UR Hero Shard": "Consuma 1 Fragmento de Her\u00f3i UR",
+      "Consume 1 SSR Hero Shard": "Consumir 1 Fragmento de Her\u00f3i SSR",
+      "Consume 1 SR Hero Shard": "Consuma 1 Fragmento de Her\u00f3i SR",
+      "Use 1 Skill Badge": "Use 1 Ins\u00edgnia de Habilidade",
+      "Use 1m Training Boost": "Use 1min de Impulso de Treinamento",
+      "Train 1 Lv.1 soldier": "Treine 1 soldado Nv.1",
+      "Train 1 Lv.2 soldier": "Treine 1 soldado Nv.2",
+      "Train 1 Lv.3 soldier": "Treine 1 soldado Nv.3",
+      "Train 1 Lv.4 soldier": "Treine 1 soldado Nv.4",
+      "Train 1 Lv.5 soldier": "Treine 1 soldado Nv.5",
+      "Train 1 Lv.6 soldier": "Treine 1 soldado Nv.6",
+      "Train 1 Lv.7 soldier": "Treine 1 soldado Nv.7",
+      "Train 1 Lv.8 soldier": "Treine 1 soldado Nv.8",
+      "Train 1 Lv.9 soldier": "Treine 1 soldado Nv.9",
+      "Train 1 Lv.10 soldier": "Treine 1 soldado Nv.10",
+      "Use 1m Healing Speedup": "Use Acelerar Cura - 1min",
+      "For each Lv.1 soldier defeated (specific match)": "Para cada soldado Nv.1 derrotado (partida espec\u00edfica)",
+      "For each Lv.2 soldier defeated (specific match)": "Para cada soldado Nv.2 derrotado (partida espec\u00edfica)",
+      "For each Lv.3 soldier defeated (specific match)": "Para cada soldado Nv.3 derrotado (partida espec\u00edfica)",
+      "For each Lv.4 soldier defeated (specific match)": "Para cada soldado Nv.4 derrotado (partida espec\u00edfica)",
+      "For each Lv.5 soldier defeated (specific match)": "Para cada soldado Nv.5 derrotado (partida espec\u00edfica)",
+      "For each Lv.6 soldier defeated (specific match)": "Para cada soldado Nv.6 derrotado (partida espec\u00edfica)",
+      "For each Lv.7 soldier defeated (specific match)": "Para cada soldado Nv.7 derrotado (partida espec\u00edfica)",
+      "For each Lv.8 soldier defeated (specific match)": "Para cada soldado Nv.8 derrotado (partida espec\u00edfica)",
+      "For each Lv.9 soldier defeated (specific match)": "Para cada soldado Nv.9 derrotado (partida espec\u00edfica)",
+      "For each Lv.10 soldier defeated (specific match)": "Para cada soldado Nv.10 derrotado (partida espec\u00edfica)",
+      "For each Lv.1 soldier defeated": "Para cada soldado Nv.1 derrotado",
+      "For each Lv.2 soldier defeated": "Para cada soldado Nv.2 derrotado",
+      "For each Lv.3 soldier defeated": "Para cada soldado Nv.3 derrotado",
+      "For each Lv.4 soldier defeated": "Para cada soldado Nv.4 derrotado",
+      "For each Lv.5 soldier defeated": "Para cada soldado Nv.5 derrotado",
+      "For each Lv.6 soldier defeated": "Para cada soldado Nv.6 derrotado",
+      "For each Lv.7 soldier defeated": "Para cada soldado Nv.7 derrotado",
+      "For each Lv.8 soldier defeated": "Para cada soldado Nv.8 derrotado",
+      "For each Lv.9 soldier defeated": "Para cada soldado Nv.9 derrotado",
+      "For each Lv.10 soldier defeated": "Para cada soldado Nv.10 derrotado",
+      "For each Lv.1 soldier lost": "Para cada soldado Nv.1 perdido",
+      "For each Lv.2 soldier lost": "Para cada soldado Nv.2 perdido",
+      "For each Lv.3 soldier lost": "Para cada soldado Nv.3 perdido",
+      "For each Lv.4 soldier lost": "Para cada soldado Nv.4 perdido",
+      "For each Lv.5 soldier lost": "Para cada soldado Nv.5 perdido",
+      "For each Lv.6 soldier lost": "Para cada soldado Nv.6 perdido",
+      "For each Lv.7 soldier lost": "Para cada soldado Nv.7 perdido",
+      "For each Lv.8 soldier lost": "Para cada soldado Nv.8 perdido",
+      "For each Lv.9 soldier lost": "Para cada soldado Nv.9 perdido",
+      "For each Lv.10 soldier lost": "Para cada soldado Nv.10 perdido"
+    }
+  },
+  pl: {
+    // ALL FIVE CONFIRMED from the in-game Kalendarz screen (Dzień 4
+    // rotation, 2026-07-29). Four are imperative; "Badania Technologii" is
+    // nominal — the client is internally inconsistent here, as in every
+    // other language checked. Raven is localised to "Kruk" ("Kruka" in the
+    // accusative/genitive).
+    // NOTE: the live event panel header renders Technology Research as
+    // "Opracuj technologie" instead; the Kalendarz form is used here
+    // because this section is a schedule table.
+    sbObjectives: {
+      "Build Territory": "Rozbuduj terytorium",
+      "Train Soldiers": "Wyszkol \u017co\u0142nierzy",
+      "Technology Research": "Badania Technologii",
+      "Enhance Raven": "Wzmocnij Kruka",
+      "Enhance Heroes": "Wzmocnij bohater\u00f3w"
+    },
+    // CONFIRMED: Phase 3 = "Badania Technologii" — Polish reuses the
+    // Kalendarz string here, unlike Spanish and Dutch.
+    // The other five are DERIVED from vocabulary confirmed elsewhere in the
+    // same screenshots: Kruka, bohaterów, terytorium, Przygotowanie (the
+    // KvK prep screen), Najazd (the Duel tab bar renders Raid as "Najazd")
+    // and wroga ("Moc Wroga" on the Oblężenie Nieumarłych screen).
+    // Grammatical form is not guaranteed.
+    // index 0 = Monday (Phase 1) .. index 5 = Saturday (Phase 6)
+    duelFocus: [
+      "Wzmocnienie Kruka",
+      "Rozw\u00f3j terytorium",
+      "Badania Technologii",
+      "Rozw\u00f3j bohater\u00f3w",
+      "Przygotowanie do wojny",
+      "Najazd na wroga"
+    ],
+    kvkPhaseText: [
+      "<b>Zaczyna się zbieranie punktów.</b> Królestwa rywalizują poprzez Pojedynek Sojuszy, Króla Demonów, Starcie o Eliksir, rankingi Bitwy o Przetrwanie itd., aby zdobyć Punkty Królestwa.",
+      "<b>Zliczanie punktów.</b> Królestwo z największą liczbą punktów zostaje atakującym, a z najmniejszą — broniącym się (przy remisie → atakuje królestwo wcześniejsze w kolejności serwerów).",
+      "Kończy się faza zbierania. Role atakującego i broniącego się zostają ustalone.",
+      "Atakujący może przenieść się do królestwa broniącego się.",
+      "<b>Znika ochrona Królewskiego Miasta i Wież.</b> Zaczyna się faza walki.",
+      "<b>Awantura w Królewskim Mieście</b> — główne okno bitwy. To tutaj rozstrzyga się zwycięzca.",
+      "Wydarzenie się kończy. Rankingi zostają ustalone, nagrody są wysyłane pocztą, a wszyscy wracają do swojego macierzystego królestwa."
+    ],
+    tbdEventNames: {
+      undead: "Obl\u0119\u017cenie Nieumar\u0142ych"
+    },
+    taskNames: {
+      "Consume 1 Stamina": "Zu\u017cyj 1 Kondycji",
+      "Complete Falcon Quest once": "Uko\u0144cz 1 sokole zadanie",
+      "Use 660 Antitoxin": "U\u017cyj 660 szt. antytoksyn",
+      "Buy a pack containing Diamonds [1 Diamond]": "Kup pakiet zawieraj\u0105cy diamenty [1 diament]",
+      "Gather 100 Grain": "Zbierz 100 szt. zbo\u017ca",
+      "Gather 100 Timber": "Zbierz 100 szt. drewna",
+      "Gather 60 Herbs": "Zbierz 60 szt. zi\u00f3\u0142",
+      "Consume 1 Raven Fruit": "Zu\u017cyj 1 Owoc Kruka",
+      "Consume 1 Raven Essence": "Zu\u017cyj 1 Esencja Kruka",
+      "Use 1m Construction Speedup": "U\u017cyj przyspieszenia budowy (1 min.)",
+      "Increase 1 Building Might": "Zwi\u0119ksz Moc budynku o 1",
+      "Execute 1 UR Covert Operation": "Wykonaj 1 tajn\u0105 operacj\u0119 UR",
+      "Dispatch a UR Caravan": "Wy\u015blij karawan\u0119 UR",
+      "Recruit survivor once": "Zwerbuj ocala\u0142ego raz",
+      "Use 1m Research Speedup": "U\u017cyj Przyspieszenia bada\u0144 (1 min.)",
+      "Consume 1 Study Scroll": "Zu\u017cyj 1 zw\u00f3j nauki",
+      "Increase 1 Tech Might": "Zwi\u0119ksz Moc technologii o 1",
+      "For each Lv.1 Raven Gear Chest opened": "Za ka\u017cd\u0105 otwart\u0105 skrzyni\u0119 wyposa\u017cenia Kruka poz. 1",
+      "For each Lv.2 Raven Gear Chest opened": "Za ka\u017cd\u0105 otwart\u0105 skrzyni\u0119 wyposa\u017cenia Kruka poz. 2",
+      "For each Lv.3 Raven Gear Chest opened": "Za ka\u017cd\u0105 otwart\u0105 skrzyni\u0119 wyposa\u017cenia Kruka poz. 3",
+      "For each Lv.4 Raven Gear Chest opened": "Za ka\u017cd\u0105 otwart\u0105 skrzyni\u0119 wyposa\u017cenia Kruka poz. 4",
+      "For each Lv.5 Raven Gear Chest opened": "Za ka\u017cd\u0105 otwart\u0105 skrzyni\u0119 wyposa\u017cenia Kruka poz. 5",
+      "For each Lv.6 Raven Gear Chest opened": "Za ka\u017cd\u0105 otwart\u0105 skrzyni\u0119 wyposa\u017cenia Kruka poz. 6",
+      "For each Lv.7 Raven Gear Chest opened": "Za ka\u017cd\u0105 otwart\u0105 skrzyni\u0119 wyposa\u017cenia Kruka poz. 7",
+      "Recruit heroes once": "Zwerbuj bohater\u00f3w raz",
+      "Consume 1 UR Hero Shard": "Zu\u017cyj 1 fragment bohatera UR",
+      "Consume 1 SSR Hero Shard": "Zu\u017cyj 1 fragment bohatera SSR",
+      "Consume 1 SR Hero Shard": "Zu\u017cyj 1 Fragment Bohatera SR",
+      "Use 1 Skill Badge": "U\u017cyj 1 odznak\u0119 umiej\u0119tno\u015bci",
+      "Use 1m Training Boost": "U\u017cyj 1 min Przyspieszenia Treningu",
+      "Train 1 Lv.1 soldier": "Wyszkol 1 \u017co\u0142nierza poz. 1",
+      "Train 1 Lv.2 soldier": "Wyszkol 1 \u017co\u0142nierza poz. 2",
+      "Train 1 Lv.3 soldier": "Wyszkol 1 \u017co\u0142nierza poz. 3",
+      "Train 1 Lv.4 soldier": "Wyszkol 1 \u017co\u0142nierza poz. 4",
+      "Train 1 Lv.5 soldier": "Wyszkol 1 \u017co\u0142nierza poz. 5",
+      "Train 1 Lv.6 soldier": "Wyszkol 1 \u017co\u0142nierza poz. 6",
+      "Train 1 Lv.7 soldier": "Wyszkol 1 \u017co\u0142nierza poz. 7",
+      "Train 1 Lv.8 soldier": "Wyszkol 1 \u017co\u0142nierza poz. 8",
+      "Train 1 Lv.9 soldier": "Wyszkol 1 \u017co\u0142nierza poz. 9",
+      "Train 1 Lv.10 soldier": "Wyszkol 1 \u017co\u0142nierza poz. 10",
+      "Use 1m Healing Speedup": "U\u017cyj przyspieszenia leczenia (1 min.)",
+      "For each Lv.1 soldier defeated (specific match)": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 1 (okre\u015blone dopasowanie)",
+      "For each Lv.2 soldier defeated (specific match)": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 2 (okre\u015blone dopasowanie)",
+      "For each Lv.3 soldier defeated (specific match)": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 3 (okre\u015blone dopasowanie)",
+      "For each Lv.4 soldier defeated (specific match)": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 4 (okre\u015blone dopasowanie)",
+      "For each Lv.5 soldier defeated (specific match)": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 5 (okre\u015blone dopasowanie)",
+      "For each Lv.6 soldier defeated (specific match)": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 6 (okre\u015blone dopasowanie)",
+      "For each Lv.7 soldier defeated (specific match)": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 7 (okre\u015blone dopasowanie)",
+      "For each Lv.8 soldier defeated (specific match)": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 8 (okre\u015blone dopasowanie)",
+      "For each Lv.9 soldier defeated (specific match)": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 9 (okre\u015blone dopasowanie)",
+      "For each Lv.10 soldier defeated (specific match)": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 10 (okre\u015blone dopasowanie)",
+      "For each Lv.1 soldier defeated": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 1",
+      "For each Lv.2 soldier defeated": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 2",
+      "For each Lv.3 soldier defeated": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 3",
+      "For each Lv.4 soldier defeated": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 4",
+      "For each Lv.5 soldier defeated": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 5",
+      "For each Lv.6 soldier defeated": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 6",
+      "For each Lv.7 soldier defeated": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 7",
+      "For each Lv.8 soldier defeated": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 8",
+      "For each Lv.9 soldier defeated": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 9",
+      "For each Lv.10 soldier defeated": "Za ka\u017cdego pokonanego \u017co\u0142nierza poz. 10",
+      "For each Lv.1 soldier lost": "Za ka\u017cdego straconego \u017co\u0142nierza poz. 1",
+      "For each Lv.2 soldier lost": "Za ka\u017cdego straconego \u017co\u0142nierza poz. 2",
+      "For each Lv.3 soldier lost": "Za ka\u017cdego straconego \u017co\u0142nierza poz. 3",
+      "For each Lv.4 soldier lost": "Za ka\u017cdego straconego \u017co\u0142nierza poz. 4",
+      "For each Lv.5 soldier lost": "Za ka\u017cdego straconego \u017co\u0142nierza poz. 5",
+      "For each Lv.6 soldier lost": "Za ka\u017cdego straconego \u017co\u0142nierza poz. 6",
+      "For each Lv.7 soldier lost": "Za ka\u017cdego straconego \u017co\u0142nierza poz. 7",
+      "For each Lv.8 soldier lost": "Za ka\u017cdego straconego \u017co\u0142nierza poz. 8",
+      "For each Lv.9 soldier lost": "Za ka\u017cdego straconego \u017co\u0142nierza poz. 9",
+      "For each Lv.10 soldier lost": "Za ka\u017cdego straconego \u017co\u0142nierza poz. 10"
+    }
+  },
+  es: {
+    // ALL FIVE CONFIRMED from the in-game Calendario screen (Día 4 rotation,
+    // 2026-07-29). Note the client mixes imperative ("Construye tu
+    // territorio", "Mejora al Cuervo"), infinitive ("Entrenar soldados",
+    // "Mejorar héroes") and nominal ("Investigación tecnológica") forms in
+    // the same list — do not extrapolate a pattern from these.
+    // NOTE: the live event panel header renders Technology Research as
+    // "Investiga tecnología" instead. Both are real in-game strings; the
+    // Calendario form is used here because this section is a schedule table.
+    // Raven is localised to "Cuervo" in Spanish (unlike Dutch, which keeps
+    // the English "Raven").
+    sbObjectives: {
+      "Build Territory": "Construye tu territorio",
+      "Train Soldiers": "Entrenar soldados",
+      "Technology Research": "Investigación tecnológica",
+      "Enhance Raven": "Mejora al Cuervo",
+      "Enhance Heroes": "Mejorar héroes"
+    },
+    // CONFIRMED: Phase 3 = "Investigación tecnológica" (Duelo de alianzas
+    // screen). The other five are DERIVED from vocabulary confirmed
+    // elsewhere in the same screenshots — Cuervo, héroes, territorio,
+    // preparación ("Fase de preparación"), and Incursión (the Duel tab bar
+    // renders Raid as "Incursión"). Grammatical form is not guaranteed.
+    // index 0 = Monday (Phase 1) .. index 5 = Saturday (Phase 6)
+    duelFocus: [
+      "Mejora del Cuervo",
+      "Desarrollo del territorio",
+      "Investigación tecnológica",
+      "Crecimiento de héroes",
+      "Preparación de guerra",
+      "Incursión al enemigo"
+    ],
+    kvkPhaseText: [
+      "<b>Comienza la acumulación de puntos.</b> Los reinos compiten mediante el Duelo de alianzas, el Rey Demonio, la Disputa de Elixir, las clasificaciones de la Batalla de supervivencia, etc. para ganar Puntos del reino.",
+      "<b>Recuento de puntos.</b> El reino con más puntos pasa a ser atacante y el de menos, defensor (en caso de empate → ataca el reino que va antes en el orden del servidor).",
+      "Termina la fase de acumulación. Los roles de atacante y defensor quedan fijados.",
+      "El atacante puede reubicarse en el reino del defensor.",
+      "<b>Cae la protección de la Ciudad Real y las Torretas.</b> Comienza la fase de disputa.",
+      "<b>Alboroto en la Ciudad Real</b> — la ventana de batalla principal. Aquí se decide el vencedor.",
+      "El evento termina. Las clasificaciones quedan fijadas, las recompensas se envían por correo y todo el mundo vuelve a su reino de origen."
+    ],
+    tbdEventNames: {
+      undead: "Asedio de no muertos"
+    },
+    taskNames: {
+      "Consume 1 Stamina": "Consume 1 de resistencia",
+      "Complete Falcon Quest once": "Completa la misi\u00f3n del halc\u00f3n una vez",
+      "Use 660 Antitoxin": "Usa 660 ant\u00eddotos",
+      "Buy a pack containing Diamonds [1 Diamond]": "Compra un paquete que contenga diamantes [1 diamante]",
+      "Gather 100 Grain": "Recolecta 100 unidades de grano",
+      "Gather 100 Timber": "Recolecta 100 unidades de madera",
+      "Gather 60 Herbs": "Recolecta 60 hierbas",
+      "Consume 1 Raven Fruit": "Consume una fruta del cuervo",
+      "Consume 1 Raven Essence": "Consume una esencia del cuervo",
+      "Use 1m Construction Speedup": "Usar aceleraci\u00f3n de constru. de 1 min",
+      "Increase 1 Building Might": "Aumenta en 1 el Poder de un edificio",
+      "Execute 1 UR Covert Operation": "Ejecuta una operaci\u00f3n encubierta UR",
+      "Dispatch a UR Caravan": "Env\u00eda una caravana UR",
+      "Recruit survivor once": "Recluta a un sobreviviente",
+      "Use 1m Research Speedup": "Usar aceleraci\u00f3n de invest. de 1 min",
+      "Consume 1 Study Scroll": "Consumir 1 pergamino de estudio",
+      "Increase 1 Tech Might": "Aumenta un punto de Poder tecnol\u00f3gico",
+      "For each Lv.1 Raven Gear Chest opened": "Por cada cofre de equipo del Cuervo de Nv. 1 abierto",
+      "For each Lv.2 Raven Gear Chest opened": "Por cada cofre de equipo del Cuervo de Nv. 2 abierto",
+      "For each Lv.3 Raven Gear Chest opened": "Por cada cofre de equipo del Cuervo de Nv. 3 abierto",
+      "For each Lv.4 Raven Gear Chest opened": "Por cada cofre de equipo del Cuervo de Nv. 4 abierto",
+      "For each Lv.5 Raven Gear Chest opened": "Por cada cofre de equipo del Cuervo de Nv. 5 abierto",
+      "For each Lv.6 Raven Gear Chest opened": "Por cada cofre de equipo del Cuervo de Nv. 6 abierto",
+      "For each Lv.7 Raven Gear Chest opened": "Por cada cofre de equipo del Cuervo de Nv. 7 abierto",
+      "Recruit heroes once": "Recluta h\u00e9roes una vez",
+      "Consume 1 UR Hero Shard": "Usa un fragmento de h\u00e9roe UR",
+      "Consume 1 SSR Hero Shard": "Usa un fragmento de h\u00e9roe SSR",
+      "Consume 1 SR Hero Shard": "Usa un fragmento de h\u00e9roe SR",
+      "Use 1 Skill Badge": "Usa una insignia de habilidad",
+      "Use 1m Training Boost": "Usa un potenciador de entreno de 1 m",
+      "Train 1 Lv.1 soldier": "Entrena 1 soldado de Nv. 1",
+      "Train 1 Lv.2 soldier": "Entrena 1 soldado de Nv. 2",
+      "Train 1 Lv.3 soldier": "Entrena 1 soldado de Nv. 3",
+      "Train 1 Lv.4 soldier": "Entrena 1 soldado de Nv. 4",
+      "Train 1 Lv.5 soldier": "Entrena 1 soldado de Nv. 5",
+      "Train 1 Lv.6 soldier": "Entrena 1 soldado de Nv. 6",
+      "Train 1 Lv.7 soldier": "Entrena 1 soldado de Nv. 7",
+      "Train 1 Lv.8 soldier": "Entrena 1 soldado de Nv. 8",
+      "Train 1 Lv.9 soldier": "Entrena 1 soldado de Nv. 9",
+      "Train 1 Lv.10 soldier": "Entrena 1 soldado de Nv. 10",
+      "Use 1m Healing Speedup": "Usar aceleraci\u00f3n de curaci\u00f3n de 1 min",
+      "For each Lv.1 soldier defeated (specific match)": "Por cada soldado de Nv. 1 derrotado (encuentro espec\u00edfico)",
+      "For each Lv.2 soldier defeated (specific match)": "Por cada soldado de Nv. 2 derrotado (encuentro espec\u00edfico)",
+      "For each Lv.3 soldier defeated (specific match)": "Por cada soldado de Nv. 3 derrotado (encuentro espec\u00edfico)",
+      "For each Lv.4 soldier defeated (specific match)": "Por cada soldado de Nv. 4 derrotado (encuentro espec\u00edfico)",
+      "For each Lv.5 soldier defeated (specific match)": "Por cada soldado de Nv. 5 derrotado (encuentro espec\u00edfico)",
+      "For each Lv.6 soldier defeated (specific match)": "Por cada soldado de Nv. 6 derrotado (encuentro espec\u00edfico)",
+      "For each Lv.7 soldier defeated (specific match)": "Por cada soldado de Nv. 7 derrotado (encuentro espec\u00edfico)",
+      "For each Lv.8 soldier defeated (specific match)": "Por cada soldado de Nv. 8 derrotado (encuentro espec\u00edfico)",
+      "For each Lv.9 soldier defeated (specific match)": "Por cada soldado de Nv. 9 derrotado (encuentro espec\u00edfico)",
+      "For each Lv.10 soldier defeated (specific match)": "Por cada soldado de Nv. 10 derrotado (encuentro espec\u00edfico)",
+      "For each Lv.1 soldier defeated": "Por cada soldado de Nv. 1 derrotado",
+      "For each Lv.2 soldier defeated": "Por cada soldado de Nv. 2 derrotado",
+      "For each Lv.3 soldier defeated": "Por cada soldado de Nv. 3 derrotado",
+      "For each Lv.4 soldier defeated": "Por cada soldado de Nv. 4 derrotado",
+      "For each Lv.5 soldier defeated": "Por cada soldado de Nv. 5 derrotado",
+      "For each Lv.6 soldier defeated": "Por cada soldado de Nv. 6 derrotado",
+      "For each Lv.7 soldier defeated": "Por cada soldado de Nv. 7 derrotado",
+      "For each Lv.8 soldier defeated": "Por cada soldado de Nv. 8 derrotado",
+      "For each Lv.9 soldier defeated": "Por cada soldado de Nv. 9 derrotado",
+      "For each Lv.10 soldier defeated": "Por cada soldado de Nv. 10 derrotado",
+      "For each Lv.1 soldier lost": "Por cada soldado de Nv. 1 perdido",
+      "For each Lv.2 soldier lost": "Por cada soldado de Nv. 2 perdido",
+      "For each Lv.3 soldier lost": "Por cada soldado de Nv. 3 perdido",
+      "For each Lv.4 soldier lost": "Por cada soldado de Nv. 4 perdido",
+      "For each Lv.5 soldier lost": "Por cada soldado de Nv. 5 perdido",
+      "For each Lv.6 soldier lost": "Por cada soldado de Nv. 6 perdido",
+      "For each Lv.7 soldier lost": "Por cada soldado de Nv. 7 perdido",
+      "For each Lv.8 soldier lost": "Por cada soldado de Nv. 8 perdido",
+      "For each Lv.9 soldier lost": "Por cada soldado de Nv. 9 perdido",
+      "For each Lv.10 soldier lost": "Por cada soldado de Nv. 10 perdido"
+    }
+  },
+  nl: {
+    // ALL FIVE CONFIRMED from the in-game Kalender screen (Dag 4 rotation,
+    // 2026-07-29). That screen is the direct in-game equivalent of this
+    // tool's Survival Battle table, so its strings are the ones to match.
+    // Four are nominal compounds; "Train soldaten" is imperative — the
+    // game itself is inconsistent, so do not extrapolate this pattern.
+    // NOTE: the live event panel header renders Technology Research as
+    // "Onderzoek technologie" instead. Both are real in-game strings for
+    // the same objective on different screens; the Kalender form is used
+    // here because this section is a schedule table. (The Alliance Duel
+    // phase screen uses a third form again — "Technologisch onderzoek".)
+    sbObjectives: {
+      "Build Territory": "Territoriumbouw",
+      "Train Soldiers": "Train soldaten",
+      "Technology Research": "Technologieonderzoek",
+      "Enhance Raven": "Ravenversterking",
+      "Enhance Heroes": "Heldenversterking"
+    },
+    // CONFIRMED from screenshot: Phase 3 = "Technologisch onderzoek" — a
+    // NOMINAL compound, not the imperative used for sbObjectives above.
+    // The other five are DERIVED on that nominal pattern. "Voorbereiding"
+    // and "Aanval" are both confirmed in-game words (KvK prep screen and
+    // the Alliantieduel tab bar); the compounds built from them are not.
+    // "Ravenversterking" uses the confirmed "-versterking" rendering of
+    // Enhance (see sbObjectives above). Phase 4 is "Hero Growth", a
+    // different English term, so "Heldengroei" is unaffected by that.
+    // index 0 = Monday (Phase 1) .. index 5 = Saturday (Phase 6)
+    duelFocus: [
+      "Ravenversterking",
+      "Territoriumontwikkeling",
+      "Technologisch onderzoek",
+      "Heldengroei",
+      "Oorlogsvoorbereiding",
+      "Vijandelijke aanval"
+    ],
+    kvkPhaseText: [
+      "<b>Het verzamelen van punten begint.</b> Koninkrijken strijden via het Alliantieduel, Demonenkoning, de Elixerstrijd, de Overlevingsstrijd-ranglijsten enz. om Koninkrijkspunten te verdienen.",
+      "<b>Punten worden opgeteld.</b> Het koninkrijk met de meeste punten wordt aanvaller, dat met de minste wordt verdediger (bij gelijkspel → het koninkrijk dat eerder in de servervolgorde staat valt aan).",
+      "De verzamelfase eindigt. De rollen van aanvaller en verdediger liggen vast.",
+      "De aanvaller kan zich verplaatsen naar het koninkrijk van de verdediger.",
+      "<b>De bescherming van de Koningsstad en de Torens vervalt.</b> De strijdfase begint.",
+      "<b>Strijd om de Koningsstad</b> — het belangrijkste gevechtsvenster. Hier wordt de winnaar bepaald.",
+      "Het event eindigt. Ranglijsten liggen vast, beloningen worden per post verstuurd en iedereen wordt teruggeplaatst naar het eigen koninkrijk."
+    ],
+    tbdEventNames: {
+      undead: "Ondodenbelegering"
+    },
+    taskNames: {
+      "Consume 1 Stamina": "Verbruik 1 stamina",
+      "Complete Falcon Quest once": "Voltooi valkenmissie 1 keer",
+      "Use 660 Antitoxin": "Gebruik 660 serum",
+      "Buy a pack containing Diamonds [1 Diamond]": "Koop een pakket met diamanten [1 diamant]",
+      "Gather 100 Grain": "Verzamel 100 graan",
+      "Gather 100 Timber": "Verzamel 100 hout",
+      "Gather 60 Herbs": "Verzamel 60 kruiden",
+      "Consume 1 Raven Fruit": "Verbruik 1 Ravenfruit",
+      "Consume 1 Raven Essence": "Verbruik 1 Ravenessentie",
+      "Use 1m Construction Speedup": "Gebruik 1m bouwversneller",
+      "Increase 1 Building Might": "Verhoog gebouwmacht met 1",
+      "Execute 1 UR Covert Operation": "Voer 1 UR-geheime operatie uit",
+      "Dispatch a UR Caravan": "Stuur een UR-karavaan",
+      "Recruit survivor once": "Rekruteer \u00e9\u00e9n keer een overlevende",
+      "Use 1m Research Speedup": "Gebruik 1m onderzoeksversneller",
+      "Consume 1 Study Scroll": "Verbruik 1 studierol",
+      "Increase 1 Tech Might": "Verhoog technologiemacht met 1",
+      "For each Lv.1 Raven Gear Chest opened": "Voor elke geopende Lv.1 Ravenuitrustingskist",
+      "For each Lv.2 Raven Gear Chest opened": "Voor elke geopende Lv.2 Ravenuitrustingskist",
+      "For each Lv.3 Raven Gear Chest opened": "Voor elke geopende Lv.3 Ravenuitrustingskist",
+      "For each Lv.4 Raven Gear Chest opened": "Voor elke geopende Lv.4 Ravenuitrustingskist",
+      "For each Lv.5 Raven Gear Chest opened": "Voor elke geopende Lv.5 Ravenuitrustingskist",
+      "For each Lv.6 Raven Gear Chest opened": "Voor elke geopende Lv.6 Ravenuitrustingskist",
+      "For each Lv.7 Raven Gear Chest opened": "Voor elke geopende Lv.7 Ravenuitrustingskist",
+      "Recruit heroes once": "Rekruteer helden \u00e9\u00e9n keer",
+      "Consume 1 UR Hero Shard": "Verbruik 1 UR-heldenscherf",
+      "Consume 1 SSR Hero Shard": "Verbruik 1 SSR-heldenscherf",
+      "Consume 1 SR Hero Shard": "Verbruik 1 SR-heldenscherf",
+      "Use 1 Skill Badge": "Gebruik 1 vaardigheidsbadge",
+      "Use 1m Training Boost": "Gebruik 1m trainingsboost",
+      "Train 1 Lv.1 soldier": "Train 1 Lv.1 soldaat",
+      "Train 1 Lv.2 soldier": "Train 1 Lv.2 soldaat",
+      "Train 1 Lv.3 soldier": "Train 1 Lv.3 soldaat",
+      "Train 1 Lv.4 soldier": "Train 1 Lv.4 soldaat",
+      "Train 1 Lv.5 soldier": "Train 1 Lv.5 soldaat",
+      "Train 1 Lv.6 soldier": "Train 1 Lv.6 soldaat",
+      "Train 1 Lv.7 soldier": "Train 1 Lv.7 soldaat",
+      "Train 1 Lv.8 soldier": "Train 1 Lv.8 soldaat",
+      "Train 1 Lv.9 soldier": "Train 1 Lv.9 soldaat",
+      "Train 1 Lv.10 soldier": "Train 1 Lv.10 soldaat",
+      "Use 1m Healing Speedup": "Gebruik 1m Genezingsversneller",
+      "For each Lv.1 soldier defeated (specific match)": "Voor elke verslagen Lv.1 soldaat (specifiek gevecht)",
+      "For each Lv.2 soldier defeated (specific match)": "Voor elke verslagen Lv.2 soldaat (specifiek gevecht)",
+      "For each Lv.3 soldier defeated (specific match)": "Voor elke verslagen Lv.3 soldaat (specifiek gevecht)",
+      "For each Lv.4 soldier defeated (specific match)": "Voor elke verslagen Lv.4 soldaat (specifiek gevecht)",
+      "For each Lv.5 soldier defeated (specific match)": "Voor elke verslagen Lv.5 soldaat (specifiek gevecht)",
+      "For each Lv.6 soldier defeated (specific match)": "Voor elke verslagen Lv.6 soldaat (specifiek gevecht)",
+      "For each Lv.7 soldier defeated (specific match)": "Voor elke verslagen Lv.7 soldaat (specifiek gevecht)",
+      "For each Lv.8 soldier defeated (specific match)": "Voor elke verslagen Lv.8 soldaat (specifiek gevecht)",
+      "For each Lv.9 soldier defeated (specific match)": "Voor elke verslagen Lv.9 soldaat (specifiek gevecht)",
+      "For each Lv.10 soldier defeated (specific match)": "Voor elke verslagen Lv.10 soldaat (specifiek gevecht)",
+      "For each Lv.1 soldier defeated": "Voor elke verslagen Lv.1 soldaat",
+      "For each Lv.2 soldier defeated": "Voor elke verslagen Lv.2 soldaat",
+      "For each Lv.3 soldier defeated": "Voor elke verslagen Lv.3 soldaat",
+      "For each Lv.4 soldier defeated": "Voor elke verslagen Lv.4 soldaat",
+      "For each Lv.5 soldier defeated": "Voor elke verslagen Lv.5 soldaat",
+      "For each Lv.6 soldier defeated": "Voor elke verslagen Lv.6 soldaat",
+      "For each Lv.7 soldier defeated": "Voor elke verslagen Lv.7 soldaat",
+      "For each Lv.8 soldier defeated": "Voor elke verslagen Lv.8 soldaat",
+      "For each Lv.9 soldier defeated": "Voor elke verslagen Lv.9 soldaat",
+      "For each Lv.10 soldier defeated": "Voor elke verslagen Lv.10 soldaat",
+      "For each Lv.1 soldier lost": "Voor elke verloren Lv.1 soldaat",
+      "For each Lv.2 soldier lost": "Voor elke verloren Lv.2 soldaat",
+      "For each Lv.3 soldier lost": "Voor elke verloren Lv.3 soldaat",
+      "For each Lv.4 soldier lost": "Voor elke verloren Lv.4 soldaat",
+      "For each Lv.5 soldier lost": "Voor elke verloren Lv.5 soldaat",
+      "For each Lv.6 soldier lost": "Voor elke verloren Lv.6 soldaat",
+      "For each Lv.7 soldier lost": "Voor elke verloren Lv.7 soldaat",
+      "For each Lv.8 soldier lost": "Voor elke verloren Lv.8 soldaat",
+      "For each Lv.9 soldier lost": "Voor elke verloren Lv.9 soldaat",
+      "For each Lv.10 soldier lost": "Voor elke verloren Lv.10 soldaat"
+    }
+  },
+  de: {
+    sbObjectives: {
+      "Build Territory": "Gebietsausbau",
+      "Train Soldiers": "Soldaten trainieren",
+      "Technology Research": "Technologieforschung",
+      "Enhance Raven": "Rabenverbesserung",
+      "Enhance Heroes": "Heldenverbesserung"
+    },
+    duelFocus: [
+      "Rabenverbesserung",
+      "Gebietsentwicklung",
+      "Technologieforschung",
+      "Heldenwachstum",
+      "Kriegsvorbereitung",
+      "Feindüberfall"
+    ],
+    kvkPhaseText: [
+      "<b>Die Punktesammlung beginnt.</b> Königreiche treten gegeneinander an über Allianz-Duell, Dämonenkönig, Elixir-Gerangel, Überlebenskampf-Ranglisten usw., um Königreichspunkte zu verdienen.",
+      "<b>Punkteauswertung.</b> Das Königreich mit mehr Punkten wird zum Angreifer, das mit weniger zum Verteidiger (bei Gleichstand → das in der Serverreihenfolge frühere Königreich greift an).",
+      "Die Sammelphase endet. Angreifer-/Verteidigerrollen werden festgelegt.",
+      "Der Angreifer kann sich in das Königreich des Verteidigers verlegen.",
+      "<b>Der Schutz von Königsstadt und Türmen fällt weg.</b> Die Wettbewerbsphase beginnt.",
+      "<b>Königsstadtkampf</b> — das Hauptkampffenster. Hier wird der Sieger entschieden.",
+      "Das Event endet. Ranglisten werden festgelegt, Belohnungen per Post verschickt, und alle werden zurück in ihr Heimatkönigreich verlegt."
+    ],
+    tbdEventNames: {
+      undead: "Untoten-Belagerung"
+    },
+    taskNames: {
+      "Consume 1 Stamina": "Verbrauche 1 Ausdauer",
+      "Complete Falcon Quest once": "Schließe die Falken-Quest einmal ab",
+      "Use 660 Antitoxin": "Verwende 660 Gegengift",
+      "Buy a pack containing Diamonds [1 Diamond]": "Kaufe ein Paket mit Diamanten [1 Diamant]",
+      "Gather 100 Grain": "Sammle 100 Getreide",
+      "Gather 100 Timber": "Sammle 100 Holz",
+      "Gather 60 Herbs": "Sammle 60 Kräuter",
+      "Consume 1 Raven Fruit": "Verbrauche 1 Rabenfrucht",
+      "Consume 1 Raven Essence": "Verbrauche 1 Rabenessenz",
+      "Use 1m Construction Speedup": "Verwende 1-Min.-Bau-Beschleunigung",
+      "Increase 1 Building Might": "Erhöhe die Gebäude-Macht um 1",
+      "Execute 1 UR Covert Operation": "Führe 1 UR Verdeckte Operation aus",
+      "Dispatch a UR Caravan": "Entsende eine UR-Karawane",
+      "Recruit survivor once": "Rekrutiere einmal einen Überlebenden",
+      "Use 1m Research Speedup": "Verwende 1-Min.-Forschung-Beschleunigung",
+      "Consume 1 Study Scroll": "1 Studien-Schriftrolle verbrauchen",
+      "Increase 1 Tech Might": "Erhöhe Technologiemacht um 1",
+      "For each Lv.1 Raven Gear Chest opened": "Für jede geöffnete Lv.1 Raben-Ausrüstungstruhe",
+      "For each Lv.2 Raven Gear Chest opened": "Für jede geöffnete Lv.2 Raben-Ausrüstungstruhe",
+      "For each Lv.3 Raven Gear Chest opened": "Für jede geöffnete Lv.3 Raben-Ausrüstungstruhe",
+      "For each Lv.4 Raven Gear Chest opened": "Für jede geöffnete Lv.4 Raben-Ausrüstungstruhe",
+      "For each Lv.5 Raven Gear Chest opened": "Für jede geöffnete Lv.5 Raben-Ausrüstungstruhe",
+      "For each Lv.6 Raven Gear Chest opened": "Für jede geöffnete Lv.6 Raben-Ausrüstungstruhe",
+      "For each Lv.7 Raven Gear Chest opened": "Für jede geöffnete Lv.7 Raben-Ausrüstungstruhe",
+      "Recruit heroes once": "Rekrutiere Helden einmal",
+      "Consume 1 UR Hero Shard": "Verbrauche 1 UR-Helden-Splitter",
+      "Consume 1 SSR Hero Shard": "Verbrauche 1 SSR-Held-Splitter",
+      "Consume 1 SR Hero Shard": "Verbrauche 1 SR Held-Splitter",
+      "Use 1 Skill Badge": "Verwende 1 Fähigkeitsabzeichen",
+      "Use 1m Training Boost": "Benutze 1 Min. Trainingsboost",
+      "Train 1 Lv.1 soldier": "Trainiere 1 Lv.1 Soldat",
+      "Train 1 Lv.2 soldier": "Trainiere 1 Lv.2 Soldat",
+      "Train 1 Lv.3 soldier": "Trainiere 1 Lv.3 Soldat",
+      "Train 1 Lv.4 soldier": "Trainiere 1 Lv.4 Soldat",
+      "Train 1 Lv.5 soldier": "Trainiere 1 Lv.5 Soldat",
+      "Train 1 Lv.6 soldier": "Trainiere 1 Lv.6 Soldat",
+      "Train 1 Lv.7 soldier": "Trainiere 1 Lv.7 Soldat",
+      "Train 1 Lv.8 soldier": "Trainiere 1 Lv.8 Soldat",
+      "Train 1 Lv.9 soldier": "Trainiere 1 Lv.9 Soldat",
+      "Train 1 Lv.10 soldier": "Trainiere 1 Lv.10 Soldat",
+      "Use 1m Healing Speedup": "Verwende 1-Min.-Heilung-Beschleunigung",
+      "For each Lv.1 soldier defeated (specific match)": "Für jeden besiegten Lv.1 Soldaten (bestimmtes Match)",
+      "For each Lv.2 soldier defeated (specific match)": "Für jeden besiegten Lv.2 Soldaten (bestimmtes Match)",
+      "For each Lv.3 soldier defeated (specific match)": "Für jeden besiegten Lv.3 Soldaten (bestimmtes Match)",
+      "For each Lv.4 soldier defeated (specific match)": "Für jeden besiegten Lv.4 Soldaten (bestimmtes Match)",
+      "For each Lv.5 soldier defeated (specific match)": "Für jeden besiegten Lv.5 Soldaten (bestimmtes Match)",
+      "For each Lv.6 soldier defeated (specific match)": "Für jeden besiegten Lv.6 Soldaten (bestimmtes Match)",
+      "For each Lv.7 soldier defeated (specific match)": "Für jeden besiegten Lv.7 Soldaten (bestimmtes Match)",
+      "For each Lv.8 soldier defeated (specific match)": "Für jeden besiegten Lv.8 Soldaten (bestimmtes Match)",
+      "For each Lv.9 soldier defeated (specific match)": "Für jeden besiegten Lv.9 Soldaten (bestimmtes Match)",
+      "For each Lv.10 soldier defeated (specific match)": "Für jeden besiegten Lv.10 Soldaten (bestimmtes Match)",
+      "For each Lv.1 soldier defeated": "Für jeden besiegten Lv.1 Soldaten",
+      "For each Lv.2 soldier defeated": "Für jeden besiegten Lv.2 Soldaten",
+      "For each Lv.3 soldier defeated": "Für jeden besiegten Lv.3 Soldaten",
+      "For each Lv.4 soldier defeated": "Für jeden besiegten Lv.4 Soldaten",
+      "For each Lv.5 soldier defeated": "Für jeden besiegten Lv.5 Soldaten",
+      "For each Lv.6 soldier defeated": "Für jeden besiegten Lv.6 Soldaten",
+      "For each Lv.7 soldier defeated": "Für jeden besiegten Lv.7 Soldaten",
+      "For each Lv.8 soldier defeated": "Für jeden besiegten Lv.8 Soldaten",
+      "For each Lv.9 soldier defeated": "Für jeden besiegten Lv.9 Soldaten",
+      "For each Lv.10 soldier defeated": "Für jeden besiegten Lv.10 Soldaten",
+      "For each Lv.1 soldier lost": "Für jeden verlorenen Lv.1 Soldaten",
+      "For each Lv.2 soldier lost": "Für jeden verlorenen Lv.2 Soldaten",
+      "For each Lv.3 soldier lost": "Für jeden verlorenen Lv.3 Soldaten",
+      "For each Lv.4 soldier lost": "Für jeden verlorenen Lv.4 Soldaten",
+      "For each Lv.5 soldier lost": "Für jeden verlorenen Lv.5 Soldaten",
+      "For each Lv.6 soldier lost": "Für jeden verlorenen Lv.6 Soldaten",
+      "For each Lv.7 soldier lost": "Für jeden verlorenen Lv.7 Soldaten",
+      "For each Lv.8 soldier lost": "Für jeden verlorenen Lv.8 Soldaten",
+      "For each Lv.9 soldier lost": "Für jeden verlorenen Lv.9 Soldaten",
+      "For each Lv.10 soldier lost": "Für jeden verlorenen Lv.10 Soldaten"
+    }
+  },
+  fr: {
+    sbObjectives: {
+      "Build Territory": "Développer le territoire",
+      "Train Soldiers": "Entraîner les soldats",
+      "Technology Research": "Rechercher des technologies",
+      "Enhance Raven": "Améliorer le Corbeau",
+      "Enhance Heroes": "Améliorer les héros"
+    },
+    // index 0 = Monday (Phase 1) .. index 5 = Saturday (Phase 6)
+    duelFocus: [
+      "Amélioration du Corbeau",
+      "Développement du territoire",
+      "Recherche technologique",
+      "Croissance des héros",
+      "Préparation de guerre",
+      "Raid de l'ennemi"
+    ],
+    kvkPhaseText: [
+      "<b>L'accumulation de points commence.</b> Les royaumes s'affrontent via le Duel d'alliances, Roi démon, Ruée à l'élixir, le classement du Combat de survie, etc. pour gagner des Points de Royaume.",
+      "<b>Décompte des points.</b> Le royaume avec le plus de points devient l'attaquant, celui avec le moins devient le défenseur (égalité → le royaume classé en premier dans l'ordre du serveur attaque).",
+      "La phase d'accumulation se termine. Les rôles d'attaquant/défenseur sont verrouillés.",
+      "L'attaquant peut se relocaliser dans le royaume du défenseur.",
+      "<b>La protection de la Cité royale et des Tourelles est levée.</b> La phase de contestation commence.",
+      "<b>Tumulte dans la Cité royale</b> — la fenêtre de bataille principale. Le vainqueur y est décidé.",
+      "L'événement se termine. Les classements sont verrouillés, les récompenses sont envoyées, et tout le monde est relocalisé dans son royaume d'origine."
+    ],
+    tbdEventNames: {
+      undead: "Siège des morts-vivants"
+    },
+    taskNames: {
+      "Consume 1 Stamina": "Consommer 1 endurance",
+      "Complete Falcon Quest once": "Accomplir la quête du faucon une fois",
+      "Use 660 Antitoxin": "Utiliser 660 antitoxine",
+      "Buy a pack containing Diamonds [1 Diamond]": "Acheter un pack contenant des diamants [1 diamant]",
+      "Gather 100 Grain": "Récolter 100 céréales",
+      "Gather 100 Timber": "Récolter 100 bois",
+      "Gather 60 Herbs": "Récolter 60 Herbes",
+      "Consume 1 Raven Fruit": "Consommer 1 Fruit du corbeau",
+      "Consume 1 Raven Essence": "Consommer 1 Essence du corbeau",
+      "Use 1m Construction Speedup": "Utiliser Accélération de construction 1 m",
+      "Increase 1 Building Might": "Augmenter la puissance de 1 bâtiment",
+      "Execute 1 UR Covert Operation": "Mener 1 Opération clandestine UR",
+      "Dispatch a UR Caravan": "Déployer une Caravane UR",
+      "Recruit survivor once": "Recruter un survivant une fois",
+      "Use 1m Research Speedup": "Utiliser l'Accélération de recherche 1 m",
+      "Consume 1 Study Scroll": "Utiliser 1 Parchemin d'étude",
+      "Increase 1 Tech Might": "Augmenter 1 Puissance technologique",
+      "For each Lv.1 Raven Gear Chest opened": "Pour chaque ouverture de Coffre d'équipement de corbeau Niv. 1",
+      "For each Lv.2 Raven Gear Chest opened": "Pour chaque ouverture de Coffre d'équipement de corbeau Niv. 2",
+      "For each Lv.3 Raven Gear Chest opened": "Pour chaque ouverture de Coffre d'équipement de corbeau Niv. 3",
+      "For each Lv.4 Raven Gear Chest opened": "Pour chaque ouverture de Coffre d'équipement de corbeau Niv. 4",
+      "For each Lv.5 Raven Gear Chest opened": "Pour chaque ouverture de Coffre d'équipement de corbeau Niv. 5",
+      "For each Lv.6 Raven Gear Chest opened": "Pour chaque ouverture de Coffre d'équipement de corbeau Niv. 6",
+      "For each Lv.7 Raven Gear Chest opened": "Pour chaque ouverture de Coffre d'équipement de corbeau Niv. 7",
+      "Recruit heroes once": "Recruter des héros une fois",
+      "Consume 1 UR Hero Shard": "Utiliser 1 Fragment de héros UR",
+      "Consume 1 SSR Hero Shard": "Utiliser 1 Fragment de héros SSR",
+      "Consume 1 SR Hero Shard": "Consommer 1 Fragment de héros SR",
+      "Use 1 Skill Badge": "Utiliser 1 Badge de compétence",
+      "Use 1m Training Boost": "Utiliser l'Accélération d'entraînement 1m",
+      "Train 1 Lv.1 soldier": "Entraîner 1 soldat Niv. 1",
+      "Train 1 Lv.2 soldier": "Entraîner 1 soldat Niv. 2",
+      "Train 1 Lv.3 soldier": "Entraîner 1 soldat Niv. 3",
+      "Train 1 Lv.4 soldier": "Entraîner 1 soldat Niv. 4",
+      "Train 1 Lv.5 soldier": "Entraîner 1 soldat Niv. 5",
+      "Train 1 Lv.6 soldier": "Entraîner 1 soldat Niv. 6",
+      "Train 1 Lv.7 soldier": "Entraîner 1 soldat Niv. 7",
+      "Train 1 Lv.8 soldier": "Entraîner 1 soldat Niv. 8",
+      "Train 1 Lv.9 soldier": "Entraîner 1 soldat Niv. 9",
+      "Train 1 Lv.10 soldier": "Entraîner 1 soldat Niv. 10",
+      "Use 1m Healing Speedup": "Utiliser l'Accélération de guérison 1 min",
+      "For each Lv.1 soldier defeated (specific match)": "Par soldat Niv. 1 vaincu (correspondance spécifique)",
+      "For each Lv.2 soldier defeated (specific match)": "Par soldat Niv. 2 vaincu (correspondance spécifique)",
+      "For each Lv.3 soldier defeated (specific match)": "Par soldat Niv. 3 vaincu (correspondance spécifique)",
+      "For each Lv.4 soldier defeated (specific match)": "Par soldat Niv. 4 vaincu (correspondance spécifique)",
+      "For each Lv.5 soldier defeated (specific match)": "Par soldat Niv. 5 vaincu (correspondance spécifique)",
+      "For each Lv.6 soldier defeated (specific match)": "Par soldat Niv. 6 vaincu (correspondance spécifique)",
+      "For each Lv.7 soldier defeated (specific match)": "Par soldat Niv. 7 vaincu (correspondance spécifique)",
+      "For each Lv.8 soldier defeated (specific match)": "Par soldat Niv. 8 vaincu (correspondance spécifique)",
+      "For each Lv.9 soldier defeated (specific match)": "Par soldat Niv. 9 vaincu (correspondance spécifique)",
+      "For each Lv.10 soldier defeated (specific match)": "Par soldat Niv. 10 vaincu (correspondance spécifique)",
+      "For each Lv.1 soldier defeated": "Par soldat Niv. 1 vaincu",
+      "For each Lv.2 soldier defeated": "Par soldat Niv. 2 vaincu",
+      "For each Lv.3 soldier defeated": "Par soldat Niv. 3 vaincu",
+      "For each Lv.4 soldier defeated": "Par soldat Niv. 4 vaincu",
+      "For each Lv.5 soldier defeated": "Par soldat Niv. 5 vaincu",
+      "For each Lv.6 soldier defeated": "Par soldat Niv. 6 vaincu",
+      "For each Lv.7 soldier defeated": "Par soldat Niv. 7 vaincu",
+      "For each Lv.8 soldier defeated": "Par soldat Niv. 8 vaincu",
+      "For each Lv.9 soldier defeated": "Par soldat Niv. 9 vaincu",
+      "For each Lv.10 soldier defeated": "Par soldat Niv. 10 vaincu",
+      "For each Lv.1 soldier lost": "Par soldat Niv. 1 perdu",
+      "For each Lv.2 soldier lost": "Par soldat Niv. 2 perdu",
+      "For each Lv.3 soldier lost": "Par soldat Niv. 3 perdu",
+      "For each Lv.4 soldier lost": "Par soldat Niv. 4 perdu",
+      "For each Lv.5 soldier lost": "Par soldat Niv. 5 perdu",
+      "For each Lv.6 soldier lost": "Par soldat Niv. 6 perdu",
+      "For each Lv.7 soldier lost": "Par soldat Niv. 7 perdu",
+      "For each Lv.8 soldier lost": "Par soldat Niv. 8 perdu",
+      "For each Lv.9 soldier lost": "Par soldat Niv. 9 perdu",
+      "For each Lv.10 soldier lost": "Par soldat Niv. 10 perdu"
+    }
+  }
+};
+
+function translateTaskName(name){
+  const dict = GAME_TERMS[currentLang] && GAME_TERMS[currentLang].taskNames;
+  return (dict && dict[name]) || name;
+}
+function translateObjective(name){
+  const dict = GAME_TERMS[currentLang] && GAME_TERMS[currentLang].sbObjectives;
+  return (dict && dict[name]) || name;
+}
+function translateDuelFocus(dayIdx, fallback){
+  const arr = GAME_TERMS[currentLang] && GAME_TERMS[currentLang].duelFocus;
+  return (arr && arr[dayIdx-1]) || fallback;
+}
+function translateKvkPhaseText(idx, fallback){
+  const arr = GAME_TERMS[currentLang] && GAME_TERMS[currentLang].kvkPhaseText;
+  return (arr && arr[idx] !== undefined) ? arr[idx] : fallback;
+}
+function translateTBDName(key, fallback){
+  const dict = GAME_TERMS[currentLang] && GAME_TERMS[currentLang].tbdEventNames;
+  return (dict && dict[key]) || fallback;
+}
+
 let currentLang = 'en';
 function t(key){
   const val = (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) || TRANSLATIONS.en[key];
@@ -1335,6 +2659,18 @@ function applyStaticTranslations(){
     el.innerHTML = t(key);
   });
   document.documentElement.lang = currentLang;
+  updateTranscribedNote();
+}
+
+// Shown only for languages the game itself does not ship. Their in-game
+// terms below are ordinary translations, not strings copied from a client,
+// so the note says so plainly rather than letting players assume otherwise.
+function updateTranscribedNote(){
+  const el = document.getElementById('transcribedNote');
+  if(!el) return;
+  const isTranscribed = !!(GAME_TERMS[currentLang] && GAME_TERMS[currentLang].transcribed);
+  el.hidden = !isTranscribed;
+  if(isTranscribed) el.innerHTML = t('note.transcribed');
 }
 
 // ============================================================
@@ -1694,7 +3030,7 @@ function renderSurvivalBattle(){
     tr.innerHTML = `
       <td class="time">${slot}</td>
       <td class="time">${conv.timeStr}${conv.dateStr ? ' <span style="color:var(--muted);font-size:11px;">'+conv.dateStr+'</span>':''}</td>
-      <td>${cycle[i]}</td>
+      <td>${translateObjective(cycle[i])}</td>
     `;
     tbody.appendChild(tr);
   });
@@ -1770,7 +3106,7 @@ function renderKvK(){
   container.innerHTML = '';
   const tz = getSelectedTZ();
 
-  KVK_PHASES.forEach(phase=>{
+  KVK_PHASES.forEach((phase, idx)=>{
     const row = document.createElement('div');
     row.className = 'kvk-phase' + (phase.battle ? ' kvk-battle':'');
 
@@ -1796,7 +3132,7 @@ function renderKvK(){
 
     row.innerHTML = `
       <div class="kvk-when">${WEEKDAY_FULL[currentLang][phase.day]} ${phase.time}<br><span style="color:var(--text)">${convertedStr}</span></div>
-      <div class="kvk-what">${phase.text}</div>
+      <div class="kvk-what">${translateKvkPhaseText(idx, phase.text)}</div>
     `;
     container.appendChild(row);
   });
@@ -1856,7 +3192,7 @@ function renderAllianceDuel(){
   tbody.innerHTML = '';
   ALLIANCE_DUEL_PHASES.forEach(p=>{
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${WEEKDAY_FULL[currentLang][p.dayIdx]}</td><td class="time">${t('th.phase')} ${p.dayIdx}</td><td>${p.focus}</td>`;
+    tr.innerHTML = `<td>${WEEKDAY_FULL[currentLang][p.dayIdx]}</td><td class="time">${t('th.phase')} ${p.dayIdx}</td><td>${translateDuelFocus(p.dayIdx, p.focus)}</td>`;
     tbody.appendChild(tr);
   });
 
@@ -1977,7 +3313,7 @@ function renderAllianceDuelTasks(){
   for(let day=1; day<=6; day++){
     const info = ALLIANCE_DUEL_TASKS[day];
     const phaseInfo = ALLIANCE_DUEL_PHASES[day-1];
-    const label = `${WEEKDAY_FULL[currentLang][day]} — ${t('th.phase')} ${day}: ${phaseInfo.focus}`;
+    const label = `${WEEKDAY_FULL[currentLang][day]} — ${t('th.phase')} ${day}: ${translateDuelFocus(day, phaseInfo.focus)}`;
     const details = document.createElement('details');
     details.className = 'ad-day-accordion';
     const summary = document.createElement('summary');
@@ -1986,7 +3322,7 @@ function renderAllianceDuelTasks(){
     info.tasks.forEach(([name, reward])=>{
       const row = document.createElement('div');
       row.className = 'ad-task-row';
-      row.innerHTML = `<span class="ad-task-name">${name}</span><span class="ad-task-reward">${reward}</span>`;
+      row.innerHTML = `<span class="ad-task-name">${translateTaskName(name)}</span><span class="ad-task-reward">${reward}</span>`;
       details.appendChild(row);
     });
     container.appendChild(details);
@@ -2094,7 +3430,7 @@ function buildTBDGrid(dataSource){
     const card = document.createElement('div');
     card.className = 'tbd-card';
     card.innerHTML = `
-      <h3><span class="status-dot ${data.day && data.time ? 'set':''}" id="dot-${ev.key}"></span>${ev.name}</h3>
+      <h3><span class="status-dot ${data.day && data.time ? 'set':''}" id="dot-${ev.key}"></span>${translateTBDName(ev.key, ev.name)}</h3>
       <div class="field">
         <label>${t('tbd.fieldDay')}</label>
         <select id="day-${ev.key}">
@@ -2219,7 +3555,7 @@ function renderUpcomingBanner(){
     if(daySel && timeInput && daySel.value && timeInput.value){
       const dayIdx = DAY_NAMES.indexOf(daySel.value);
       const [hh,mm] = timeInput.value.split(':').map(Number);
-      candidates.push({name: ev.name, date: nextFutureWeeklyServerTime(dayIdx, hh, mm)});
+      candidates.push({name: translateTBDName(ev.key, ev.name), date: nextFutureWeeklyServerTime(dayIdx, hh, mm)});
     }
   });
 
