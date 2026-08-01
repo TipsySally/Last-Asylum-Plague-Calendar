@@ -638,7 +638,47 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 .hoard-lines{ margin-top:8px; }
 .hoard-line{ display:flex; justify-content:space-between; gap:12px; font-size:.83rem; padding:3px 0; }
 .hoard-line span:last-child{ font-variant-numeric:tabular-nums; color:var(--muted); }
-.fq-custom{ margin-top:-4px; }
+.fq-custom{ margin-top:6px; padding:8px 10px; border-radius:5px; background:rgba(0,0,0,.18); }
+.fq-customnote{ font-size:.78rem; color:var(--muted); margin:0 0 6px; }
+
+/* ---- Falcon planner: one question per line ---- */
+.fq-simple{ display:flex; flex-direction:column; gap:8px; margin:12px 0; }
+.fq-row{ display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+.fq-row > label{ flex:1 1 200px; font-size:.88rem; }
+.fq-row select, .fq-row input{
+  flex:none; background:rgba(0,0,0,.32); color:inherit; font:inherit; font-size:.88rem;
+  border:1px solid rgba(255,255,255,.15); border-radius:4px; padding:5px 8px;
+  font-variant-numeric:tabular-nums;
+}
+.fq-row input[type="number"]{ width:82px; text-align:right; }
+.fq-row input[type="text"]{ width:82px; text-align:right; }
+.fq-row select:focus, .fq-row input:focus{ outline:none; border-color:var(--green); }
+.fq-hint{ flex:1 1 100%; font-size:.74rem; color:var(--muted); }
+.fq-verdict{ font-size:1.05rem; font-weight:700; line-height:1.35; }
+.fq-why{ font-size:.85rem; margin-top:3px; opacity:.92; }
+.fq-maths{ margin-top:8px; }
+.fq-maths > summary{
+  cursor:pointer; list-style:none; font-size:.74rem; text-transform:uppercase;
+  letter-spacing:.07em; color:var(--muted); border-bottom:1px dotted rgba(255,255,255,.26);
+  display:inline-block; padding:1px 0;
+}
+.fq-maths > summary::-webkit-details-marker{ display:none; }
+.fq-maths > summary::after{ content:' \25B8'; font-size:.7em; opacity:.7; }
+.fq-maths[open] > summary::after{ content:' \25BE'; }
+.fq-maths > summary:hover{ color:var(--green-bright); border-bottom-color:var(--green); }
+
+/* ---- Reference card ---- */
+.fq-ref{ margin:8px 0; border:1px solid rgba(255,255,255,.12); border-radius:5px; }
+.fq-ref > summary{
+  cursor:pointer; list-style:none; padding:9px 12px; font-size:.88rem; font-weight:600;
+  display:flex; justify-content:space-between; align-items:center; gap:10px;
+}
+.fq-ref > summary::-webkit-details-marker{ display:none; }
+.fq-ref > summary::after{ content:'+'; color:var(--green-bright); font-size:1rem; flex:none; }
+.fq-ref[open] > summary::after{ content:'\2013'; }
+.fq-ref > summary:hover{ color:var(--green-bright); }
+.fq-refbody{ padding:0 12px 10px; }
+
 .fq-table tr.fq-gap td{ color:var(--muted); font-size:.8rem; font-style:italic; text-align:left; }
 .hoard-flag{
   margin-top:8px; padding:8px 10px; border-radius:4px; font-size:.82rem; line-height:1.5;
@@ -1821,13 +1861,13 @@ section.evf-out{ display:none; }
 
     <div class="tool-card" id="falconPlanner">
       <h3 data-i18n="tools.falconTitle">Falcon Quest Planner</h3>
-      <p data-i18n="tools.falconBody">Falcon Quests arrive in a <b>block on a fixed timer</b>, not a trickle &mdash; so the useful question is not &ldquo;when do I stop spending&rdquo; but <b>how far down can I spend and still refill in time</b>. Set your Falcon Tower level and this works it out.</p>
+      <p data-i18n="tools.falconBody">Tells you how many Falcon Quests you can safely use right now, and still be full when you want to claim them.</p>
 
-      <div class="guide-warn" data-i18n="tools.falconExpiry"><b>Completing is not claiming.</b> These are two separate actions. Quests you leave <i>uncompleted</i> will <b>expire</b> and are simply lost &mdash; so complete them as they arrive, and hold back only the claim. Hoarding means a pile of completed-but-unclaimed quests, never a pile of untouched ones.</div>
+      <div class="guide-warn" data-i18n="tools.falconExpiry"><b>Complete them, just don&rsquo;t claim them.</b> Completing and claiming are two separate actions. Any quest you leave <i>uncompleted</i> will <b>expire and be lost</b> &mdash; so keep completing as they arrive, and hold back only the claim.</div>
 
-      <div class="hoard-grid">
-        <div class="hoard-field">
-          <label for="fqLevel" data-i18n="fq.level">Falcon Tower level</label>
+      <div class="fq-simple">
+        <div class="fq-row">
+          <label for="fqLevel" data-i18n="fq.level">My Falcon Tower is</label>
           <select id="fqLevel">
             <option value="4">Lv.4</option>
             <option value="5">Lv.5</option>
@@ -1835,19 +1875,20 @@ section.evf-out{ display:none; }
             <option value="10">Lv.10</option>
             <option value="11">Lv.11</option>
             <option value="12">Lv.12</option>
-            <option value="0">Other / custom</option>
+            <option value="0" data-i18n="fq.optOther">Another level</option>
           </select>
         </div>
-        <div class="hoard-field">
-          <label for="fqHave" data-i18n="fq.have">Held right now</label>
+        <div class="fq-row">
+          <label for="fqHave" data-i18n="fq.have">I have this many saved</label>
           <input type="number" id="fqHave" min="0" step="1" inputmode="numeric" value="0">
         </div>
-        <div class="hoard-field">
-          <label for="fqNext" data-i18n="fq.next">Next refresh in (h:mm)</label>
+        <div class="fq-row">
+          <label for="fqNext" data-i18n="fq.next">Next refresh countdown</label>
           <input type="text" id="fqNext" inputmode="numeric" placeholder="4:46" value="4:46">
+          <span class="fq-hint" data-i18n="fq.nextHint">copy the timer at the top of the Falcon Tower screen</span>
         </div>
-        <div class="hoard-field">
-          <label for="fqDay" data-i18n="fq.day">Claim on</label>
+        <div class="fq-row">
+          <label for="fqDay" data-i18n="fq.day">I want to claim on</label>
           <select id="fqDay">
             <option value="1">Monday</option>
             <option value="3">Wednesday</option>
@@ -1857,33 +1898,29 @@ section.evf-out{ display:none; }
             <option value="6">Saturday</option>
             <option value="0">Sunday</option>
           </select>
-        </div>
-        <div class="hoard-field">
-          <label for="fqTime" data-i18n="fq.time">At (your local time)</label>
           <input type="time" id="fqTime" value="08:00">
         </div>
       </div>
 
       <div class="fq-custom" id="fqCustom" hidden>
-        <div class="hoard-grid">
-          <div class="hoard-field">
-            <label for="fqRefresh" data-i18n="fq.refresh">Quests on refresh</label>
-            <input type="number" id="fqRefresh" min="1" step="1" value="11">
-          </div>
-          <div class="hoard-field">
-            <label for="fqInactive" data-i18n="fq.inactive">Inactive cap</label>
-            <input type="number" id="fqInactive" min="0" step="1" value="35">
-          </div>
-          <div class="hoard-field">
-            <label for="fqActive" data-i18n="fq.active">Max active</label>
-            <input type="number" id="fqActive" min="0" step="1" value="9">
-          </div>
+        <p class="fq-customnote" data-i18n="fq.customNote">Only six levels have been recorded. For any other level, read these three numbers off your own upgrade preview.</p>
+        <div class="fq-simple">
+          <div class="fq-row"><label for="fqRefresh" data-i18n="fq.refresh">Quests on refresh</label><input type="number" id="fqRefresh" min="1" step="1" value="11"></div>
+          <div class="fq-row"><label for="fqInactive" data-i18n="fq.inactive">Inactive quests</label><input type="number" id="fqInactive" min="0" step="1" value="35"></div>
+          <div class="fq-row"><label for="fqActive" data-i18n="fq.active">Max active quests</label><input type="number" id="fqActive" min="0" step="1" value="9"></div>
         </div>
       </div>
 
       <div class="hoard-out" id="fqOut"></div>
+    </div>
 
-      <h4 data-i18n="fq.tableHead">Falcon Tower by level</h4>
+    <div class="tool-card" id="falconReference">
+      <h3 data-i18n="fq.refTitle">Falcon Tower &mdash; reference</h3>
+      <p data-i18n="fq.refBody">The numbers behind the planner. You do not need any of this to use it.</p>
+
+      <details class="fq-ref">
+        <summary data-i18n="fq.refLevels">What each tower level gives</summary>
+        <div class="fq-refbody">
       <div class="table-scroll">
       <table class="score-table stackable fq-table">
         <thead><tr>
@@ -1907,8 +1944,12 @@ section.evf-out{ display:none; }
       </div>
       <p class="tbl-foot" data-i18n="fq.tableNote"><b>Six levels captured from three accounts</b>, each panel showing its current level and the next. Lv.1&ndash;3, Lv.6&ndash;8 and Lv.13+ are unrecorded and are <b>not interpolated</b> &mdash; the three stats move on different levels, so a midpoint guess would be wrong more often than right. Upgrades come from <b>completing Falcon Tower incidents</b>: 50 to leave Lv.4, 1,500 to leave Lv.9, 2,500 to leave Lv.11.</p>
       <p class="tbl-foot" data-i18n="fq.capCurve"><b>The useful pattern is capacity against daily output.</b> At Lv.4 you hold 31 but generate 32 a day, and at Lv.5 you hold 32 and generate 36 &mdash; so early on <b>you cannot bank even a single day</b> and hoarding for a specific hour is barely possible. At <b>Lv.9 capacity and daily output meet exactly at 44</b>. From <b>Lv.10</b> the cap finally exceeds production (49 held against 44 a day), which is the first point where banking more than one day’s worth becomes possible at all. If you are hoarding for Alliance Duel days, <b>Lv.10 is the upgrade that changes what you can do</b>, not Lv.11 or Lv.12.</p>
+        </div>
+      </details>
 
-      <h4 data-i18n="fq.oddsHead">What turns up, and how often</h4>
+      <details class="fq-ref">
+        <summary data-i18n="fq.refOdds">Which quests turn up, and how often</summary>
+        <div class="fq-refbody">
       <div class="table-scroll">
       <table class="score-table stackable fq-odds">
         <thead><tr>
@@ -1930,6 +1971,8 @@ section.evf-out{ display:none; }
         <li data-i18n="fq.odds3">Four quests appear <b>once daily</b> and sit outside this table: Defeat Blight, Defeat Blight Legion, Eliminate Wandering Blight, and Rescue the Wounded.</li>
         <li data-i18n="fq.odds4">From <b>Lv.6</b> onward, Help Alliance Members and Supply Recovery can be completed <b>with one tap</b> &mdash; which matters here, since together they are half of all quests that appear.</li>
       </ul>
+        </div>
+      </details>
 
       <details class="src-note"><summary data-i18n="ui.source">Source</summary><div class="src-body" data-i18n="fq.src">In-game Falcon Tower upgrade-preview panels and the Info notice, from two accounts on server #217, 1 Aug 2026. Highest evidence tier. The six-hour refresh interval is inferred from two independent countdowns reading 4:46:37 and 4:14:02 against a stated 11-per-refresh rate; it has not been timed end to end. English-only for now.</div></details>
     </div>
@@ -2621,6 +2664,15 @@ en: {
 "nav.research":"Alliance Research",
 "nav.howto":"How-To",
 "nav.changelog":"What Changed",
+"fq.showNumbers":"Show the numbers",
+"fq.refTitle":"Falcon Tower &mdash; reference",
+"fq.refBody":"The numbers behind the planner. You do not need any of this to use it.",
+"fq.refLevels":"What each tower level gives",
+"fq.refOdds":"Which quests turn up, and how often",
+"nav.falconRef":"Falcon Tower Reference",
+"fq.optOther":"Another level",
+"fq.nextHint":"copy the timer at the top of the Falcon Tower screen",
+"fq.customNote":"Only six levels have been recorded. For any other level, read these three numbers off your own upgrade preview.",
 "nav.calcSpeedup":"Speed-Up Calculator",
 "nav.calcFalcon":"Falcon Quest Planner",
 "nav.calcHoard":"General Hoard Planner",
@@ -2829,6 +2881,15 @@ de: {
 "nav.research":"Allianzforschung",
 "nav.howto":"Anleitungen",
 "nav.changelog":"Änderungen",
+"fq.showNumbers":"Zahlen anzeigen",
+"fq.refTitle":"Falkenturm &mdash; Referenz",
+"fq.refBody":"Die Zahlen hinter dem Planer. Zum Benutzen brauchst du davon nichts.",
+"fq.refLevels":"Was jede Turmstufe bringt",
+"fq.refOdds":"Welche Quests erscheinen, und wie oft",
+"nav.falconRef":"Falkenturm-Referenz",
+"fq.optOther":"Andere Stufe",
+"fq.nextHint":"übernimm den Timer oben im Falkenturm-Bildschirm",
+"fq.customNote":"Nur sechs Stufen sind erfasst. Für jede andere Stufe lies diese drei Zahlen in deiner eigenen Upgrade-Vorschau ab.",
 "nav.calcSpeedup":"Beschleuniger-Rechner",
 "nav.calcFalcon":"Falken-Quest-Planer",
 "nav.calcHoard":"Allgemeiner Hortplaner",
@@ -2974,6 +3035,15 @@ nl: {
 "nav.research":"Alliantieonderzoek",
 "nav.howto":"Handleidingen",
 "nav.changelog":"Wijzigingen",
+"fq.showNumbers":"Toon de getallen",
+"fq.refTitle":"Falcon Tower &mdash; naslag",
+"fq.refBody":"De getallen achter de planner. Je hebt hier niets van nodig om hem te gebruiken.",
+"fq.refLevels":"Wat elk torenniveau geeft",
+"fq.refOdds":"Welke quests verschijnen, en hoe vaak",
+"nav.falconRef":"Falcon Tower-naslag",
+"fq.optOther":"Ander niveau",
+"fq.nextHint":"neem de timer boven in het Falcon Tower-scherm over",
+"fq.customNote":"Slechts zes niveaus zijn vastgelegd. Lees voor elk ander niveau deze drie getallen af in je eigen upgradevoorbeeld.",
 "nav.calcSpeedup":"Speedup-calculator",
 "nav.calcFalcon":"Falcon Quest-planner",
 "nav.calcHoard":"Algemene hoardplanner",
@@ -3119,6 +3189,15 @@ fr: {
 "nav.research":"Recherche d’alliance",
 "nav.howto":"Tutoriels",
 "nav.changelog":"Changements",
+"fq.showNumbers":"Afficher les chiffres",
+"fq.refTitle":"Falcon Tower &mdash; référence",
+"fq.refBody":"Les chiffres derrière le planificateur. Rien de tout cela n’est nécessaire pour s’en servir.",
+"fq.refLevels":"Ce que donne chaque niveau de tour",
+"fq.refOdds":"Quelles quêtes apparaissent, et à quelle fréquence",
+"nav.falconRef":"Référence Falcon Tower",
+"fq.optOther":"Autre niveau",
+"fq.nextHint":"recopiez le minuteur en haut de l’écran Falcon Tower",
+"fq.customNote":"Seuls six niveaux ont été relevés. Pour tout autre niveau, lisez ces trois chiffres dans votre propre aperçu d’amélioration.",
 "nav.calcSpeedup":"Calculateur d’accélération",
 "nav.calcFalcon":"Planificateur Falcon Quest",
 "nav.calcHoard":"Planificateur de réserve",
@@ -3264,6 +3343,15 @@ es: {
 "nav.research":"Investigación de alianza",
 "nav.howto":"Cómo se hace",
 "nav.changelog":"Cambios",
+"fq.showNumbers":"Ver los números",
+"fq.refTitle":"Falcon Tower &mdash; referencia",
+"fq.refBody":"Los números detrás del planificador. No hace falta nada de esto para usarlo.",
+"fq.refLevels":"Qué da cada nivel de torre",
+"fq.refOdds":"Qué misiones aparecen, y con qué frecuencia",
+"nav.falconRef":"Referencia Falcon Tower",
+"fq.optOther":"Otro nivel",
+"fq.nextHint":"copia el temporizador de la parte superior de la pantalla Falcon Tower",
+"fq.customNote":"Solo se han registrado seis niveles. Para cualquier otro, lee estos tres números en tu propia vista previa de mejora.",
 "nav.calcSpeedup":"Calculadora de aceleraciones",
 "nav.calcFalcon":"Planificador de Falcon Quests",
 "nav.calcHoard":"Planificador de reservas",
@@ -3409,6 +3497,15 @@ pt: {
 "nav.research":"Pesquisa de aliança",
 "nav.howto":"Como fazer",
 "nav.changelog":"Alterações",
+"fq.showNumbers":"Ver os números",
+"fq.refTitle":"Falcon Tower &mdash; referência",
+"fq.refBody":"Os números por trás do planeador. Não precisas de nada disto para o usar.",
+"fq.refLevels":"O que dá cada nível da torre",
+"fq.refOdds":"Que missões aparecem, e com que frequência",
+"nav.falconRef":"Referência Falcon Tower",
+"fq.optOther":"Outro nível",
+"fq.nextHint":"copia o temporizador no topo do ecrã Falcon Tower",
+"fq.customNote":"Só foram registados seis níveis. Para qualquer outro, lê estes três números na tua própria pré-visualização de melhoria.",
 "nav.calcSpeedup":"Calculadora de acelerações",
 "nav.calcFalcon":"Planeador de Falcon Quests",
 "nav.calcHoard":"Planeador de reservas",
@@ -3554,6 +3651,15 @@ hu: {
 "nav.research":"Szövetségi kutatás",
 "nav.howto":"Lépésről lépésre",
 "nav.changelog":"Változások",
+"fq.showNumbers":"Számok mutatása",
+"fq.refTitle":"Falcon Tower &mdash; adatok",
+"fq.refBody":"A tervező mögötti számok. A használatához semmi sem kell belőle.",
+"fq.refLevels":"Mit ad az egyes toronyszintek",
+"fq.refOdds":"Mely küldetések bőkkennek fel, és milyen gyakran",
+"nav.falconRef":"Falcon Tower adatok",
+"fq.optOther":"Más szint",
+"fq.nextHint":"másold a Falcon Tower képernyő tetején látható időzítőt",
+"fq.customNote":"Csak hat szint van rögzítve. Bármely más szinthez olvasd le ezt a három számot a saját fejlesztési előnézetedből.",
 "nav.calcSpeedup":"Gyorsító-kalkulátor",
 "nav.calcFalcon":"Falcon Quest tervező",
 "nav.calcHoard":"Általános gyűjtéstervező",
@@ -3699,6 +3805,15 @@ ru: {
 "nav.research":"Исследования альянса",
 "nav.howto":"Инструкции",
 "nav.changelog":"Изменения",
+"fq.showNumbers":"Показать цифры",
+"fq.refTitle":"Falcon Tower &mdash; справка",
+"fq.refBody":"Цифры, на которых основан планировщик. Для его использования ничего из этого не нужно.",
+"fq.refLevels":"Что даёт каждый уровень башни",
+"fq.refOdds":"Какие квесты выпадают и как часто",
+"nav.falconRef":"Справка Falcon Tower",
+"fq.optOther":"Другой уровень",
+"fq.nextHint":"скопируйте таймер сверху экрана Falcon Tower",
+"fq.customNote":"Записано только шесть уровней. Для любого другого возьмите эти три числа из своего предпросмотра улучшения.",
 "nav.calcSpeedup":"Калькулятор ускорений",
 "nav.calcFalcon":"Планировщик Falcon Quest",
 "nav.calcHoard":"Общий планировщик запаса",
@@ -3844,6 +3959,15 @@ uk: {
 "nav.research":"Дослідження альянсу",
 "nav.howto":"Інструкції",
 "nav.changelog":"Зміни",
+"fq.showNumbers":"Показати цифри",
+"fq.refTitle":"Falcon Tower &mdash; довідка",
+"fq.refBody":"Цифри, на яких базується планувальник. Для його використання нічого з цього не потрібно.",
+"fq.refLevels":"Що дає кожен рівень вежі",
+"fq.refOdds":"Які квести випадають і як часто",
+"nav.falconRef":"Довідка Falcon Tower",
+"fq.optOther":"Інший рівень",
+"fq.nextHint":"скопіюйте таймер угорі екрана Falcon Tower",
+"fq.customNote":"Записано лише шість рівнів. Для будь-якого іншого візьміть ці три числа зі свого передперегляду покращення.",
 "nav.calcSpeedup":"Калькулятор прискорень",
 "nav.calcFalcon":"Планувальник Falcon Quest",
 "nav.calcHoard":"Загальний планувальник запасу",
@@ -3989,6 +4113,15 @@ pl: {
 "nav.research":"Badania sojuszu",
 "nav.howto":"Instrukcje",
 "nav.changelog":"Zmiany",
+"fq.showNumbers":"Pokaż liczby",
+"fq.refTitle":"Falcon Tower &mdash; dane",
+"fq.refBody":"Liczby stojące za planerem. Do korzystania z niego nic z tego nie jest potrzebne.",
+"fq.refLevels":"Co daje każdy poziom wieży",
+"fq.refOdds":"Jakie zadania się pojawiają i jak często",
+"nav.falconRef":"Dane Falcon Tower",
+"fq.optOther":"Inny poziom",
+"fq.nextHint":"przepisz licznik u góry ekranu Falcon Tower",
+"fq.customNote":"Zapisano tylko sześć poziomów. Dla dowolnego innego odczytaj te trzy liczby z własnego podglądu ulepszenia.",
 "nav.calcSpeedup":"Kalkulator przyspieszeń",
 "nav.calcFalcon":"Planer Falcon Quest",
 "nav.calcHoard":"Ogólny planer zapasów",
@@ -4134,6 +4267,15 @@ fi: {
 "nav.research":"Liittouman tutkimus",
 "nav.howto":"Ohjeet",
 "nav.changelog":"Muutokset",
+"fq.showNumbers":"Näytä luvut",
+"fq.refTitle":"Falcon Tower &mdash; tiedot",
+"fq.refBody":"Suunnittelijan taustaluvut. Mitään tästä ei tarvita sen käyttöön.",
+"fq.refLevels":"Mitä kukin tornitaso antaa",
+"fq.refOdds":"Mitkä tehtävät ilmestyvät ja kuinka usein",
+"nav.falconRef":"Falcon Tower -tiedot",
+"fq.optOther":"Muu taso",
+"fq.nextHint":"kopioi Falcon Tower -ruudun yläreunan ajastin",
+"fq.customNote":"Vain kuusi tasoa on kirjattu. Muille tasoille lue nämä kolme lukua omasta päivitysesikatselustasi.",
 "nav.calcSpeedup":"Nopeutuslaskuri",
 "nav.calcFalcon":"Falcon Quest -suunnittelija",
 "nav.calcHoard":"Yleinen keräyssuunnittelija",
@@ -4279,6 +4421,15 @@ et: {
 "nav.research":"Liidu uuringud",
 "nav.howto":"Juhised",
 "nav.changelog":"Muudatused",
+"fq.showNumbers":"Näita numbreid",
+"fq.refTitle":"Falcon Tower &mdash; andmed",
+"fq.refBody":"Planeerija taga olevad numbrid. Selle kasutamiseks pole neist midagi vaja.",
+"fq.refLevels":"Mida iga torni tase annab",
+"fq.refOdds":"Millised ülesanded ilmuvad ja kui tihti",
+"nav.falconRef":"Falcon Toweri andmed",
+"fq.optOther":"Muu tase",
+"fq.nextHint":"kopeeri taimer Falcon Toweri ekraani ülaservast",
+"fq.customNote":"Kirja on pandud vaid kuus taset. Iga muu taseme puhul loe need kolm numbrit oma uuenduse eelvaatest.",
 "nav.calcSpeedup":"Kiirenduskalkulaator",
 "nav.calcFalcon":"Falcon Questi planeerija",
 "nav.calcHoard":"Üldine varumisplaneerija",
@@ -6855,22 +7006,34 @@ function buildFalconPlanner(){
 
     const ans = document.createElement('div');
     ans.className = 'hoard-answer';
+    // Plain-language verdict first; the arithmetic is available but collapsed,
+    // because most people want an instruction, not a model.
+    let head, why;
     if(incoming >= cap){
-      ans.innerHTML = '<b>Spend freely.</b> ' + refreshes + ' refreshes land before then, bringing ' +
-        incoming + ' quests \u2014 more than the ' + cap + ' you can hold. You will be full whatever you do now.';
+      head = 'Use them freely.';
+      why  = 'Enough refreshes land before ' + HOARD_DAYNAMES[day] + ' to refill you completely, whatever you spend now.';
     } else if(spendable > 0){
-      ans.innerHTML = 'You can spend <b>' + spendable + '</b> now and still be full. ' +
-        'Do not drop below <b>' + floor + '</b>.';
+      head = 'You can use ' + spendable + ' now.';
+      why  = 'Keep at least ' + floor + ' in reserve and the refreshes will top you back up to ' + cap + ' in time.';
     } else if(projected >= cap){
       ans.classList.add('warn');
-      ans.innerHTML = '<b>Stop spending now.</b> You are exactly on track for ' + cap + '.';
+      head = 'Stop using them now.';
+      why  = 'You are exactly on track for a full ' + cap + '. Spending even one costs you one at claim time.';
     } else {
       ans.classList.add('warn');
-      ans.innerHTML = '<b>Cannot reach full.</b> Even spending nothing you arrive with about <b>' +
-        projected + '</b> of ' + cap + '.';
+      head = 'You will not fill up in time.';
+      why  = 'Even saving everything from now, you reach about ' + projected + ' of ' + cap +
+             '. Claim anyway, or pick a later time.';
     }
+    ans.innerHTML = '<div class="fq-verdict">' + head + '</div><div class="fq-why">' + why + '</div>';
     out.appendChild(ans);
 
+    const det = document.createElement('details');
+    det.className = 'fq-maths';
+    const sum = document.createElement('summary');
+    sum.setAttribute('data-i18n', 'fq.showNumbers');
+    sum.textContent = t('fq.showNumbers');
+    det.appendChild(sum);
     const lines = document.createElement('div');
     lines.className = 'hoard-lines';
     [['Capacity', spec.inactive + ' inactive + ' + spec.active + ' active = ' + cap],
@@ -6883,7 +7046,8 @@ function buildFalconPlanner(){
       r.innerHTML = '<span>' + pr[0] + '</span><span>' + pr[1] + '</span>';
       lines.appendChild(r);
     });
-    out.appendChild(lines);
+    det.appendChild(lines);
+    out.appendChild(det);
 
     if(FQ_SCORING_DAYS.indexOf(day) < 0){
       const w = document.createElement('div');
@@ -7213,6 +7377,7 @@ const SUBNAV = {
   'sec-tools': [
     { id:'speedupCalc',   key:'nav.calcSpeedup' },
     { id:'falconPlanner', key:'nav.calcFalcon'  },
+    { id:'falconReference', key:'nav.falconRef' },
     { id:'hoardPlanner',  key:'nav.calcHoard'   }
   ]
 };
