@@ -588,6 +588,7 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 .gear-cost-table tr.prio-5 td, .gear-stat-table tr.prio-5 td{ background:rgba(255,196,0,.07); }
 .gear-stat-table td:nth-child(2), .gear-stat-table td:nth-child(4){ font-size:.8rem; line-height:1.5; }
 .gear-stat-table td.dim{ color:var(--muted); }
+.lineup-table tr.prio-5 td, .lineup-table tr.prio-4 td{ background:rgba(255,196,0,.07); }
 .r-sr{ color:#6fb3e0; } .r-ssr{ color:#b57ae0; } .r-ur{ color:var(--amber); }
 
 /* ---- Speed-up calculator ---- */
@@ -615,6 +616,34 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 }
 .calc-verdict.ok{ background:rgba(143,176,62,.14); border-left-color:var(--green); }
 .calc-verdict.no{ background:rgba(168,57,44,.14); border-left-color:var(--red); }
+
+/* ---- Hoard planner ---- */
+.hoard-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:12px 0; }
+.hoard-field{ display:flex; flex-direction:column; gap:3px; }
+.hoard-field label{ font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+.hoard-field input, .hoard-field select{
+  background:rgba(0,0,0,.32); color:inherit; font:inherit; font-size:.86rem;
+  border:1px solid rgba(255,255,255,.15); border-radius:4px; padding:5px 7px;
+  font-variant-numeric:tabular-nums;
+}
+.hoard-field input:focus, .hoard-field select:focus{ outline:none; border-color:var(--green); }
+.hoard-out{ margin-top:6px; }
+.hoard-answer{
+  padding:10px 12px; border-radius:5px; font-size:.95rem; line-height:1.5;
+  background:rgba(143,176,62,.14); border-left:3px solid var(--green);
+}
+.hoard-answer b{ color:var(--green-bright); }
+.hoard-answer.warn{ background:rgba(217,164,65,.13); border-left-color:var(--amber); }
+.hoard-answer.warn b{ color:var(--amber); }
+.hoard-lines{ margin-top:8px; }
+.hoard-line{ display:flex; justify-content:space-between; gap:12px; font-size:.83rem; padding:3px 0; }
+.hoard-line span:last-child{ font-variant-numeric:tabular-nums; color:var(--muted); }
+.fq-custom{ margin-top:-4px; }
+.fq-table tr.fq-gap td{ color:var(--muted); font-size:.8rem; font-style:italic; text-align:left; }
+.hoard-flag{
+  margin-top:8px; padding:8px 10px; border-radius:4px; font-size:.82rem; line-height:1.5;
+  background:rgba(168,57,44,.13); border-left:3px solid var(--red);
+}
 .calc-actions{ margin-top:10px; }
 
 /* ---- Event filter chips ---- */
@@ -692,6 +721,12 @@ section.evf-out{ display:none; }
   .stackable tr.total td{ border-top:none; }
 }
 .quicknav button.evf-out{ display:none; }
+.quicknav button.qn-sub{
+  font-size:.74rem; opacity:.82; padding-left:16px; position:relative;
+}
+.quicknav button.qn-sub::before{
+  content:'\21B3'; position:absolute; left:5px; opacity:.55; font-size:.8em;
+}
 
 /* ---- Collapsed provenance ---- */
 .src-note{ margin:6px 0 2px; }
@@ -1783,6 +1818,162 @@ section.evf-out{ display:none; }
       <p class="tbl-foot" data-i18n="calc.caveat"><b>One thing the original sheet glosses over, and so does this.</b> Task-specific speed-ups only apply to their own task type &mdash; a construction speed-up will not finish a research queue. The combined total is therefore a <b>best case</b>. If your task-specific stack is mostly the wrong type for the queues you are trying to clear, judge by the general total alone.</p>
       <p class="tool-credit" data-i18n="tools.calcCredit">Logic reproduced from the Speed-Up Calculator by <b>Corlanthis v1.0#1029</b>, Discord guide section, 29 Jul 2026. The original sheet is linked above and remains the authoritative version.</p>
     </div>
+
+    <div class="tool-card" id="falconPlanner">
+      <h3 data-i18n="tools.falconTitle">Falcon Quest Planner</h3>
+      <p data-i18n="tools.falconBody">Falcon Quests arrive in a <b>block on a fixed timer</b>, not a trickle &mdash; so the useful question is not &ldquo;when do I stop spending&rdquo; but <b>how far down can I spend and still refill in time</b>. Set your Falcon Tower level and this works it out.</p>
+
+      <div class="guide-warn" data-i18n="tools.falconExpiry"><b>Completing is not claiming.</b> These are two separate actions. Quests you leave <i>uncompleted</i> will <b>expire</b> and are simply lost &mdash; so complete them as they arrive, and hold back only the claim. Hoarding means a pile of completed-but-unclaimed quests, never a pile of untouched ones.</div>
+
+      <div class="hoard-grid">
+        <div class="hoard-field">
+          <label for="fqLevel" data-i18n="fq.level">Falcon Tower level</label>
+          <select id="fqLevel">
+            <option value="4">Lv.4</option>
+            <option value="5">Lv.5</option>
+            <option value="9">Lv.9</option>
+            <option value="10">Lv.10</option>
+            <option value="11">Lv.11</option>
+            <option value="12">Lv.12</option>
+            <option value="0">Other / custom</option>
+          </select>
+        </div>
+        <div class="hoard-field">
+          <label for="fqHave" data-i18n="fq.have">Held right now</label>
+          <input type="number" id="fqHave" min="0" step="1" inputmode="numeric" value="0">
+        </div>
+        <div class="hoard-field">
+          <label for="fqNext" data-i18n="fq.next">Next refresh in (h:mm)</label>
+          <input type="text" id="fqNext" inputmode="numeric" placeholder="4:46" value="4:46">
+        </div>
+        <div class="hoard-field">
+          <label for="fqDay" data-i18n="fq.day">Claim on</label>
+          <select id="fqDay">
+            <option value="1">Monday</option>
+            <option value="3">Wednesday</option>
+            <option value="5">Friday</option>
+            <option value="2">Tuesday</option>
+            <option value="4">Thursday</option>
+            <option value="6">Saturday</option>
+            <option value="0">Sunday</option>
+          </select>
+        </div>
+        <div class="hoard-field">
+          <label for="fqTime" data-i18n="fq.time">At (your local time)</label>
+          <input type="time" id="fqTime" value="08:00">
+        </div>
+      </div>
+
+      <div class="fq-custom" id="fqCustom" hidden>
+        <div class="hoard-grid">
+          <div class="hoard-field">
+            <label for="fqRefresh" data-i18n="fq.refresh">Quests on refresh</label>
+            <input type="number" id="fqRefresh" min="1" step="1" value="11">
+          </div>
+          <div class="hoard-field">
+            <label for="fqInactive" data-i18n="fq.inactive">Inactive cap</label>
+            <input type="number" id="fqInactive" min="0" step="1" value="35">
+          </div>
+          <div class="hoard-field">
+            <label for="fqActive" data-i18n="fq.active">Max active</label>
+            <input type="number" id="fqActive" min="0" step="1" value="9">
+          </div>
+        </div>
+      </div>
+
+      <div class="hoard-out" id="fqOut"></div>
+
+      <h4 data-i18n="fq.tableHead">Falcon Tower by level</h4>
+      <div class="table-scroll">
+      <table class="score-table stackable fq-table">
+        <thead><tr>
+          <th data-i18n="fq.thLevel">Level</th>
+          <th class="num" data-i18n="fq.thRefresh">On refresh</th>
+          <th class="num" data-i18n="fq.thInactive">Inactive cap</th>
+          <th class="num" data-i18n="fq.thActive">Max active</th>
+          <th class="num" data-i18n="fq.thTotal">Total held</th>
+          <th class="num" data-i18n="fq.thBonus">Resource bonus</th>
+        </tr></thead>
+        <tbody>
+          <tr><td data-label="Level"><b>Lv.4</b></td><td class="num" data-label="On refresh">8</td><td class="num" data-label="Inactive cap">25</td><td class="num" data-label="Max active">6</td><td class="num" data-label="Total held">31</td><td class="num" data-label="Resource bonus">5%</td></tr>
+          <tr><td data-label="Level"><b>Lv.5</b></td><td class="num" data-label="On refresh">9</td><td class="num" data-label="Inactive cap">25</td><td class="num" data-label="Max active">7</td><td class="num" data-label="Total held">32</td><td class="num" data-label="Resource bonus">5%</td></tr>
+          <tr class="fq-gap"><td data-label="Level"><b>Lv.6&ndash;8</b></td><td class="num" colspan="5" data-label="">Not captured &mdash; Lv.6 is known to unlock one-tap completion for two quest types, but its numbers are unrecorded</td></tr>
+          <tr><td data-label="Level"><b>Lv.9</b></td><td class="num" data-label="On refresh">11</td><td class="num" data-label="Inactive cap">35</td><td class="num" data-label="Max active">9</td><td class="num" data-label="Total held">44</td><td class="num" data-label="Resource bonus">10%</td></tr>
+          <tr><td data-label="Level"><b>Lv.10</b></td><td class="num" data-label="On refresh">11</td><td class="num" data-label="Inactive cap">40</td><td class="num" data-label="Max active">9</td><td class="num" data-label="Total held">49</td><td class="num" data-label="Resource bonus">15%</td></tr>
+          <tr><td data-label="Level"><b>Lv.11</b></td><td class="num" data-label="On refresh">11</td><td class="num" data-label="Inactive cap">40</td><td class="num" data-label="Max active">10</td><td class="num" data-label="Total held">50</td><td class="num" data-label="Resource bonus">15%</td></tr>
+          <tr class="prio-5"><td data-label="Level"><b>Lv.12</b></td><td class="num" data-label="On refresh">12</td><td class="num" data-label="Inactive cap">40</td><td class="num" data-label="Max active">10</td><td class="num" data-label="Total held">50</td><td class="num" data-label="Resource bonus">15%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="tbl-foot" data-i18n="fq.tableNote"><b>Six levels captured from three accounts</b>, each panel showing its current level and the next. Lv.1&ndash;3, Lv.6&ndash;8 and Lv.13+ are unrecorded and are <b>not interpolated</b> &mdash; the three stats move on different levels, so a midpoint guess would be wrong more often than right. Upgrades come from <b>completing Falcon Tower incidents</b>: 50 to leave Lv.4, 1,500 to leave Lv.9, 2,500 to leave Lv.11.</p>
+      <p class="tbl-foot" data-i18n="fq.capCurve"><b>The useful pattern is capacity against daily output.</b> At Lv.4 you hold 31 but generate 32 a day, and at Lv.5 you hold 32 and generate 36 &mdash; so early on <b>you cannot bank even a single day</b> and hoarding for a specific hour is barely possible. At <b>Lv.9 capacity and daily output meet exactly at 44</b>. From <b>Lv.10</b> the cap finally exceeds production (49 held against 44 a day), which is the first point where banking more than one day’s worth becomes possible at all. If you are hoarding for Alliance Duel days, <b>Lv.10 is the upgrade that changes what you can do</b>, not Lv.11 or Lv.12.</p>
+
+      <h4 data-i18n="fq.oddsHead">What turns up, and how often</h4>
+      <div class="table-scroll">
+      <table class="score-table stackable fq-odds">
+        <thead><tr>
+          <th data-i18n="fq.thQuest">Quest</th>
+          <th class="num" data-i18n="fq.thChance">Appearance chance</th>
+        </tr></thead>
+        <tbody>
+          <tr class="prio-4"><td data-label="Quest">Raid Quests</td><td class="num" data-label="Appearance chance">29.93%</td></tr>
+          <tr class="prio-4"><td data-label="Quest">Help Alliance Members</td><td class="num" data-label="Appearance chance">29.93%</td></tr>
+          <tr><td data-label="Quest">Supply Recovery</td><td class="num" data-label="Appearance chance">19.95%</td></tr>
+          <tr><td data-label="Quest">Resource Gathering</td><td class="num" data-label="Appearance chance">19.95%</td></tr>
+          <tr><td data-label="Quest">Alliance Excavation</td><td class="num" data-label="Appearance chance">0.24%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul class="guide-block-ul">
+        <li data-i18n="fq.odds1"><b>If you are not in an alliance, Help Alliance Members never appears</b> &mdash; nearly a third of the table simply vanishes, which the game itself points out as a reason to join one.</li>
+        <li data-i18n="fq.odds2"><b>Alliance Excavation is effectively a rounding error at 0.24%</b> &mdash; roughly one in 417 quests. Do not plan around seeing it.</li>
+        <li data-i18n="fq.odds3">Four quests appear <b>once daily</b> and sit outside this table: Defeat Blight, Defeat Blight Legion, Eliminate Wandering Blight, and Rescue the Wounded.</li>
+        <li data-i18n="fq.odds4">From <b>Lv.6</b> onward, Help Alliance Members and Supply Recovery can be completed <b>with one tap</b> &mdash; which matters here, since together they are half of all quests that appear.</li>
+      </ul>
+
+      <details class="src-note"><summary data-i18n="ui.source">Source</summary><div class="src-body" data-i18n="fq.src">In-game Falcon Tower upgrade-preview panels and the Info notice, from two accounts on server #217, 1 Aug 2026. Highest evidence tier. The six-hour refresh interval is inferred from two independent countdowns reading 4:46:37 and 4:14:02 against a stated 11-per-refresh rate; it has not been timed end to end. English-only for now.</div></details>
+    </div>
+
+    <div class="tool-card" id="hoardPlanner">
+      <h3 data-i18n="tools.hoardTitle">General Hoard Planner</h3>
+      <p data-i18n="tools.hoardBody">For anything else that regenerates into a capped pool &mdash; Stamina, attack attempts, event currencies. Assumes a steady trickle rather than timed blocks; for Falcon Quests use the planner above instead, which models the refresh clock properly.</p>
+
+      <div class="hoard-grid">
+        <div class="hoard-field">
+          <label for="hoardBank" data-i18n="hoard.cap">Pool capacity</label>
+          <input type="number" id="hoardBank" min="0" step="1" inputmode="numeric" value="120">
+        </div>
+        <div class="hoard-field">
+          <label for="hoardGain" data-i18n="hoard.gain">Gained each cycle</label>
+          <input type="number" id="hoardGain" min="1" step="1" inputmode="numeric" value="1">
+        </div>
+        <div class="hoard-field">
+          <label for="hoardEvery" data-i18n="hoard.every">Cycle length (hours)</label>
+          <input type="number" id="hoardEvery" min="0.01" step="0.05" inputmode="decimal" value="0.5">
+        </div>
+        <div class="hoard-field">
+          <label for="hoardHave" data-i18n="hoard.have">Have right now</label>
+          <input type="number" id="hoardHave" min="0" step="1" inputmode="numeric" value="0">
+        </div>
+        <div class="hoard-field">
+          <label for="hoardDay" data-i18n="hoard.day">Want it full on</label>
+          <select id="hoardDay">
+            <option value="1">Monday</option><option value="2">Tuesday</option>
+            <option value="3">Wednesday</option><option value="4">Thursday</option>
+            <option value="5">Friday</option><option value="6">Saturday</option>
+            <option value="0">Sunday</option>
+          </select>
+        </div>
+        <div class="hoard-field">
+          <label for="hoardTime" data-i18n="hoard.time">At (your local time)</label>
+          <input type="time" id="hoardTime" value="08:00">
+        </div>
+      </div>
+      <input type="hidden" id="hoardLive" value="0">
+
+      <div class="hoard-out" id="hoardOut"></div>
+      <p class="tbl-foot" data-i18n="hoard.note">If your pool actually fills in timed blocks rather than smoothly, treat the answer as the earliest safe moment rather than an exact one.</p>
+    </div>
   </section>
 
 
@@ -1989,7 +2180,47 @@ section.evf-out{ display:none; }
       <span class="section-tag tbd" data-i18n="tag.communitySourced">COMMUNITY-SOURCED</span>
       <h2 data-i18n="title.heroes">Hero &amp; Gear Progression</h2>
     </div>
-    <p class="section-note" data-i18n="note.heroes">How hero and gear progression works, with the shard costs and the published gear order. Per-hero data and squad compositions will live in the companion hero and squad builder.</p>
+    <p class="section-note" data-i18n="note.heroes">How hero and gear progression works &mdash; lineup and faction bonuses, shard costs, and the published gear order. Per-hero data and squad compositions will live in the companion hero and squad builder.</p>
+
+    <div class="guide-block" id="lineupGuide">
+      <h3 data-i18n="guide.lineupTitle">Lineup bonuses &mdash; build one faction</h3>
+      <details class="src-note"><summary data-i18n="ui.source">Source</summary><div class="src-body" data-i18n="guide.lineupSrc">The percentage table comes from an <b>unattributed text excerpt</b> with no visible author, logo or date &mdash; the weakest sourcing of anything on this page, and it should be treated as provisional. Everything around it is corroborated by the game&rsquo;s own Quiz of Wisdom answer key, reproduced on the Tools tab. Where the two are consistent that is said; where the excerpt goes beyond the quiz, it stands alone. English-only for now.</div></details>
+
+      <p data-i18n="guide.lineupIntro">Fielding heroes of the same type in one squad triggers additional attribute boosts to <b>HP, ATK and DEF</b>. The more matching heroes, the larger the bonus &mdash; and the curve is steep enough that a partial stack is barely worth having.</p>
+
+      <div class="table-scroll">
+      <table class="score-table stackable lineup-table">
+        <thead><tr>
+          <th data-i18n="guide.thMatching">Matching heroes</th>
+          <th class="num" data-i18n="guide.thAttrBoost">Attribute increase</th>
+          <th class="num" data-i18n="guide.thGain">Gain over previous</th>
+        </tr></thead>
+        <tbody>
+          <tr><td data-label="Matching heroes"><b>3</b></td><td class="num" data-label="Attribute increase">5%</td><td class="num" data-label="Gain over previous">&mdash;</td></tr>
+          <tr class="prio-4"><td data-label="Matching heroes"><b>4</b></td><td class="num" data-label="Attribute increase">15%</td><td class="num" data-label="Gain over previous">+10 pts</td></tr>
+          <tr class="prio-5"><td data-label="Matching heroes"><b>5</b></td><td class="num" data-label="Attribute increase">20%</td><td class="num" data-label="Gain over previous">+5 pts</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p class="tbl-foot" data-i18n="guide.lineupCurve"><b>The fourth hero is the one that matters.</b> Going from three to four <b>triples</b> the bonus, from 5% to 15%. Going from four to five adds only another five points. So a squad with three matching heroes has taken almost none of the available gain, and the useful decision is whether you can reach four &mdash; the fifth is a smaller top-up than the jump that precedes it. No bonus is listed below three, so a two-hero pairing appears to give nothing at all.</p>
+
+      <h4 data-i18n="guide.lineupQuizHead">What the game&rsquo;s own quiz says</h4>
+      <ul class="guide-block-ul">
+        <li data-i18n="guide.lineupQ1">Asked how to <b>maximise overall damage</b> when building a lineup, the answer key gives <b>&ldquo;5 members from the same faction&rdquo;</b> &mdash; which matches the 5-hero peak above and is the strongest corroboration available.</li>
+        <li data-i18n="guide.lineupQ2">Asked what the advantage of a same-faction team is, the answer is <b>&ldquo;damage increased by faction bonus&rdquo;</b>.</li>
+        <li data-i18n="guide.lineupQ3">The <b>faction bonus feature unlocks at the first Royal City Scramble</b>, so on a young server it is not yet active and none of this applies.</li>
+      </ul>
+
+      <div class="guide-conflict" data-i18n="guide.lineupAmbiguity"><b>Unresolved &mdash; &ldquo;unit type&rdquo; is not defined.</b> The excerpt says <i>same unit type</i> without saying whether that means <b>faction</b> (Warrior / Ranger / Warlock) or something else such as troop type or hero role. The quiz consistently says <b>faction</b> and gives the same 5-hero figure, so faction is the likely reading and is assumed here &mdash; but the two texts also describe the payoff differently: the excerpt says <b>HP, ATK and DEF</b>, the quiz says <b>damage</b>. Those may be one mechanic described loosely, or two separate ones. A screenshot of the in-game lineup or faction-bonus panel would settle both questions at once.</div>
+
+      <h4 data-i18n="guide.lineupCounterHead">Faction counters apply on top</h4>
+      <p data-i18n="guide.lineupCounterBody">Stacking one faction also fixes which enemies you are strong and weak against, because faction restraint runs in a closed triangle: <b>Ranger beats Warrior, Warrior beats Warlock, Warlock beats Ranger.</b> The quiz answers &ldquo;when is faction restraint applicable?&rdquo; with <b>all of the above</b>, so it is not confined to one mode. A mono-faction squad is therefore a trade &mdash; up to 20% attributes in exchange for a predictable weakness, which is why a second squad of a different faction is worth building before a third of the same one.</p>
+      <p class="tbl-foot" data-i18n="guide.lineupCounterEx">The clearest place this pays out is the <b>Demon King Blight</b>, where sending the countering faction is worth <b>+50% damage</b> &mdash; far more than any lineup bonus. See that section for the daily rotation.</p>
+
+      <h4 data-i18n="guide.lineupPosHead">Positioning</h4>
+      <p data-i18n="guide.lineupPosBody">Two further points from the answer key, both about placement rather than composition: putting a <b>tank hero in the back row is explicitly marked incorrect</b>, and asked what the roles of the different hero classes are, the answer is <b>all of the above</b> &mdash; that is, tanks, damage and support each have a distinct job rather than being interchangeable stat blocks. Detailed per-hero placement lives in the companion hero and squad builder rather than here.</p>
+    </div>
 
     <div class="guide-block" id="heroShardGuide">
       <h3 data-i18n="guide.shardTitle">Hero shards per star level</h3>
@@ -2390,12 +2621,15 @@ en: {
 "nav.research":"Alliance Research",
 "nav.howto":"How-To",
 "nav.changelog":"What Changed",
+"nav.calcSpeedup":"Speed-Up Calculator",
+"nav.calcFalcon":"Falcon Quest Planner",
+"nav.calcHoard":"General Hoard Planner",
 "note.titles":"Nine court titles, each granting a buff. Seven rotate on a five-minute queue that anyone can join; King of Battle is won in the Royal City Scramble and Queen is appointed by the King.",
 "note.research":"A donation-order suggestion for the alliance tech tree. This is strategy, not a game rule.",
 "note.league":"A seasonal ladder layered on top of the Alliance Duel, with promotion and relegation between groups.",
 "note.hunts":"Three rally-driven events that run on their own triggers rather than a fixed weekly slot.",
 "note.howto":"Short procedural guides for things that are easy once you know where the button is.",
-"note.heroes":"How hero and gear progression works, with the shard costs and the published gear order. Per-hero data and squad compositions will live in the companion hero and squad builder.",
+"note.heroes":"How hero and gear progression works &mdash; lineup and faction bonuses, shard costs, and the published gear order. Per-hero data and squad compositions will live in the companion hero and squad builder.",
 "note.epigraphs":"Permanent squad bonuses that unlock late. Two guides cover this and they disagree in places &mdash; where they do, both readings are shown rather than one being picked.",
 "note.demonking":"Three separate Demon Kings rotate through the week, one faction each. Which heroes you send matters more than how many.",
 "note.changelog":"What is new since the last published version, newest first. Small corrections are folded in silently; anything still <b>unknown</b> is flagged in the section it belongs to rather than listed here. English-only.",
@@ -2595,12 +2829,15 @@ de: {
 "nav.research":"Allianzforschung",
 "nav.howto":"Anleitungen",
 "nav.changelog":"Änderungen",
+"nav.calcSpeedup":"Beschleuniger-Rechner",
+"nav.calcFalcon":"Falken-Quest-Planer",
+"nav.calcHoard":"Allgemeiner Hortplaner",
 "note.titles":"Neun Hoftitel, jeder mit einem Buff. Sieben rotieren über eine Fünf-Minuten-Warteschlange, der jeder beitreten kann; King of Battle wird im Royal City Scramble gewonnen und Queen vom King ernannt.",
 "note.research":"Ein Vorschlag zur Spendenreihenfolge im Allianz-Techbaum. Das ist Strategie, keine Spielregel.",
 "note.league":"Eine Saison-Rangliste über dem Alliance Duel, mit Auf- und Abstieg zwischen den Gruppen.",
 "note.hunts":"Drei Rally-Events, die von eigenen Auslösern starten statt zu einem festen wöchentlichen Termin.",
 "note.howto":"Kurze Schritt-für-Schritt-Anleitungen für Dinge, die leicht sind, sobald man weiß, wo der Knopf ist.",
-"note.heroes":"Wie Helden- und Ausrüstungsfortschritt funktioniert, mit Splitterkosten und der veröffentlichten Ausrüstungsreihenfolge. Daten pro Held und Squad-Aufstellungen kommen in den zugehörigen Hero- und Squad-Builder.",
+"note.heroes":"Wie Helden- und Ausrüstungsfortschritt funktioniert — Lineup- und Fraktionsboni, Splitterkosten und die veröffentlichte Ausrüstungsreihenfolge. Daten pro Held und Squad-Aufstellungen kommen in den zugehörigen Hero- und Squad-Builder.",
 "note.epigraphs":"Dauerhafte Squad-Boni, die spät freigeschaltet werden. Mehrere Guides behandeln das Thema und widersprechen sich stellenweise &mdash; wo das passiert, werden beide Lesarten gezeigt statt einer ausgewählt.",
 "note.demonking":"Drei verschiedene Demon Kings rotieren durch die Woche, je eine Fraktion. Welche Helden du schickst, zählt mehr als wie viele.",
 "note.changelog":"Was seit der letzten veröffentlichten Fassung neu ist, Neuestes zuerst. Kleine Korrekturen werden still eingearbeitet; alles noch <b>Unbekannte</b> wird im jeweiligen Abschnitt markiert statt hier gelistet. Nur auf Englisch.",
@@ -2737,12 +2974,15 @@ nl: {
 "nav.research":"Alliantieonderzoek",
 "nav.howto":"Handleidingen",
 "nav.changelog":"Wijzigingen",
+"nav.calcSpeedup":"Speedup-calculator",
+"nav.calcFalcon":"Falcon Quest-planner",
+"nav.calcHoard":"Algemene hoardplanner",
 "note.titles":"Negen hoftitels, elk met een buff. Zeven rouleren via een wachtrij van vijf minuten waar iedereen aan kan deelnemen; King of Battle win je in de Royal City Scramble en Queen wordt door de King benoemd.",
 "note.research":"Een voorstel voor de donatievolgorde in de alliantietechboom. Dit is strategie, geen spelregel.",
 "note.league":"Een seizoensladder bovenop de Alliance Duel, met promotie en degradatie tussen groepen.",
 "note.hunts":"Drie rally-events die op hun eigen triggers starten in plaats van op een vast wekelijks moment.",
 "note.howto":"Korte stapsgewijze uitleg voor dingen die makkelijk zijn zodra je weet waar de knop zit.",
-"note.heroes":"Hoe helden- en uitrustingsprogressie werkt, met de shardkosten en de gepubliceerde uitrustingsvolgorde. Gegevens per held en squadsamenstellingen komen in de bijbehorende hero- en squadbuilder.",
+"note.heroes":"Hoe helden- en uitrustingsprogressie werkt — lineup- en factiebonussen, shardkosten en de gepubliceerde uitrustingsvolgorde. Gegevens per held en squadsamenstellingen komen in de bijbehorende hero- en squadbuilder.",
 "note.epigraphs":"Permanente squadbonussen die pas laat vrijkomen. Meerdere gidsen behandelen dit en spreken elkaar op punten tegen &mdash; waar dat gebeurt tonen we beide lezingen in plaats van er één te kiezen.",
 "note.demonking":"Drie verschillende Demon Kings rouleren door de week, één per factie. Welke helden je stuurt telt zwaarder dan hoeveel.",
 "note.changelog":"Wat er nieuw is sinds de laatst gepubliceerde versie, nieuwste eerst. Kleine correcties worden stilzwijgend verwerkt; alles wat nog <b>onbekend</b> is wordt gemarkeerd in het betreffende onderdeel in plaats van hier. Alleen in het Engels.",
@@ -2879,12 +3119,15 @@ fr: {
 "nav.research":"Recherche d’alliance",
 "nav.howto":"Tutoriels",
 "nav.changelog":"Changements",
+"nav.calcSpeedup":"Calculateur d’accélération",
+"nav.calcFalcon":"Planificateur Falcon Quest",
+"nav.calcHoard":"Planificateur de réserve",
 "note.titles":"Neuf titres de cour, chacun avec un bonus. Sept tournent via une file de cinq minutes ouverte à tous ; King of Battle se gagne au Royal City Scramble et Queen est nommée par le King.",
 "note.research":"Une suggestion d’ordre de dons dans l’arbre technologique d’alliance. C’est une stratégie, pas une règle du jeu.",
 "note.league":"Un classement saisonnier superposé à l’Alliance Duel, avec promotion et relégation entre groupes.",
 "note.hunts":"Trois événements de ralliement déclenchés par leurs propres conditions plutôt qu’à heure fixe chaque semaine.",
 "note.howto":"Brèves procédures pour des choses simples une fois qu’on sait où se trouve le bouton.",
-"note.heroes":"Comment fonctionne la progression des héros et de l’équipement, avec le coût en éclats et l’ordre d’équipement publié. Les données par héros et les compositions d’escouade iront dans l’outil dédié.",
+"note.heroes":"Comment fonctionne la progression des héros et de l’équipement — bonus de composition et de faction, coût en éclats et ordre d’équipement publié. Les données par héros et les compositions d’escouade iront dans l’outil dédié.",
 "note.epigraphs":"Bonus permanents d’escouade débloqués tardivement. Plusieurs guides traitent le sujet et se contredisent par endroits — dans ce cas, les deux lectures sont montrées plutôt qu’une seule retenue.",
 "note.demonking":"Trois Demon Kings différents alternent sur la semaine, un par faction. Les héros que vous envoyez comptent plus que leur nombre.",
 "note.changelog":"Ce qui est nouveau depuis la dernière version publiée, du plus récent au plus ancien. Les petites corrections sont intégrées sans mention ; tout ce qui reste <b>inconnu</b> est signalé dans la section concernée plutôt qu’ici. En anglais uniquement.",
@@ -3021,12 +3264,15 @@ es: {
 "nav.research":"Investigación de alianza",
 "nav.howto":"Cómo se hace",
 "nav.changelog":"Cambios",
+"nav.calcSpeedup":"Calculadora de aceleraciones",
+"nav.calcFalcon":"Planificador de Falcon Quests",
+"nav.calcHoard":"Planificador de reservas",
 "note.titles":"Nueve títulos de la corte, cada uno con una bonificación. Siete rotan en una cola de cinco minutos abierta a cualquiera; King of Battle se gana en el Royal City Scramble y Queen la nombra el King.",
 "note.research":"Una sugerencia de orden de donación en el árbol tecnológico de alianza. Es estrategia, no una regla del juego.",
 "note.league":"Una clasificación por temporadas sobre el Alliance Duel, con ascensos y descensos entre grupos.",
 "note.hunts":"Tres eventos de asalto que se activan por sus propios disparadores en vez de en un hueco semanal fijo.",
 "note.howto":"Guías breves paso a paso para cosas que son fáciles en cuanto sabes dónde está el botón.",
-"note.heroes":"Cómo funciona la progresión de héroes y equipo, con el coste en fragmentos y el orden de equipo publicado. Los datos por héroe y las composiciones de escuadrón irán en la herramienta complementaria.",
+"note.heroes":"Cómo funciona la progresión de héroes y equipo — bonificaciones de alineación y facción, coste en fragmentos y el orden de equipo publicado. Los datos por héroe y las composiciones de escuadrón irán en la herramienta complementaria.",
 "note.epigraphs":"Bonificaciones permanentes de escuadrón que se desbloquean tarde. Varias guías lo cubren y se contradicen en algunos puntos: donde ocurre, se muestran ambas lecturas en vez de elegir una.",
 "note.demonking":"Tres Demon Kings distintos rotan durante la semana, uno por facción. Importa más qué héroes envías que cuántos.",
 "note.changelog":"Lo nuevo desde la última versión publicada, lo más reciente primero. Las correcciones pequeñas se integran sin avisar; todo lo que sigue siendo <b>desconocido</b> se marca en su propia sección en lugar de aquí. Solo en inglés.",
@@ -3163,12 +3409,15 @@ pt: {
 "nav.research":"Pesquisa de aliança",
 "nav.howto":"Como fazer",
 "nav.changelog":"Alterações",
+"nav.calcSpeedup":"Calculadora de acelerações",
+"nav.calcFalcon":"Planeador de Falcon Quests",
+"nav.calcHoard":"Planeador de reservas",
 "note.titles":"Nove títulos da corte, cada um com um bónus. Sete rodam numa fila de cinco minutos aberta a todos; King of Battle ganha-se no Royal City Scramble e Queen é nomeada pelo King.",
 "note.research":"Uma sugestão de ordem de doação na árvore tecnológica da aliança. É estratégia, não uma regra do jogo.",
 "note.league":"Uma classificação sazonal sobre o Alliance Duel, com subidas e descidas entre grupos.",
 "note.hunts":"Três eventos de ataque conjunto que arrancam por gatilhos próprios em vez de num horário semanal fixo.",
 "note.howto":"Guias curtos passo a passo para coisas fáceis assim que se sabe onde fica o botão.",
-"note.heroes":"Como funciona a progressão de heróis e equipamento, com o custo em fragmentos e a ordem de equipamento publicada. Os dados por herói e as composições de esquadrão ficarão na ferramenta complementar.",
+"note.heroes":"Como funciona a progressão de heróis e equipamento — bónus de formação e de facção, custo em fragmentos e a ordem de equipamento publicada. Os dados por herói e as composições de esquadrão ficarão na ferramenta complementar.",
 "note.epigraphs":"Bónus permanentes de esquadrão que só desbloqueiam tarde. Vários guias abordam o tema e contradizem-se em pontos &mdash; quando acontece, mostram-se as duas leituras em vez de se escolher uma.",
 "note.demonking":"Três Demon Kings diferentes alternam ao longo da semana, um por facção. Que heróis envias conta mais do que quantos.",
 "note.changelog":"O que há de novo desde a última versão publicada, do mais recente ao mais antigo. Pequenas correções são integradas sem aviso; tudo o que continua <b>desconhecido</b> é assinalado na respetiva secção e não aqui. Apenas em inglês.",
@@ -3305,12 +3554,15 @@ hu: {
 "nav.research":"Szövetségi kutatás",
 "nav.howto":"Lépésről lépésre",
 "nav.changelog":"Változások",
+"nav.calcSpeedup":"Gyorsító-kalkulátor",
+"nav.calcFalcon":"Falcon Quest tervező",
+"nav.calcHoard":"Általános gyűjtéstervező",
 "note.titles":"Kilenc udvari cím, mindegyik ad egy bónuszt. Hét ötöperces sorban forog, amelybe bárki beállhat; a King of Battle a Royal City Scramble-ben nyerhető, a Queen-t a King nevezi ki.",
 "note.research":"Javaslat a szövetségi technológiafa adományozási sorrendjére. Ez stratégia, nem játékszabály.",
 "note.league":"Szezonális ranglista az Alliance Duel felett, csoportok közötti fel- és kieséssel.",
 "note.hunts":"Három roham-esemény, amelyek saját feltétel alapján indulnak, nem fix heti időpontban.",
 "note.howto":"Rövid lépésről lépésre útmutatók olyasmihez, ami könnyű, ha tudod, hol a gomb.",
-"note.heroes":"Hogyan működik a hős- és felszerelésfejlődés, a szilánkköltségekkel és a közzétett felszerelési sorrenddel. A hősönkénti adatok és a csapatösszeállítások a külön épülő eszközbe kerülnek.",
+"note.heroes":"Hogyan működik a hős- és felszerelésfejlődés — felállás- és frakcióbónuszok, szilánkköltségek és a közzétett felszerelési sorrend. A hősönkénti adatok és a csapatösszeállítások a külön épülő eszközbe kerülnek.",
 "note.epigraphs":"Tartós csapatbónuszok, amelyek későn nyílnak meg. Több útmutató foglalkozik vele, és helyenként ellentmondanak &mdash; ilyenkor mindkét olvasat szerepel, nem választunk.",
 "note.demonking":"Három különböző Demon King váltja egymást a héten, frakciónként egy. Többet számít, milyen hősöket küldesz, mint hányat.",
 "note.changelog":"Mi új az utolsó közzétett változat óta, a legfrissebbel kezdve. A kisebb javítások jelzés nélkül épülnek be; ami még <b>ismeretlen</b>, azt a saját szakaszában jelöljük, nem itt. Csak angolul.",
@@ -3447,12 +3699,15 @@ ru: {
 "nav.research":"Исследования альянса",
 "nav.howto":"Инструкции",
 "nav.changelog":"Изменения",
+"nav.calcSpeedup":"Калькулятор ускорений",
+"nav.calcFalcon":"Планировщик Falcon Quest",
+"nav.calcHoard":"Общий планировщик запаса",
 "note.titles":"Девять придворных титулов, каждый даёт бонус. Семь ротируются через пятиминутную очередь, открытую для всех; King of Battle выигрывается в Royal City Scramble, а Queen назначает King.",
 "note.research":"Предложение по порядку пожертвований в дереве технологий альянса. Это стратегия, а не правило игры.",
 "note.league":"Сезонная таблица поверх Alliance Duel, с повышением и понижением между группами.",
 "note.hunts":"Три рейдовых события, запускающиеся по своим условиям, а не в фиксированное время недели.",
 "note.howto":"Короткие пошаговые инструкции для вещей, которые просты, когда знаешь, где кнопка.",
-"note.heroes":"Как устроено развитие героев и снаряжения, с ценой в осколках и опубликованным порядком снаряжения. Данные по каждому герою и составы отрядов будут в отдельном инструменте.",
+"note.heroes":"Как устроено развитие героев и снаряжения — бонусы состава и фракции, цена в осколках и опубликованный порядок снаряжения. Данные по каждому герою и составы отрядов будут в отдельном инструменте.",
 "note.epigraphs":"Постоянные бонусы отряда, открывающиеся поздно. Несколько гайдов описывают это и местами противоречат друг другу &mdash; в таких случаях показаны оба варианта, а не один.",
 "note.demonking":"Три разных Demon King сменяют друг друга в течение недели, по одному на фракцию. Важнее, каких героев вы отправляете, а не сколько.",
 "note.changelog":"Что нового с момента последней публикации, сначала самое свежее. Мелкие правки вносятся без отдельного упоминания; всё, что остаётся <b>неизвестным</b>, отмечено в своём разделе, а не здесь. Только на английском.",
@@ -3589,12 +3844,15 @@ uk: {
 "nav.research":"Дослідження альянсу",
 "nav.howto":"Інструкції",
 "nav.changelog":"Зміни",
+"nav.calcSpeedup":"Калькулятор прискорень",
+"nav.calcFalcon":"Планувальник Falcon Quest",
+"nav.calcHoard":"Загальний планувальник запасу",
 "note.titles":"Дев’ять придворних титулів, кожен дає бонус. Сім ротуються через п’ятихвилинну чергу, відкриту для всіх; King of Battle виграється в Royal City Scramble, а Queen призначає King.",
 "note.research":"Пропозиція щодо порядку пожертв у дереві технологій альянсу. Це стратегія, а не правило гри.",
 "note.league":"Сезонна таблиця поверх Alliance Duel, із підвищенням і пониженням між групами.",
 "note.hunts":"Три рейдові події, які запускаються за власними умовами, а не у фіксований час тижня.",
 "note.howto":"Короткі покрокові інструкції для речей, які прості, коли знаєш, де кнопка.",
-"note.heroes":"Як працює розвиток героїв та спорядження, із ціною в уламках і опублікованим порядком спорядження. Дані по кожному герою та склади загонів будуть в окремому інструменті.",
+"note.heroes":"Як працює розвиток героїв та спорядження — бонуси складу та фракції, ціна в уламках і опублікований порядок спорядження. Дані по кожному герою та склади загонів будуть в окремому інструменті.",
 "note.epigraphs":"Постійні бонуси загону, які відкриваються пізно. Кілька гайдів описують це й місцями суперечать один одному &mdash; тоді показано обидві версії, а не одна.",
 "note.demonking":"Три різних Demon King змінюють один одного протягом тижня, по одному на фракцію. Важливіше, яких героїв ви шлете, а не скільки.",
 "note.changelog":"Що нового від останньої публікації, спочатку найсвіжіше. Дрібні виправлення вносяться без окремої згадки; усе, що залишається <b>невідомим</b>, позначено в своєму розділі, а не тут. Лише англійською.",
@@ -3731,12 +3989,15 @@ pl: {
 "nav.research":"Badania sojuszu",
 "nav.howto":"Instrukcje",
 "nav.changelog":"Zmiany",
+"nav.calcSpeedup":"Kalkulator przyspieszeń",
+"nav.calcFalcon":"Planer Falcon Quest",
+"nav.calcHoard":"Ogólny planer zapasów",
 "note.titles":"Dziewięć tytułów dworskich, każdy daje premię. Siedem rotuje w pięciominutowej kolejce otwartej dla wszystkich; King of Battle zdobywa się w Royal City Scramble, a Queen mianuje King.",
 "note.research":"Propozycja kolejności dotacji w drzewku technologii sojuszu. To strategia, nie reguła gry.",
 "note.league":"Sezonowa drabinka nad Alliance Duel, z awansami i spadkami między grupami.",
 "note.hunts":"Trzy wydarzenia rajdowe uruchamiane własnymi warunkami, a nie o stałej porze tygodnia.",
 "note.howto":"Krótkie instrukcje krok po kroku do rzeczy łatwych, gdy już wiesz, gdzie jest przycisk.",
-"note.heroes":"Jak działa rozwój bohaterów i sprzętu, z kosztem w odłamkach i opublikowaną kolejnością sprzętu. Dane per bohater i składy oddziałów trafią do osobnego narzędzia.",
+"note.heroes":"Jak działa rozwój bohaterów i sprzętu — premie za skład i frakcję, koszt w odłamkach oraz opublikowana kolejność sprzętu. Dane per bohater i składy oddziałów trafią do osobnego narzędzia.",
 "note.epigraphs":"Stałe premie oddziału odblokowywane późno. Kilka poradników to opisuje i miejscami sobie przeczy &mdash; wtedy pokazujemy obie wersje zamiast wybierać jedną.",
 "note.demonking":"Trzej różni Demon Kingowie zmieniają się w ciągu tygodnia, po jednym na frakcję. Ważniejsze jest, jakich bohaterów wysyłasz, niż ilu.",
 "note.changelog":"Co nowego od ostatniej opublikowanej wersji, od najnowszych. Drobne poprawki wprowadzane są bez wzmianki; wszystko, co wciąż <b>nieznane</b>, oznaczono w odpowiedniej sekcji, a nie tutaj. Tylko po angielsku.",
@@ -3873,12 +4134,15 @@ fi: {
 "nav.research":"Liittouman tutkimus",
 "nav.howto":"Ohjeet",
 "nav.changelog":"Muutokset",
+"nav.calcSpeedup":"Nopeutuslaskuri",
+"nav.calcFalcon":"Falcon Quest -suunnittelija",
+"nav.calcHoard":"Yleinen keräyssuunnittelija",
 "note.titles":"Yhdeksän hovin arvonimeä, kukin antaa bonuksen. Seitsemän kiertää viiden minuutin jonossa, johon kuka tahansa voi liittyä; King of Battle voitetaan Royal City Scramblessa ja Queenin nimittää King.",
 "note.research":"Ehdotus liittouman teknologiapuun lahjoitusjärjestykseksi. Tämä on strategiaa, ei pelin sääntö.",
 "note.league":"Kausiluontoinen sarjataulukko Alliance Duelin päällä, ryhmien välisin nousuin ja putoamisin.",
 "note.hunts":"Kolme ryhmähyökkäystapahtumaa, jotka käynnistyvät omista ehdoistaan eivätkä kiinteänä viikonaikana.",
 "note.howto":"Lyhyitä vaiheittaisia ohjeita asioihin, jotka ovat helppoja kun tietää missä nappi on.",
-"note.heroes":"Miten sankari- ja varustekehitys toimii, sirukustannuksineen ja julkaistuine varustejärjestyksineen. Sankarikohtaiset tiedot ja ryhmäkokoonpanot tulevat erilliseen työkaluun.",
+"note.heroes":"Miten sankari- ja varustekehitys toimii — kokoonpano- ja fraktiobonukset, sirukustannukset ja julkaistu varustejärjestys. Sankarikohtaiset tiedot ja ryhmäkokoonpanot tulevat erilliseen työkaluun.",
 "note.epigraphs":"Pysyviä ryhmäbonuksia, jotka aukeavat myöhään. Useampi opas käsittelee tätä ja ne ovat paikoin ristiriidassa &mdash; silloin näytetään molemmat tulkinnat yhden valitsemisen sijaan.",
 "note.demonking":"Kolme eri Demon Kingiä vuorottelee viikon aikana, yksi kutakin fraktiota kohden. Sillä on enemmän väliä, mitkä sankarit lähetät kuin kuinka monta.",
 "note.changelog":"Mitä uutta viimeisimmän julkaistun version jälkeen, uusin ensin. Pienet korjaukset tehdään mainitsematta; kaikki vielä <b>tuntematon</b> merkitään omaan osioonsa eikä tänne. Vain englanniksi.",
@@ -4015,12 +4279,15 @@ et: {
 "nav.research":"Liidu uuringud",
 "nav.howto":"Juhised",
 "nav.changelog":"Muudatused",
+"nav.calcSpeedup":"Kiirenduskalkulaator",
+"nav.calcFalcon":"Falcon Questi planeerija",
+"nav.calcHoard":"Üldine varumisplaneerija",
 "note.titles":"Üheksa õuetiitlit, igalüks annab boonuse. Seitse vahelduvad viieminutilises järjekorras, millega võib liituda igaüks; King of Battle võidetakse Royal City Scramble’is ja Queeni määrab King.",
 "note.research":"Soovitus liidu tehnoloogiapuu annetuste järjekorra kohta. See on strateegia, mitte mängureegel.",
 "note.league":"Hooajaline edetabel Alliance Dueli peal, gruppide vahel tõusu ja langusega.",
 "note.hunts":"Kolm rünnakusündmust, mis käivituvad omadel tingimustel, mitte kindlal nädalaajal.",
 "note.howto":"Lühikesed sammhaaval juhendid asjade kohta, mis on lihtsad, kui tead, kus nupp asub.",
-"note.heroes":"Kuidas kangelaste ja varustuse areng toimib, koos kildude hinna ja avaldatud varustusjärjekorraga. Kangelasepõhised andmed ja salgakoosseisud tulevad eraldi tööriista.",
+"note.heroes":"Kuidas kangelaste ja varustuse areng toimib — koosseisu- ja fraktsioonibooniused, kildude hind ja avaldatud varustusjärjekord. Kangelasepõhised andmed ja salgakoosseisud tulevad eraldi tööriista.",
 "note.epigraphs":"Püsivad salgabooniused, mis avanevad hilja. Mitu juhendit käsitlevad seda ja on kohati vastuolus &mdash; siis näidatakse mõlemat lugemist, mitte ei valita ühte.",
 "note.demonking":"Kolm erinevat Demon Kingi vahelduvad nädala jooksul, üks iga fraktsiooni kohta. Olulisem on, milliseid kangelasi saadad, mitte kui palju.",
 "note.changelog":"Mis on uut alates viimasest avaldatud versioonist, uuemad eespool. Väiksemad parandused tehakse vaikimisi; kõik veel <b>teadmata</b> on märgitud omas jaotises, mitte siin. Ainult inglise keeles.",
@@ -6496,6 +6763,279 @@ function buildSrcBars(){
   applySrcState(srcAllOpen());
 }
 
+// ============================================================
+// Hoard Planner (Tools tab)
+// ------------------------------------------------------------
+// Works back from "I want to be full at T" to "stop spending at T minus fill
+// time". Capacity is banked + live because both hold usable items. Also warns
+// when the chosen day does not actually score the thing being hoarded, since
+// that is the mistake worth catching first.
+// ============================================================
+// ============================================================
+// Falcon Quest Planner
+// ------------------------------------------------------------
+// Falcon Quests arrive as a BLOCK on a fixed ~6h timer, not as a trickle. That
+// changes the question: the refresh clock runs whatever you do, so the useful
+// output is a SPEND FLOOR ("you may go down to N now") rather than a moment to
+// stop. Capacity is inactive cap + max active, since both hold usable quests.
+// ============================================================
+const FQ_KEY = 'lppc-falcon';
+const FQ_REFRESH_HOURS = 6;
+const FQ_LEVELS = {
+  4:  { refresh:8,  inactive:25, active:6  },
+  5:  { refresh:9,  inactive:25, active:7  },
+  9:  { refresh:11, inactive:35, active:9  },
+  10: { refresh:11, inactive:40, active:9  },
+  11: { refresh:11, inactive:40, active:10 },
+  12: { refresh:12, inactive:40, active:10 }
+};
+const FQ_SCORING_DAYS = [1, 3, 5];
+
+function fqParseHM(txt){
+  const m = String(txt || '').match(/^\s*(\d+)\s*[:.h]\s*(\d+)?/);
+  if(!m) return null;
+  const h = parseInt(m[1], 10), mi = parseInt(m[2] || '0', 10);
+  if(!isFinite(h) || !isFinite(mi)) return null;
+  return h + mi / 60;
+}
+function buildFalconPlanner(){
+  const host = document.getElementById('falconPlanner');
+  if(!host || host.dataset.wired) return;
+  host.dataset.wired = '1';
+  const ids = ['fqLevel','fqHave','fqNext','fqDay','fqTime','fqRefresh','fqInactive','fqActive'];
+  try{
+    const saved = JSON.parse(localStorage.getItem(FQ_KEY) || '{}');
+    ids.forEach(function(id){
+      const el = document.getElementById(id);
+      if(el && saved[id] !== undefined && saved[id] !== '') el.value = saved[id];
+    });
+  }catch(e){}
+
+  function recalc(){
+    const lvl = parseInt(document.getElementById('fqLevel').value, 10);
+    const custom = document.getElementById('fqCustom');
+    custom.hidden = !!FQ_LEVELS[lvl];
+    const spec = FQ_LEVELS[lvl] || {
+      refresh:  Math.max(1, parseInt(document.getElementById('fqRefresh').value, 10)  || 11),
+      inactive: Math.max(0, parseInt(document.getElementById('fqInactive').value, 10) || 0),
+      active:   Math.max(0, parseInt(document.getElementById('fqActive').value, 10)   || 0)
+    };
+    const cap  = spec.inactive + spec.active;
+    const have = Math.max(0, parseInt(document.getElementById('fqHave').value, 10) || 0);
+    const nextIn = fqParseHM(document.getElementById('fqNext').value);
+    const day  = parseInt(document.getElementById('fqDay').value, 10);
+    const tv   = (document.getElementById('fqTime').value || '08:00').split(':');
+    const hh = parseInt(tv[0],10) || 0, mm = parseInt(tv[1],10) || 0;
+
+    const out = document.getElementById('fqOut');
+    out.innerHTML = '';
+    if(nextIn === null){
+      const e = document.createElement('div');
+      e.className = 'hoard-answer warn';
+      e.innerHTML = '<b>Enter the next refresh countdown</b> as h:mm, exactly as the Falcon Tower screen shows it.';
+      out.appendChild(e);
+      return;
+    }
+
+    const now = new Date();
+    const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, mm, 0, 0);
+    target.setDate(target.getDate() + ((day - target.getDay() + 7) % 7));
+    if(target <= now) target.setDate(target.getDate() + 7);
+    const hoursToTarget = (target - now) / 3600000;
+
+    // How many refreshes land strictly before the claim moment.
+    let refreshes = 0;
+    if(hoursToTarget >= nextIn){
+      refreshes = 1 + Math.floor((hoursToTarget - nextIn) / FQ_REFRESH_HOURS);
+    }
+    const incoming = refreshes * spec.refresh;
+    const projected = Math.min(cap, have + incoming);
+    const floor = Math.max(0, cap - incoming);
+    const spendable = Math.max(0, have - floor);
+
+    const ans = document.createElement('div');
+    ans.className = 'hoard-answer';
+    if(incoming >= cap){
+      ans.innerHTML = '<b>Spend freely.</b> ' + refreshes + ' refreshes land before then, bringing ' +
+        incoming + ' quests \u2014 more than the ' + cap + ' you can hold. You will be full whatever you do now.';
+    } else if(spendable > 0){
+      ans.innerHTML = 'You can spend <b>' + spendable + '</b> now and still be full. ' +
+        'Do not drop below <b>' + floor + '</b>.';
+    } else if(projected >= cap){
+      ans.classList.add('warn');
+      ans.innerHTML = '<b>Stop spending now.</b> You are exactly on track for ' + cap + '.';
+    } else {
+      ans.classList.add('warn');
+      ans.innerHTML = '<b>Cannot reach full.</b> Even spending nothing you arrive with about <b>' +
+        projected + '</b> of ' + cap + '.';
+    }
+    out.appendChild(ans);
+
+    const lines = document.createElement('div');
+    lines.className = 'hoard-lines';
+    [['Capacity', spec.inactive + ' inactive + ' + spec.active + ' active = ' + cap],
+     ['Refreshes before claim', refreshes + ' \u00d7 ' + spec.refresh + ' = ' + incoming + ' quests'],
+     ['Projected at claim', projected + ' of ' + cap],
+     ['Time until claim', Math.floor(hoursToTarget) + 'h ' + Math.round((hoursToTarget % 1) * 60) + 'm']
+    ].forEach(function(pr){
+      const r = document.createElement('div');
+      r.className = 'hoard-line';
+      r.innerHTML = '<span>' + pr[0] + '</span><span>' + pr[1] + '</span>';
+      lines.appendChild(r);
+    });
+    out.appendChild(lines);
+
+    if(FQ_SCORING_DAYS.indexOf(day) < 0){
+      const w = document.createElement('div');
+      w.className = 'hoard-flag';
+      w.innerHTML = '<b>' + HOARD_DAYNAMES[day] + ' does not score Falcon Quests in the Alliance Duel.</b> ' +
+        'The task tables award them on <b>Monday, Wednesday and Friday</b> only.';
+      out.appendChild(w);
+    }
+    const perDay = spec.refresh * (24 / FQ_REFRESH_HOURS);
+    if(perDay > cap){
+      const c = document.createElement('div');
+      c.className = 'hoard-flag';
+      c.innerHTML = '<b>Your tower holds less than a day of quests.</b> It caps at ' + cap +
+        ' but produces ' + perDay + ' per day, so you cannot bank a full day and some overflow is ' +
+        'unavoidable. Upgrading the inactive cap is what fixes this, not the refresh amount.';
+      out.appendChild(c);
+    }
+    if(incoming > cap - have && have + incoming > cap){
+      const o = document.createElement('div');
+      o.className = 'hoard-flag';
+      o.innerHTML = '<b>Overflow warning.</b> Holding still would waste about ' +
+        (have + incoming - cap) + ' quests, since refreshes keep arriving once you are capped. ' +
+        'Spending down to ' + floor + ' costs you nothing.';
+      out.appendChild(o);
+    }
+
+    const store = {};
+    ids.forEach(function(id){ const el = document.getElementById(id); if(el) store[id] = el.value; });
+    try{ localStorage.setItem(FQ_KEY, JSON.stringify(store)); }catch(e){}
+  }
+  ids.forEach(function(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('input', recalc);
+    el.addEventListener('change', recalc);
+  });
+  recalc();
+}
+
+const HOARD_KEY = 'lppc-hoard';
+// Days on which the Alliance Duel task tables award points for a Falcon Quest.
+const FALCON_DAYS = [1, 3, 5];
+const HOARD_DAYNAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+function hoardFmtDur(hours){
+  const total = Math.round(hours * 60);
+  const h = Math.floor(total / 60), m = total % 60;
+  return h + 'h ' + (m < 10 ? '0' : '') + m + 'm';
+}
+function hoardFmtWhen(dt){
+  return HOARD_DAYNAMES[dt.getDay()] + ' ' +
+    String(dt.getHours()).padStart(2,'0') + ':' + String(dt.getMinutes()).padStart(2,'0');
+}
+function buildHoardPlanner(){
+  const host = document.getElementById('hoardPlanner');
+  if(!host || host.dataset.wired) return;
+  host.dataset.wired = '1';
+
+  const ids = ['hoardBank','hoardLive','hoardGain','hoardEvery','hoardHave','hoardDay','hoardTime'];
+  try{
+    const saved = JSON.parse(localStorage.getItem(HOARD_KEY) || '{}');
+    ids.forEach(function(id){ if(saved[id] !== undefined && saved[id] !== '') document.getElementById(id).value = saved[id]; });
+  }catch(e){}
+
+  function num(id, fallback){
+    const v = parseFloat(document.getElementById(id).value);
+    return isFinite(v) ? v : fallback;
+  }
+
+  function recalc(){
+    const bank  = Math.max(0, num('hoardBank', 0));
+    const live  = Math.max(0, num('hoardLive', 0));
+    const gain  = Math.max(0.0001, num('hoardGain', 1));
+    const every = Math.max(0.0001, num('hoardEvery', 1));
+    const have  = Math.max(0, num('hoardHave', 0));
+    const day   = parseInt(document.getElementById('hoardDay').value, 10);
+    const tval  = document.getElementById('hoardTime').value || '08:00';
+    const parts = tval.split(':');
+    const hh = parseInt(parts[0], 10) || 0, mm = parseInt(parts[1], 10) || 0;
+
+    const cap = bank + live;
+    const perHour = gain / every;
+    const needed = Math.max(0, cap - have);
+    const fillHours = needed / perHour;
+
+    // next occurrence of the chosen weekday at the chosen local time
+    const now = new Date();
+    const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, mm, 0, 0);
+    let delta = (day - target.getDay() + 7) % 7;
+    target.setDate(target.getDate() + delta);
+    if(target <= now) target.setDate(target.getDate() + 7);
+
+    const stop = new Date(target.getTime() - fillHours * 3600000);
+    const hoursAway = (stop - now) / 3600000;
+
+    const out = document.getElementById('hoardOut');
+    out.innerHTML = '';
+
+    const ans = document.createElement('div');
+    ans.className = 'hoard-answer';
+    if(hoursAway <= 0){
+      ans.classList.add('warn');
+      ans.innerHTML = '<b>Stop spending now.</b> To be full by ' + hoardFmtWhen(target) +
+        ' you needed to start ' + hoardFmtDur(Math.abs(hoursAway)) + ' ago \u2014 you will reach about ' +
+        Math.floor(Math.min(cap, have + perHour * ((target - now) / 3600000))) + ' of ' + cap + '.';
+    } else {
+      ans.innerHTML = 'Stop spending at <b>' + hoardFmtWhen(stop) + '</b> to be full at ' +
+        hoardFmtWhen(target) + '. That is <b>' + hoardFmtDur(hoursAway) + '</b> from now.';
+    }
+    out.appendChild(ans);
+
+    const lines = document.createElement('div');
+    lines.className = 'hoard-lines';
+    [['Total capacity', bank + ' banked + ' + live + ' live = ' + cap],
+     ['Regeneration rate', (Math.round(perHour * 100) / 100) + ' per hour \u00b7 ' + (Math.round(perHour * 24 * 10) / 10) + ' per day'],
+     ['Need to accumulate', needed + ' more'],
+     ['Time to fill', hoardFmtDur(fillHours)]
+    ].forEach(function(pair){
+      const r = document.createElement('div');
+      r.className = 'hoard-line';
+      r.innerHTML = '<span>' + pair[0] + '</span><span>' + pair[1] + '</span>';
+      lines.appendChild(r);
+    });
+    out.appendChild(lines);
+
+    // Cap vs daily production: if the pool holds less than a day, hoarding alone
+    // cannot capture a full day's output and a second spend is needed.
+    const perDay = perHour * 24;
+    if(perDay > cap){
+      const extra = document.createElement('div');
+      extra.className = 'hoard-flag';
+      extra.innerHTML = '<b>Your pool holds less than a day of production.</b> It caps at ' + cap +
+        ' but generates about ' + (Math.round(perDay * 10) / 10) +
+        ' per day, so a single claim cannot capture everything. Spend again later the same day, ' +
+        'or the overflow is lost while you are capped.';
+      out.appendChild(extra);
+    }
+
+
+    const store = {};
+    ids.forEach(function(id){ store[id] = document.getElementById(id).value; });
+    try{ localStorage.setItem(HOARD_KEY, JSON.stringify(store)); }catch(e){}
+  }
+
+  ids.forEach(function(id){
+    const el = document.getElementById(id);
+    el.addEventListener('input', recalc);
+    el.addEventListener('change', recalc);
+  });
+  recalc();
+}
+
 const CALC_KEY = 'lppc-speedup';
 const CALC_DENOMS = [
   {id:'m1',   mins:1,   label:'1 minute'},
@@ -6669,6 +7209,13 @@ function buildTabs(){
   });
   return panels;
 }
+const SUBNAV = {
+  'sec-tools': [
+    { id:'speedupCalc',   key:'nav.calcSpeedup' },
+    { id:'falconPlanner', key:'nav.calcFalcon'  },
+    { id:'hoardPlanner',  key:'nav.calcHoard'   }
+  ]
+};
 function buildQuicknav(tab){
   const inner = document.getElementById('quicknavInner');
   if(!inner) return;
@@ -6686,6 +7233,23 @@ function buildQuicknav(tab){
       b.dataset.navid = realId;
       b.addEventListener('click', ()=> revealSection(realId));
       inner.appendChild(b);
+      // Sections that hold several distinct instruments get one nav entry per
+      // instrument, since "Tools" alone doesn't say what is in there.
+      (SUBNAV[realId] || []).forEach(sub=>{
+        const target = document.getElementById(sub.id);
+        if(!target) return;
+        const sb = document.createElement('button');
+        sb.type = 'button';
+        sb.className = 'qn-sub';
+        sb.setAttribute('data-i18n', sub.key);
+        sb.textContent = t(sub.key);
+        sb.dataset.navid = realId;
+        sb.addEventListener('click', ()=>{
+          revealSection(realId);
+          try{ target.scrollIntoView({behavior:'smooth', block:'start'}); }catch(e){ target.scrollIntoView(); }
+        });
+        inner.appendChild(sb);
+      });
     });
   });
   if(tab === 'events' && typeof evfApply === 'function') evfApply(evfGet());
@@ -7600,6 +8164,8 @@ function renderUpcomingBanner(){
   initEra();
   initTabs();
   buildSpeedupCalc();
+  buildHoardPlanner();
+  buildFalconPlanner();
   buildEventFilter();
   buildBackToTop();
   buildSiteSearch();
