@@ -6,25 +6,116 @@
 <title>Last Asylum Plague — Alliance Ops File</title>
 <style>
   :root{
-    --bg:#0b0d09;
-    --panel:#12150e;
-    --panel-2:#171b10;
-    --line:#2a2f1f;
-    --text:#e7e9dd;
-    --muted:#8b9077;
-    --green:#8fb03e;
-    --green-bright:#c3e05c;
+    --bg:#0a0c08;
+    --panel:#141810;
+    --panel-2:#1d2317;
+    --line:#3a4229;
+    --text:#e2e5d4;
+    --muted:#9aa084;
+    --green:#9cc23f;
+    --green-bright:#d2f06a;
     --red:#a8392c;
-    --red-bright:#d45342;
-    --amber:#d9a441;
+    --red-bright:#ef6e5b;
+    --amber:#f0b64a;
+    /* --- surfaces and edges, so both themes drive off one set --- */
+    --panel-3:#0e1109;
+    --tint-1:rgba(255,255,255,.035);
+    --tint-2:rgba(255,255,255,.065);
+    --tint-3:rgba(255,255,255,.10);
+    --edge:rgba(255,255,255,.15);
+    --edge-2:rgba(255,255,255,.20);
+    --edge-3:rgba(255,255,255,.28);
+    --well-1:rgba(0,0,0,.20);
+    --well-2:rgba(0,0,0,.32);
+    --shadow:rgba(0,0,0,.45);
+    --fab-bg:rgba(11,13,9,.92);
+    /* --- semantic tints --- */
+    --hl-1:rgba(255,196,0,.045);
+    --hl-2:rgba(255,196,0,.08);
+    --hl-3:rgba(255,196,0,.13);
+    --hl-4:rgba(255,196,0,.22);
+    --hl-5:rgba(255,196,0,.40);
+    --ok-1:rgba(143,176,62,.08);
+    --ok-2:rgba(143,176,62,.16);
+    --bad-1:rgba(168,57,44,.07);
+    --bad-2:rgba(168,57,44,.13);
+    --info-1:rgba(120,190,255,.07);
+    --info-2:rgba(120,190,255,.24);
+    /* --- text that sits ON a filled accent --- */
+    --accent:#63cfe0;
+    --accent-strong:#8fe4f0;
+    --accent-tint:rgba(99,207,224,.14);
+    --on-accent:#080a06;
+    --info-text:#9fd0ff;
+    --rar-sr:#6fb3e0;
+    --rar-ssr:#b57ae0;
+    --err-text:#ffb3b3;
   }
+  /* ============================================================
+     Light theme — "Bleached"
+     ------------------------------------------------------------
+     Not a lightened copy of the dark palette. The dark theme is
+     night: char, olive, lamplight amber. This one is the same
+     world at midday — bone dust, sun-faded canvas, oxidised metal.
+     Accents move from lamp-glow to pigment: moss instead of
+     bright olive, burnt umber instead of amber, iron oxide
+     instead of ember red. Overlay tints invert from lightening
+     to darkening, which is why they had to become variables.
+     ============================================================ */
+  html[data-theme="light"]{
+    --bg:#f6f3e9;
+    --panel:#e9e4d3;
+    --panel-2:#d5ccb2;
+    --panel-3:#f0ecdf;
+    --line:#b3a68a;
+    --text:#17140e;
+    --muted:#5a5342;
+    --green:#41631f;
+    --green-bright:#2b4614;
+    --red:#8d2a18;
+    --red-bright:#6f2013;
+    --amber:#734508;
+
+    --tint-1:rgba(60,48,24,.055);
+    --tint-2:rgba(60,48,24,.095);
+    --tint-3:rgba(60,48,24,.15);
+    --edge:rgba(60,48,24,.24);
+    --edge-2:rgba(60,48,24,.30);
+    --edge-3:rgba(60,48,24,.42);
+    --well-1:rgba(60,48,24,.07);
+    --well-2:rgba(60,48,24,.11);
+    --shadow:rgba(60,48,24,.28);
+    --fab-bg:rgba(235,230,214,.94);
+
+    --hl-1:rgba(150,95,15,.09);
+    --hl-2:rgba(150,95,15,.14);
+    --hl-3:rgba(150,95,15,.20);
+    --hl-4:rgba(150,95,15,.28);
+    --hl-5:rgba(150,95,15,.45);
+    --ok-1:rgba(76,107,43,.12);
+    --ok-2:rgba(76,107,43,.24);
+    --bad-1:rgba(149,48,31,.10);
+    --bad-2:rgba(149,48,31,.18);
+    --info-1:rgba(30,86,120,.10);
+    --info-2:rgba(30,86,120,.26);
+
+    --accent:#0e5f74;
+    --accent-strong:#0a4657;
+    --accent-tint:rgba(14,95,116,.13);
+    --on-accent:#f6f3e8;
+    --info-text:#1e5678;
+    --rar-sr:#1f6690;
+    --rar-ssr:#6a3391;
+    --err-text:#8c2418;
+  }
+
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);}
   body{
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
     background:
-      radial-gradient(ellipse at top left, rgba(143,176,62,0.06), transparent 60%),
-      radial-gradient(ellipse at bottom right, rgba(168,57,44,0.05), transparent 60%),
+      radial-gradient(ellipse at top left, var(--ok-1), transparent 60%),
+      radial-gradient(ellipse at bottom right, var(--bad-1), transparent 60%),
       var(--bg);
     min-height:100vh;
     padding:0 0 60px 0;
@@ -46,7 +137,7 @@
   header{
     border-bottom:2px solid var(--line);
     background:
-      repeating-linear-gradient(135deg, rgba(217,164,65,0.05) 0 10px, transparent 10px 20px),
+      repeating-linear-gradient(135deg, var(--hl-1) 0 10px, transparent 10px 20px),
       var(--panel);
     padding:28px 20px 22px;
     position:relative;
@@ -70,7 +161,7 @@
     font-size:clamp(28px,5vw,44px);
     margin:0 0 6px;
     color:var(--green-bright);
-    text-shadow:0 0 18px rgba(195,224,92,0.25);
+    text-shadow:0 0 18px var(--ok-2);
   }
   .subtitle{color:var(--muted);font-size:14px;margin:0 0 20px;max-width:640px;line-height:1.5;}
 
@@ -90,7 +181,7 @@
   .clock-sub{font-size:11px;color:var(--muted);margin-top:2px;}
 
   select, input[type=text], input[type=date], input[type=time], input[type=number]{
-    background:#0e1109;
+    background:var(--panel-3);
     border:1px solid var(--line);
     color:var(--text);
     padding:7px 10px;
@@ -105,7 +196,7 @@
   section{margin-top:38px;}
   .section-head{
     display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
-    border-bottom:1px solid var(--line);
+    border-bottom:2px solid var(--line);
     padding-bottom:10px; margin-bottom:16px;
   }
   .section-tag{
@@ -118,14 +209,17 @@
     letter-spacing:0.1em;
   }
   .section-tag.war{background:var(--red);}
-  .section-tag.recur{background:var(--amber); color:#1a1400;}
-  .section-tag.tbd{background:var(--muted); color:#0b0d09;}
-  .section-tag.ok{background:var(--green); color:#0b0d09;}
+  .section-tag.recur{background:var(--amber); color:var(--on-accent);}
+  .section-tag.tbd{background:var(--muted); color:var(--on-accent);}
+  .section-tag.ok{background:var(--green); color:var(--on-accent);}
+  /* Not part of the evidence ladder: this tool contains no game data to
+     verify, only arithmetic the user supplies inputs for. */
+  .section-tag.calc{background:none; color:var(--muted); border:1px solid var(--edge-3);}
   /* "none" = we have no source at all. Deliberately hollow so it cannot be
      mistaken at a glance for the filled grey of COMMUNITY-SOURCED. */
   .section-tag.none{
     background:none; color:var(--muted);
-    border:1px dashed rgba(255,255,255,.32);
+    border:1px dashed var(--edge-3);
   }
   h2{font-size:20px;margin:0;color:var(--text);}
   .section-note{color:var(--muted);font-size:13px;margin:-6px 0 16px;line-height:1.6;}
@@ -150,7 +244,7 @@
   .day-chip.active{
     border-color:var(--green);
     color:var(--green-bright);
-    background:rgba(143,176,62,0.1);
+    background:var(--ok-1);
   }
   table{width:100%;border-collapse:collapse;}
   .sb-table th, .sb-table td{
@@ -168,7 +262,7 @@
     letter-spacing:0.08em;
   }
   .sb-table td.time{font-family:'Courier New',monospace;color:var(--green-bright);white-space:nowrap;}
-  .sb-table tr.now td{background:rgba(217,164,65,0.09);}
+  .sb-table tr.now td{background:var(--hl-2);}
   .sb-table tr.now td.time{color:var(--amber);font-weight:700;}
   .today-setter{
     display:flex;align-items:center;gap:10px;margin:14px 0 20px;
@@ -199,7 +293,7 @@
   .kvk-what{padding:12px 14px;font-size:13px;line-height:1.5;}
   .kvk-what b{color:var(--green-bright);}
   .kvk-battle .kvk-when{color:var(--red-bright);}
-  .kvk-battle{background:rgba(168,57,44,0.06);}
+  .kvk-battle{background:var(--bad-1);}
   .monthly-note{
     margin-top:14px;
     border-left:3px solid var(--amber);
@@ -222,7 +316,7 @@
   .checkbox-row label{display:flex;gap:6px;align-items:center;color:var(--text);text-transform:none;letter-spacing:0;font-size:13px;}
   button{
     background:var(--green);
-    color:#0b0d09;
+    color:var(--on-accent);
     border:none;
     padding:8px 16px;
     border-radius:2px;
@@ -293,7 +387,7 @@
   .milestone-name{font-size:13px;color:var(--text);}
   .milestone-row.past{opacity:0.4;}
   .milestone-row.today{
-    background:rgba(217,164,65,0.12);
+    background:var(--hl-3);
     border-left:3px solid var(--amber);
   }
   .milestone-row.today .milestone-day{color:var(--amber);font-weight:700;}
@@ -338,7 +432,7 @@
     max-width:1100px; margin:16px auto 0; padding:0 20px;
   }
   .banner-inner{
-    background:rgba(217,164,65,0.1);
+    background:var(--hl-3);
     border:1px solid var(--amber);
     border-radius:2px;
     padding:12px 16px;
@@ -355,7 +449,7 @@
     font-size:13px;
     padding:4px 0;
     display:flex; justify-content:space-between; gap:12px;
-    border-top:1px solid rgba(217,164,65,0.2);
+    border-top:1px solid var(--hl-4);
   }
   .banner-item:first-of-type{border-top:none;}
   .banner-item .when{color:var(--amber); font-family:'Courier New',monospace; white-space:nowrap;}
@@ -422,7 +516,7 @@
 .transcribed-note{
   display:block; margin:10px auto 0; max-width:70ch;
   padding:7px 12px; border-left:2px solid var(--amber);
-  background:rgba(255,255,255,.03);
+  background:var(--tint-1);
   font-size:.78rem; line-height:1.45; text-align:left;
   color:var(--muted); opacity:.9;
 }
@@ -433,7 +527,7 @@
 .qow-controls{ display:flex; align-items:center; gap:12px; margin:14px 0 10px; flex-wrap:wrap; }
 .qow-search{
   flex:1 1 260px; min-width:0; padding:9px 12px;
-  background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.14);
+  background:var(--well-2); border:1px solid var(--edge);
   border-radius:4px; color:inherit; font:inherit; font-size:.9rem;
 }
 .qow-search:focus{ outline:none; border-color:var(--amber); }
@@ -442,21 +536,21 @@
 .qow-cat-head{
   font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
   color:var(--amber); opacity:.85; padding-bottom:5px;
-  border-bottom:1px solid rgba(255,255,255,.1); margin-bottom:2px;
+  border-bottom:1px solid var(--tint-3); margin-bottom:2px;
 }
 .qow-row{
   display:grid; grid-template-columns:1fr minmax(120px,.55fr); gap:10px 18px;
-  padding:9px 4px; border-bottom:1px solid rgba(255,255,255,.055); align-items:start;
+  padding:9px 4px; border-bottom:1px solid var(--tint-2); align-items:start;
 }
-.qow-row:hover{ background:rgba(255,255,255,.03); }
+.qow-row:hover{ background:var(--tint-1); }
 .qow-q{ font-size:.88rem; line-height:1.4; }
 .qow-a{ font-size:.88rem; line-height:1.4; color:var(--amber); font-weight:600; }
 .qow-a-sub{ display:block; font-weight:400; font-size:.78rem; color:var(--muted); margin-top:3px; }
 .qow-empty{ margin-top:16px; font-size:.85rem; color:var(--muted); }
-mark.qow-hit{ background:rgba(255,196,0,.28); color:inherit; border-radius:2px; padding:0 1px; }
+mark.qow-hit{ background:var(--hl-4); color:inherit; border-radius:2px; padding:0 1px; }
 @media (max-width:640px){
   .qow-row{ grid-template-columns:1fr; gap:3px; }
-  .qow-a{ padding-left:10px; border-left:2px solid rgba(255,196,0,.4); }
+  .qow-a{ padding-left:10px; border-left:2px solid var(--hl-5); }
 }
 
 /* ---- Collapsible sections ---- */
@@ -464,11 +558,11 @@ mark.qow-hit{ background:rgba(255,196,0,.28); color:inherit; border-radius:2px; 
 .sec-toggle{
   display:flex; align-items:center; gap:7px;
   margin-left:auto; padding:5px 11px 5px 9px;
-  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16);
+  background:var(--tint-2); border:1px solid var(--edge);
   border-radius:999px; color:var(--muted); font:inherit; font-size:.72rem;
   letter-spacing:.08em; text-transform:uppercase; cursor:pointer; white-space:nowrap;
 }
-.sec-toggle:hover{ background:rgba(255,196,0,.14); border-color:var(--amber); color:var(--amber); }
+.sec-toggle:hover{ background:var(--hl-3); border-color:var(--amber); color:var(--amber); }
 .sec-toggle:focus-visible{ outline:2px solid var(--amber); outline-offset:2px; }
 .sec-chevron{ width:11px; height:11px; flex:none; transition:transform .18s ease; }
 .sec-chevron path{ stroke:currentColor; stroke-width:2.4; fill:none; stroke-linecap:round; stroke-linejoin:round; }
@@ -479,8 +573,8 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 .collapse-all-row{
   display:flex; justify-content:center; gap:10px; align-items:center; flex-wrap:wrap;
   max-width:var(--maxw,1100px); margin:0 auto 14px; padding:12px 18px;
-  border-top:1px solid rgba(255,255,255,.07); border-bottom:1px solid rgba(255,255,255,.07);
-  background:rgba(255,255,255,.022);
+  border-top:1px solid var(--tint-2); border-bottom:1px solid var(--tint-2);
+  background:var(--tint-1);
 }
 .collapse-all-label{
   font-size:.72rem; letter-spacing:.13em; text-transform:uppercase; color:var(--muted);
@@ -497,7 +591,7 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 /* ---- Community guide blocks ---- */
 .guide-block{
   margin-top:16px; padding:14px 16px; border-radius:6px;
-  background:rgba(255,255,255,.028); border:1px solid rgba(255,255,255,.08);
+  background:var(--tint-1); border:1px solid var(--tint-3);
   border-left:3px solid var(--amber);
 }
 .guide-block h3{ font-size:.95rem; margin:0 0 4px; }
@@ -509,20 +603,25 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 .guide-block p{ font-size:.85rem; line-height:1.55; margin:6px 0; }
 .guide-warn{
   margin-top:10px; padding:8px 11px; border-left:2px solid var(--red-bright);
-  background:rgba(255,80,80,.07); font-size:.8rem; line-height:1.5;
+  background:var(--bad-1); font-size:.8rem; line-height:1.5;
 }
 .score-table{ width:100%; border-collapse:collapse; margin-top:6px; font-size:.85rem; }
-.score-table th,.score-table td{ text-align:left; padding:5px 8px; border-bottom:1px solid rgba(255,255,255,.07); }
+.score-table th,.score-table td{ text-align:left; padding:5px 8px; border-bottom:1px solid var(--tint-2); }
+/* Headers sit one step deeper than the card they are in, so a table reads
+   as a distinct block rather than as continuous text. */
+.score-table thead th{ background:var(--panel-2); border-bottom:1px solid var(--line); }
+.score-table thead th:first-child{ border-radius:4px 0 0 0; }
+.score-table thead th:last-child{ border-radius:0 4px 0 0; }
 .score-table th{ font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:600; }
 .score-table td.pts{ text-align:right; color:var(--amber); font-weight:600; white-space:nowrap; }
-.score-table tr.total td{ border-top:1px solid rgba(255,196,0,.35); border-bottom:none; font-weight:700; }
+.score-table tr.total td{ border-top:1px solid var(--hl-5); border-bottom:none; font-weight:700; }
 
 /* ---- Gift codes ---- */
 .code-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(178px,1fr)); gap:8px; margin-top:12px; }
 .code-chip{
   display:flex; align-items:center; justify-content:space-between; gap:8px;
-  padding:9px 10px; background:rgba(0,0,0,.32);
-  border:1px solid rgba(255,255,255,.13); border-radius:5px;
+  padding:9px 10px; background:var(--well-2);
+  border:1px solid var(--edge); border-radius:5px;
 }
 .code-text{
   font-family:"DejaVu Sans Mono","Liberation Mono",Consolas,"SF Mono",ui-monospace,monospace;
@@ -530,13 +629,13 @@ section.is-collapsed .section-head{ margin-bottom:0; }
   font-size:.94rem; letter-spacing:.06em; word-break:break-all; line-height:1.3;
 }
 .code-copy{
-  flex:none; background:none; border:1px solid rgba(255,255,255,.2); border-radius:4px;
+  flex:none; background:none; border:1px solid var(--edge-2); border-radius:4px;
   color:var(--muted); font:inherit; font-size:.68rem; text-transform:uppercase;
   letter-spacing:.06em; padding:4px 7px; cursor:pointer;
 }
 .code-copy:hover{ border-color:var(--amber); color:var(--amber); }
 .code-copy.done{ border-color:var(--amber); color:var(--amber); }
-.code-chip.ambig{ border-color:rgba(255,180,60,.5); }
+.code-chip.ambig{ border-color:var(--hl-5); }
 .code-flag{ font-size:.68rem; color:var(--amber); opacity:.9; display:block; margin-top:2px; letter-spacing:.02em; }
 .redeem-steps{ counter-reset:step; list-style:none; padding-left:0; margin:8px 0 0; }
 .redeem-steps li{
@@ -545,7 +644,7 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 }
 .redeem-steps li::before{
   content:counter(step); position:absolute; left:0; top:1px;
-  width:17px; height:17px; border-radius:50%; background:rgba(255,196,0,.18);
+  width:17px; height:17px; border-radius:50%; background:var(--hl-4);
   color:var(--amber); font-size:.68rem; font-weight:700; display:flex;
   align-items:center; justify-content:center;
 }
@@ -554,8 +653,8 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 .table-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
 .elixir-table{ min-width:640px; }
 .elixir-table td.stars{ color:var(--amber); letter-spacing:.06em; white-space:nowrap; font-size:.8rem; }
-.elixir-table tr.prio-5 td{ background:rgba(255,196,0,.08); }
-.elixir-table tr.prio-4 td{ background:rgba(255,196,0,.035); }
+.elixir-table tr.prio-5 td{ background:var(--hl-2); }
+.elixir-table tr.prio-4 td{ background:var(--hl-1); }
 
 /* ---- Sanctuary upgrade table ---- */
 .score-table td.num{ text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
@@ -564,32 +663,32 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 .sanct-table .note-star{ color:var(--muted); cursor:help; }
 .sanct-table td.time{ color:var(--amber); font-weight:600; }
 .sanct-table td.req{ font-size:.8rem; color:var(--muted); line-height:1.45; min-width:190px; }
-.sanct-table tr.sanct-mid   td{ background:rgba(255,255,255,.018); }
-.sanct-table tr.sanct-adv   td{ background:rgba(255,196,0,.030); }
-.sanct-table tr.sanct-elite td{ background:rgba(255,196,0,.055); }
-.sanct-table tr.sanct-end   td{ background:rgba(168,57,44,.085); }
+.sanct-table tr.sanct-mid   td{ background:var(--tint-1); }
+.sanct-table tr.sanct-adv   td{ background:var(--hl-1); }
+.sanct-table tr.sanct-elite td{ background:var(--hl-1); }
+.sanct-table tr.sanct-end   td{ background:var(--bad-1); }
 
 /* ---- Kingdom titles table ---- */
-.titles-table tr.prio-5 td{ background:rgba(255,196,0,.08); }
-.titles-table tr.prio-4 td{ background:rgba(255,196,0,.035); }
+.titles-table tr.prio-5 td{ background:var(--hl-2); }
+.titles-table tr.prio-4 td{ background:var(--hl-1); }
 .titles-table td.na{ color:var(--muted); font-weight:400; font-size:.78rem; }
 .titles-table td:nth-child(2){ font-size:.82rem; line-height:1.5; }
 
 /* ---- Demon King / shard / epigraph tables ---- */
-.dk-table tr.prio-5 td{ background:rgba(255,196,0,.08); }
-.dk-table tr.prio-4 td{ background:rgba(255,196,0,.035); }
+.dk-table tr.prio-5 td{ background:var(--hl-2); }
+.dk-table tr.prio-4 td{ background:var(--hl-1); }
 .dk-table td.ev-ok{ color:var(--green-bright); font-size:.78rem; white-space:nowrap; }
 .dk-table td.ev-mid{ color:var(--muted); font-size:.78rem; }
 .shard-table tr.red-star td:first-child{ color:var(--red-bright); }
 .epi-table td:nth-child(3){ font-size:.82rem; line-height:1.5; }
 .epi-faction-table td:nth-child(2){ font-size:.82rem; line-height:1.5; }
-.dp-table tr.prio-5 td{ background:rgba(255,196,0,.08); }
+.dp-table tr.prio-5 td{ background:var(--hl-2); }
 .dp-table td.num{ color:var(--amber); font-weight:600; }
-.gear-cost-table tr.prio-5 td, .gear-stat-table tr.prio-5 td{ background:rgba(255,196,0,.07); }
+.gear-cost-table tr.prio-5 td, .gear-stat-table tr.prio-5 td{ background:var(--hl-2); }
 .gear-stat-table td:nth-child(2), .gear-stat-table td:nth-child(4){ font-size:.8rem; line-height:1.5; }
 .gear-stat-table td.dim{ color:var(--muted); }
-.lineup-table tr.prio-5 td, .lineup-table tr.prio-4 td{ background:rgba(255,196,0,.07); }
-.r-sr{ color:#6fb3e0; } .r-ssr{ color:#b57ae0; } .r-ur{ color:var(--amber); }
+.lineup-table tr.prio-5 td, .lineup-table tr.prio-4 td{ background:var(--hl-2); }
+.r-sr{ color:var(--rar-sr); } .r-ssr{ color:var(--rar-ssr); } .r-ur{ color:var(--amber); }
 
 /* ---- Speed-up calculator ---- */
 .calc-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin-top:10px; }
@@ -599,46 +698,46 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 .calc-row label{ flex:1; font-size:.85rem; }
 .calc-row .calc-sub{ flex:none; min-width:64px; text-align:right; font-size:.78rem; color:var(--muted); font-variant-numeric:tabular-nums; }
 .calc-row input, .calc-queue input{
-  width:74px; flex:none; background:rgba(0,0,0,.32); color:inherit; font:inherit; font-size:.85rem;
-  border:1px solid rgba(255,255,255,.15); border-radius:4px; padding:4px 6px; text-align:right;
+  width:74px; flex:none; background:var(--well-2); color:inherit; font:inherit; font-size:.85rem;
+  border:1px solid var(--edge); border-radius:4px; padding:4px 6px; text-align:right;
   font-variant-numeric:tabular-nums;
 }
 .calc-queue input{ width:62px; }
 .calc-queue td{ vertical-align:middle; }
-.calc-out{ margin-top:14px; border-top:1px solid rgba(255,255,255,.1); padding-top:10px; }
+.calc-out{ margin-top:14px; border-top:1px solid var(--tint-3); padding-top:10px; }
 .calc-out-row{ display:flex; justify-content:space-between; gap:12px; font-size:.85rem; padding:3px 0; }
 .calc-out-row b{ font-variant-numeric:tabular-nums; }
 .calc-out-major{ font-size:.92rem; }
 .calc-out-major b{ color:var(--amber); }
 .calc-verdict{
   margin-top:10px; padding:9px 11px; border-radius:5px; font-size:.88rem; font-weight:600;
-  background:rgba(255,255,255,.05); border-left:3px solid var(--muted);
+  background:var(--tint-2); border-left:3px solid var(--muted);
 }
-.calc-verdict.ok{ background:rgba(143,176,62,.14); border-left-color:var(--green); }
-.calc-verdict.no{ background:rgba(168,57,44,.14); border-left-color:var(--red); }
+.calc-verdict.ok{ background:var(--ok-2); border-left-color:var(--green); }
+.calc-verdict.no{ background:var(--bad-2); border-left-color:var(--red); }
 
 /* ---- Hoard planner ---- */
 .hoard-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:12px 0; }
 .hoard-field{ display:flex; flex-direction:column; gap:3px; }
 .hoard-field label{ font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
 .hoard-field input, .hoard-field select{
-  background:rgba(0,0,0,.32); color:inherit; font:inherit; font-size:.86rem;
-  border:1px solid rgba(255,255,255,.15); border-radius:4px; padding:5px 7px;
+  background:var(--well-2); color:inherit; font:inherit; font-size:.86rem;
+  border:1px solid var(--edge); border-radius:4px; padding:5px 7px;
   font-variant-numeric:tabular-nums;
 }
-.hoard-field input:focus, .hoard-field select:focus{ outline:none; border-color:var(--green); }
+.hoard-field input:focus, .hoard-field select:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 2px var(--accent-tint); }
 .hoard-out{ margin-top:6px; }
 .hoard-answer{
   padding:10px 12px; border-radius:5px; font-size:.95rem; line-height:1.5;
-  background:rgba(143,176,62,.14); border-left:3px solid var(--green);
+  background:var(--ok-2); border-left:3px solid var(--green);
 }
 .hoard-answer b{ color:var(--green-bright); }
-.hoard-answer.warn{ background:rgba(217,164,65,.13); border-left-color:var(--amber); }
+.hoard-answer.warn{ background:var(--hl-3); border-left-color:var(--amber); }
 .hoard-answer.warn b{ color:var(--amber); }
 .hoard-lines{ margin-top:8px; }
 .hoard-line{ display:flex; justify-content:space-between; gap:12px; font-size:.83rem; padding:3px 0; }
 .hoard-line span:last-child{ font-variant-numeric:tabular-nums; color:var(--muted); }
-.fq-custom{ margin-top:6px; padding:8px 10px; border-radius:5px; background:rgba(0,0,0,.18); }
+.fq-custom{ margin-top:6px; padding:8px 10px; border-radius:5px; background:var(--well-1); }
 .fq-customnote{ font-size:.78rem; color:var(--muted); margin:0 0 6px; }
 
 /* ---- Falcon planner: one question per line ---- */
@@ -646,43 +745,43 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 .fq-row{ display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
 .fq-row > label{ flex:1 1 200px; font-size:.88rem; }
 .fq-row select, .fq-row input{
-  flex:none; background:rgba(0,0,0,.32); color:inherit; font:inherit; font-size:.88rem;
-  border:1px solid rgba(255,255,255,.15); border-radius:4px; padding:5px 8px;
+  flex:none; background:var(--well-2); color:inherit; font:inherit; font-size:.88rem;
+  border:1px solid var(--edge); border-radius:4px; padding:5px 8px;
   font-variant-numeric:tabular-nums;
 }
 .fq-row input[type="number"]{ width:82px; text-align:right; }
 .fq-row input[type="text"]{ width:82px; text-align:right; }
-.fq-row select:focus, .fq-row input:focus{ outline:none; border-color:var(--green); }
+.fq-row select:focus, .fq-row input:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 2px var(--accent-tint); }
 .fq-hint{ flex:1 1 100%; font-size:.74rem; color:var(--muted); }
 .fq-verdict{ font-size:1.05rem; font-weight:700; line-height:1.35; }
 .fq-why{ font-size:.85rem; margin-top:3px; opacity:.92; }
 .fq-maths{ margin-top:8px; }
 .fq-maths > summary{
   cursor:pointer; list-style:none; font-size:.74rem; text-transform:uppercase;
-  letter-spacing:.07em; color:var(--muted); border-bottom:1px dotted rgba(255,255,255,.26);
+  letter-spacing:.07em; color:var(--muted); border-bottom:1px dotted var(--edge-3);
   display:inline-block; padding:1px 0;
 }
 .fq-maths > summary::-webkit-details-marker{ display:none; }
 .fq-maths > summary::after{ content:' \25B8'; font-size:.7em; opacity:.7; }
 .fq-maths[open] > summary::after{ content:' \25BE'; }
-.fq-maths > summary:hover{ color:var(--green-bright); border-bottom-color:var(--green); }
+.fq-maths > summary:hover{ color:var(--accent-strong); border-bottom-color:var(--accent); }
 
 /* ---- Reference card ---- */
-.fq-ref{ margin:8px 0; border:1px solid rgba(255,255,255,.12); border-radius:5px; }
+.fq-ref{ margin:8px 0; border:1px solid var(--edge); border-radius:5px; }
 .fq-ref > summary{
   cursor:pointer; list-style:none; padding:9px 12px; font-size:.88rem; font-weight:600;
   display:flex; justify-content:space-between; align-items:center; gap:10px;
 }
 .fq-ref > summary::-webkit-details-marker{ display:none; }
-.fq-ref > summary::after{ content:'+'; color:var(--green-bright); font-size:1rem; flex:none; }
+.fq-ref > summary::after{ content:'+'; color:var(--accent); font-size:1rem; flex:none; }
 .fq-ref[open] > summary::after{ content:'\2013'; }
-.fq-ref > summary:hover{ color:var(--green-bright); }
+.fq-ref > summary:hover{ color:var(--accent-strong); }
 .fq-refbody{ padding:0 12px 10px; }
 
 .fq-table tr.fq-gap td{ color:var(--muted); font-size:.8rem; font-style:italic; text-align:left; }
 .hoard-flag{
   margin-top:8px; padding:8px 10px; border-radius:4px; font-size:.82rem; line-height:1.5;
-  background:rgba(168,57,44,.13); border-left:3px solid var(--red);
+  background:var(--bad-2); border-left:3px solid var(--red);
 }
 .calc-actions{ margin-top:10px; }
 
@@ -693,13 +792,13 @@ section.is-collapsed .section-head{ margin-bottom:0; }
   color:var(--muted); margin-right:2px;
 }
 .evfilter button{
-  background:rgba(0,0,0,.28); border:1px solid rgba(255,255,255,.16); border-radius:99px;
+  background:var(--well-2); border:1px solid var(--edge); border-radius:99px;
   color:var(--muted); font:inherit; font-size:.76rem; padding:4px 11px; cursor:pointer;
   white-space:nowrap;
 }
-.evfilter button:hover{ color:var(--green-bright); border-color:var(--green); }
+.evfilter button:hover{ color:var(--accent-strong); border-color:var(--accent); }
 .evfilter button.is-on{
-  background:rgba(143,176,62,.18); border-color:var(--green); color:var(--green-bright); font-weight:600;
+  background:var(--accent-tint); border-color:var(--accent); color:var(--accent-strong); font-weight:600;
 }
 .evfilter .evf-count{ font-size:.72rem; color:var(--muted); margin-left:4px; }
 
@@ -707,32 +806,41 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 #backToTop{
   position:fixed; right:14px; bottom:14px; z-index:60;
   width:42px; height:42px; border-radius:50%;
-  background:rgba(11,13,9,.92); border:1px solid var(--green);
-  color:var(--green-bright); font-size:1.15rem; line-height:1; cursor:pointer;
+  background:var(--fab-bg); border:1px solid var(--accent);
+  color:var(--accent-strong); font-size:1.15rem; line-height:1; cursor:pointer;
   opacity:0; pointer-events:none; transform:translateY(8px);
   transition:opacity .18s ease, transform .18s ease;
-  box-shadow:0 2px 10px rgba(0,0,0,.45);
+  box-shadow:0 2px 10px var(--shadow);
 }
 #backToTop.is-vis{ opacity:1; pointer-events:auto; transform:none; }
 
 /* ---- Site search ---- */
+.theme-toggle{
+  position:fixed; top:10px; right:12px; z-index:70;
+  background:var(--fab-bg); border:1px solid var(--edge); border-radius:99px;
+  color:var(--muted); font:inherit; font-size:.72rem; letter-spacing:.05em;
+  padding:5px 12px; cursor:pointer; white-space:nowrap;
+  backdrop-filter:blur(3px);
+}
+.theme-toggle:hover{ color:var(--accent); border-color:var(--accent); }
+@media (max-width:520px){ .theme-toggle{ top:6px; right:8px; font-size:.68rem; padding:4px 9px; } }
 .searchbar{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:10px 0 4px; }
 .searchbar input[type="search"]{
-  flex:1 1 220px; min-width:0; background:rgba(0,0,0,.30); color:inherit; font:inherit;
-  font-size:.88rem; border:1px solid rgba(255,255,255,.16); border-radius:5px; padding:7px 10px;
+  flex:1 1 220px; min-width:0; background:var(--well-2); color:inherit; font:inherit;
+  font-size:.88rem; border:1px solid var(--edge); border-radius:5px; padding:7px 10px;
 }
-.searchbar input[type="search"]:focus{ outline:none; border-color:var(--green); }
+.searchbar input[type="search"]:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 2px var(--accent-tint); }
 .searchbar #siteSearchClear{
-  flex:none; background:none; border:1px solid rgba(255,255,255,.18); border-radius:5px;
+  flex:none; background:none; border:1px solid var(--edge-2); border-radius:5px;
   color:var(--muted); font:inherit; font-size:1rem; line-height:1; padding:5px 9px; cursor:pointer;
 }
-.searchbar #siteSearchClear:hover{ color:var(--green-bright); border-color:var(--green); }
+.searchbar #siteSearchClear:hover{ color:var(--accent-strong); border-color:var(--accent); }
 .search-msg{ font-size:.76rem; color:var(--muted); }
 .search-msg a{ cursor:pointer; text-decoration:underline; }
 section.srch-out{ display:none; }
 .quicknav button.srch-out{ display:none; }
-mark.srch-hit{ background:rgba(217,164,65,.34); color:inherit; border-radius:2px; }
-#backToTop:hover{ background:var(--green); color:#0b0d09; }
+mark.srch-hit{ background:var(--hl-5); color:inherit; border-radius:2px; }
+#backToTop:hover{ background:var(--accent); color:var(--on-accent); }
 @media (max-width:640px){ #backToTop{ right:10px; bottom:10px; } }
 section.evf-out{ display:none; }
 
@@ -744,8 +852,8 @@ section.evf-out{ display:none; }
   .stackable, .stackable tbody, .stackable tr, .stackable td{ display:block; width:100%; }
   .stackable thead{ display:none; }
   .stackable tr{
-    border:1px solid rgba(255,255,255,.12); border-radius:5px;
-    margin-bottom:10px; padding:4px 2px; background:rgba(0,0,0,.18);
+    border:1px solid var(--edge); border-radius:5px;
+    margin-bottom:10px; padding:4px 2px; background:var(--well-1);
   }
   .stackable td{
     border-bottom:none !important; text-align:left !important;
@@ -773,29 +881,29 @@ section.evf-out{ display:none; }
 .src-note > summary{
   display:inline-block; cursor:pointer; list-style:none;
   font-size:.72rem; text-transform:uppercase; letter-spacing:.08em;
-  color:var(--muted); border-bottom:1px dotted rgba(255,255,255,.28);
+  color:var(--muted); border-bottom:1px dotted var(--edge-3);
   padding:1px 0;
 }
 .src-note > summary::-webkit-details-marker{ display:none; }
 .src-note > summary::after{ content:' \25B8'; font-size:.7em; opacity:.7; }
 .src-note[open] > summary::after{ content:' \25BE'; }
-.src-note > summary:hover{ color:var(--green-bright); border-bottom-color:var(--green); }
+.src-note > summary:hover{ color:var(--accent-strong); border-bottom-color:var(--accent); }
 .src-body{
   margin-top:6px; padding:8px 10px; border-radius:4px;
-  background:rgba(0,0,0,.22); border-left:2px solid rgba(255,255,255,.14);
+  background:var(--well-1); border-left:2px solid var(--edge);
   font-size:.8rem; line-height:1.55; color:var(--muted);
 }
 .src-body b{ color:inherit; }
 .srcbar{ display:flex; justify-content:flex-end; margin:0 0 10px; }
 .srcbar button{
-  background:none; border:1px solid rgba(255,255,255,.18); border-radius:4px;
+  background:none; border:1px solid var(--edge-2); border-radius:4px;
   color:var(--muted); font:inherit; font-size:.7rem; text-transform:uppercase;
   letter-spacing:.06em; padding:4px 8px; cursor:pointer;
 }
-.srcbar button:hover{ color:var(--green-bright); border-color:var(--green); }
+.srcbar button:hover{ color:var(--accent-strong); border-color:var(--accent); }
 
 /* ---- Changelog ---- */
-.chg-entry{ border-left:2px solid rgba(255,255,255,.13); padding:0 0 0 12px; margin:0 0 16px; }
+.chg-entry{ border-left:2px solid var(--edge); padding:0 0 0 12px; margin:0 0 16px; }
 .chg-date{ font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); }
 .chg-entry h4{ margin:2px 0 6px; font-size:.92rem; }
 .chg-entry ul{ margin:0; padding-left:18px; }
@@ -804,9 +912,9 @@ section.evf-out{ display:none; }
   display:inline-block; font-size:.64rem; text-transform:uppercase; letter-spacing:.07em;
   padding:1px 5px; border-radius:3px; margin-right:6px; vertical-align:1px;
 }
-.chg-tag.add{ background:var(--green); color:#0b0d09; }
+.chg-tag.add{ background:var(--green); color:var(--on-accent); }
 .chg-tag.fix{ background:var(--red); color:#fff; }
-.chg-tag.chg{ background:var(--amber); color:#1a1400; }
+.chg-tag.chg{ background:var(--amber); color:var(--on-accent); }
 
 /* ---- UI path breadcrumbs ---- */
 .uipath{
@@ -817,13 +925,13 @@ section.evf-out{ display:none; }
 .uipath li{
   counter-increment:uistep;
   display:inline-flex; align-items:baseline; gap:5px;
-  background:rgba(0,0,0,.30); border:1px solid rgba(255,255,255,.15);
+  background:var(--well-2); border:1px solid var(--edge);
   border-radius:4px; padding:4px 8px 4px 6px; font-size:.83rem; line-height:1.3;
 }
 .uipath li::before{
   content:counter(uistep);
   font-size:.62rem; font-weight:700; color:var(--amber);
-  background:rgba(217,164,65,.14); border-radius:3px;
+  background:var(--hl-3); border-radius:3px;
   padding:1px 4px; position:relative; top:-1px;
 }
 .uipath li + li{ margin-left:16px; position:relative; }
@@ -844,9 +952,17 @@ section.evf-out{ display:none; }
     content:'\2193'; left:10px; top:-12px; transform:none;
   }
 }
+.opinion-block{
+  margin-top:10px; padding:9px 12px; border-radius:5px;
+  background:var(--info-1); border-left:3px solid var(--info-text);
+  font-size:.84rem; line-height:1.55;
+}
+.opinion-block ul{ margin:7px 0 0; padding-left:18px; }
+.opinion-block li{ margin-bottom:5px; }
+.opinion-src{ margin:8px 0 0; font-size:.76rem; color:var(--muted); }
 .guide-conflict{
   margin-top:10px; padding:9px 11px; border-radius:5px;
-  background:rgba(217,164,65,.10); border-left:3px solid var(--amber);
+  background:var(--hl-3); border-left:3px solid var(--amber);
   font-size:.82rem; line-height:1.55;
 }
 .tbl-foot{ font-size:.78rem; color:var(--muted); margin-top:6px; }
@@ -854,11 +970,11 @@ section.evf-out{ display:none; }
 .era-row{
   display:inline-flex; align-items:center; gap:9px; flex-wrap:wrap;
   margin:12px auto 0; padding:6px 12px; border-radius:999px;
-  background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.12);
+  background:var(--tint-2); border:1px solid var(--edge);
 }
 .era-label{ font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
 .era-select{
-  background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.16); border-radius:4px;
+  background:var(--well-2); border:1px solid var(--edge); border-radius:4px;
   color:var(--amber); font:inherit; font-size:.8rem; font-weight:600; padding:3px 7px;
 }
 .era-select:focus{ outline:none; border-color:var(--amber); }
@@ -867,7 +983,7 @@ section.evf-out{ display:none; }
 
 .tool-card{
   margin-top:12px; padding:14px 16px; border-radius:6px;
-  background:rgba(255,255,255,.028); border:1px solid rgba(255,255,255,.08);
+  background:var(--tint-1); border:1px solid var(--tint-3);
   border-left:3px solid var(--amber);
 }
 .tool-card h3{ font-size:.95rem; margin:0 0 6px; }
@@ -875,55 +991,55 @@ section.evf-out{ display:none; }
 .tool-credit{ font-size:.78rem; color:var(--muted); }
 .tool-link{
   display:inline-block; margin-top:4px; padding:7px 13px; border-radius:4px;
-  background:rgba(255,196,0,.14); border:1px solid var(--amber);
+  background:var(--hl-3); border:1px solid var(--amber);
   color:var(--amber); text-decoration:none; font-size:.83rem; font-weight:600;
 }
-.tool-link:hover{ background:rgba(255,196,0,.24); }
+.tool-link:hover{ background:var(--hl-4); }
 
 /* ---- Per-event "new player" primers ---- */
 .primer{
-  margin-top:16px; border:1px solid rgba(120,190,255,.28); border-radius:6px;
-  background:rgba(90,160,255,.05); overflow:hidden;
+  margin-top:16px; border:1px solid var(--info-2); border-radius:6px;
+  background:var(--info-1); overflow:hidden;
 }
 .primer > summary{
   cursor:pointer; padding:11px 14px; list-style:none; display:flex;
-  align-items:center; gap:9px; font-size:.85rem; font-weight:600; color:#9fd0ff;
+  align-items:center; gap:9px; font-size:.85rem; font-weight:600; color:var(--info-text);
 }
 .primer > summary::-webkit-details-marker{ display:none; }
 .primer > summary::before{
   content:"?"; flex:none; width:19px; height:19px; border-radius:50%;
-  background:rgba(120,190,255,.2); color:#9fd0ff; font-size:.74rem; font-weight:700;
+  background:var(--info-2); color:var(--info-text); font-size:.74rem; font-weight:700;
   display:flex; align-items:center; justify-content:center;
 }
 .primer > summary::after{
   content:"▾"; margin-left:auto; font-size:.8rem; opacity:.75; transition:transform .18s ease;
 }
 .primer[open] > summary::after{ transform:rotate(180deg); }
-.primer > summary:hover{ background:rgba(120,190,255,.08); }
+.primer > summary:hover{ background:var(--info-1); }
 .primer-body{ padding:2px 15px 14px; }
 .primer-body h5{
   font-size:.74rem; text-transform:uppercase; letter-spacing:.09em;
-  color:#9fd0ff; margin:12px 0 4px; opacity:.9;
+  color:var(--info-text); margin:12px 0 4px; opacity:.9;
 }
 .primer-body p, .primer-body li{ font-size:.85rem; line-height:1.55; }
 .primer-body ul{ margin:4px 0 0; padding-left:18px; }
 .primer-body li{ margin-bottom:4px; }
 .primer-gap{
-  margin-top:12px; padding:8px 11px; border-left:2px solid rgba(255,196,0,.55);
-  background:rgba(255,196,0,.06); font-size:.8rem; line-height:1.5;
+  margin-top:12px; padding:8px 11px; border-left:2px solid var(--hl-5);
+  background:var(--hl-1); font-size:.8rem; line-height:1.5;
 }
 .guide-block-ul{ margin:6px 0 0; padding-left:18px; }
 .guide-block-ul li{ font-size:.85rem; line-height:1.55; margin-bottom:4px; }
 
 .banner-item.banner-alert{
-  background:rgba(255,80,80,.11); border-left:3px solid var(--red-bright);
+  background:var(--bad-2); border-left:3px solid var(--red-bright);
   padding-left:9px; border-radius:3px; font-weight:600;
 }
-.banner-item.banner-alert .when{ color:#ffb3b3; }
+.banner-item.banner-alert .when{ color:var(--err-text); }
 
 .obj-detail{
-  margin-top:14px; border:1px solid rgba(255,255,255,.1); border-radius:6px;
-  background:rgba(255,255,255,.022); overflow:hidden;
+  margin-top:14px; border:1px solid var(--tint-3); border-radius:6px;
+  background:var(--tint-1); overflow:hidden;
 }
 .obj-detail > summary{
   cursor:pointer; padding:10px 14px; list-style:none; display:flex; align-items:center; gap:8px;
@@ -932,59 +1048,66 @@ section.evf-out{ display:none; }
 .obj-detail > summary::-webkit-details-marker{ display:none; }
 .obj-detail > summary::after{ content:"▾"; margin-left:auto; opacity:.7; transition:transform .18s ease; }
 .obj-detail[open] > summary::after{ transform:rotate(180deg); }
-.obj-detail > summary:hover{ background:rgba(255,196,0,.07); }
+.obj-detail > summary:hover{ background:var(--hl-2); }
 .obj-detail-body{ padding:0 14px 14px; }
 .obj-intro{ font-size:.82rem; color:var(--muted); line-height:1.5; margin:2px 0 12px; }
 .obj-card{
   margin-top:9px; padding:10px 12px; border-radius:5px;
-  background:rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.07);
+  background:var(--well-1); border:1px solid var(--tint-2);
 }
 .obj-card h5{ font-size:.85rem; margin:0 0 6px; color:#fff; }
 .obj-card.is-empty{ opacity:.62; }
 .obj-table{ width:100%; border-collapse:collapse; }
-.obj-table td{ padding:4px 0; font-size:.83rem; border-bottom:1px solid rgba(255,255,255,.05); }
+.obj-table td{ padding:4px 0; font-size:.83rem; border-bottom:1px solid var(--tint-2); }
 .obj-table td.pts{ text-align:right; color:var(--amber); font-weight:700; white-space:nowrap; padding-left:12px; }
 .obj-table tr:last-child td{ border-bottom:none; }
 .obj-tip{ font-size:.79rem; color:var(--muted); line-height:1.5; margin:8px 0 0; }
 .obj-missing{ font-size:.79rem; color:var(--muted); margin:0; font-style:italic; }
 
 .tabbar{
-  display:flex; gap:6px; justify-content:center; flex-wrap:wrap;
+  display:flex; gap:6px; justify-content:flex-start; align-items:flex-end; flex-wrap:wrap;
   max-width:var(--maxw,1100px); margin:0 auto; padding:14px 18px 0;
+}
+/* Search sits opposite the tabs: navigation on the left, retrieval on the right. */
+.tabbar .searchbar{ margin-left:auto; margin-bottom:4px; }
+@media (max-width:640px){
+  .tabbar .searchbar{ margin-left:0; width:100%; }
 }
 .tab-btn{
   flex:0 1 auto; padding:10px 22px; border-radius:7px 7px 0 0;
-  background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.12);
+  background:var(--tint-1); border:1px solid var(--edge);
   border-bottom:none; color:var(--muted); font:inherit; font-size:.86rem;
   font-weight:600; letter-spacing:.03em; cursor:pointer;
 }
-.tab-btn:hover{ color:var(--amber); background:rgba(255,196,0,.09); }
+.tab-btn:hover{ color:var(--accent-strong); background:var(--accent-tint); }
 .tab-btn.is-active{
-  background:rgba(255,196,0,.16); border-color:var(--amber); color:var(--amber);
+  background:var(--panel); border-color:var(--accent); color:var(--accent-strong);
+  border-bottom:1px solid var(--panel); box-shadow:inset 0 2px 0 var(--accent);
 }
 .tab-panel[hidden]{ display:none; }
 @media (max-width:520px){ .tab-btn{ flex:1 1 45%; padding:10px 8px; font-size:.8rem; } }
 
 .code-toolbar{ display:flex; align-items:center; gap:12px; margin-top:12px; flex-wrap:wrap; }
 .code-reset{
-  background:none; border:1px solid rgba(255,255,255,.2); border-radius:4px; color:var(--muted);
+  background:none; border:1px solid var(--edge-2); border-radius:4px; color:var(--muted);
   font:inherit; font-size:.7rem; text-transform:uppercase; letter-spacing:.06em;
   padding:4px 9px; cursor:pointer;
 }
 .code-reset:hover{ border-color:var(--amber); color:var(--amber); }
 .code-tick{
   flex:none; width:22px; height:22px; border-radius:4px; cursor:pointer;
-  background:rgba(0,0,0,.3); border:1px solid rgba(255,255,255,.22);
+  background:var(--well-2); border:1px solid var(--edge-2);
   color:var(--amber); font-size:.82rem; line-height:1; font-weight:700;
   display:flex; align-items:center; justify-content:center; padding:0;
 }
 .code-tick:hover{ border-color:var(--amber); }
-.code-chip.is-used{ opacity:.42; border-color:rgba(255,255,255,.08); }
-.code-chip.is-used .code-tick{ background:rgba(255,196,0,.22); border-color:var(--amber); }
+.code-chip.is-used{ opacity:.42; border-color:var(--tint-3); }
+.code-chip.is-used .code-tick{ background:var(--hl-4); border-color:var(--amber); }
 .code-chip.is-used .code-text{ text-decoration:line-through; text-decoration-thickness:1.5px; }
 </style>
 </head>
 <body>
+<button type="button" id="themeToggle" class="theme-toggle" aria-pressed="false"></button>
 
 <header>
   <div class="header-inner">
@@ -1799,19 +1922,12 @@ section.evf-out{ display:none; }
   </section>
 
   <!-- ============ COMMUNITY TOOLS ============ -->
-  <section id="sec-tools">
+  <section id="sec-tool-speedup">
     <div class="section-head">
       <span class="section-tag tbd" data-i18n="tag.communitySourced">COMMUNITY-SOURCED</span>
-      <h2 data-i18n="title.tools">Community Tools</h2>
+      <h2 data-i18n="title.toolSpeedup">Speed-Up Calculator</h2>
     </div>
-    <p class="section-note" data-i18n="note.tools">Tools built and maintained by other players. These are external links &mdash; they are not part of this page and we do not control their contents or availability.</p>
-
-    <div class="tool-card">
-      <h3 data-i18n="tools.speedupTitle">Speed-Up Calculator</h3>
-      <p data-i18n="tools.speedupBody">Enter how many of each speed-up you hold and it totals the time, in minutes and in days/hours/minutes. The top block covers general-use speed-ups, the bottom block task-specific ones. Version 2 adds build-queue times and shows whether you have enough banked to cover all current projects. Make your own copy before entering anything.</p>
-      <p class="tool-credit" data-i18n="tools.speedupCredit">Built by <b>Corlanthis v1.0#1029</b>, posted to the Discord guide section on 29 Jul 2026.</p>
-      <p><a class="tool-link" id="speedupLink" href="https://docs.google.com/spreadsheets/d/1_QBCVOMEPCUG3qstRQ3XbAU7SPIQKWxZ966slcPzO18/edit" target="_blank" rel="noopener" data-i18n="tools.openSheet">Open the original sheet ↗</a></p>
-    </div>
+    <p class="section-note" data-i18n="note.toolspeedup">A local rebuild of the community speed-up sheet, so nobody has to copy it. Nothing is sent anywhere &mdash; entries stay in this browser.</p>
 
     <div class="tool-card" id="speedupCalc">
       <h3 data-i18n="tools.calcTitle">Speed-Up Calculator &mdash; on this page</h3>
@@ -1858,6 +1974,14 @@ section.evf-out{ display:none; }
       <p class="tbl-foot" data-i18n="calc.caveat"><b>One thing the original sheet glosses over, and so does this.</b> Task-specific speed-ups only apply to their own task type &mdash; a construction speed-up will not finish a research queue. The combined total is therefore a <b>best case</b>. If your task-specific stack is mostly the wrong type for the queues you are trying to clear, judge by the general total alone.</p>
       <p class="tool-credit" data-i18n="tools.calcCredit">Logic reproduced from the Speed-Up Calculator by <b>Corlanthis v1.0#1029</b>, Discord guide section, 29 Jul 2026. The original sheet is linked above and remains the authoritative version.</p>
     </div>
+  </section>
+
+  <section id="sec-tool-falcon">
+    <div class="section-head">
+      <span class="section-tag ok" data-i18n="tag.screenshotVerified">SCREENSHOT-VERIFIED</span>
+      <h2 data-i18n="title.toolFalcon">Falcon Quest Planner</h2>
+    </div>
+    <p class="section-note" data-i18n="note.toolfalcon">Works out how many Falcon Quests you can safely spend now and still be full when you want to claim.</p>
 
     <div class="tool-card" id="falconPlanner">
       <h3 data-i18n="tools.falconTitle">Falcon Quest Planner</h3>
@@ -1913,6 +2037,14 @@ section.evf-out{ display:none; }
 
       <div class="hoard-out" id="fqOut"></div>
     </div>
+  </section>
+
+  <section id="sec-tool-falconref">
+    <div class="section-head">
+      <span class="section-tag ok" data-i18n="tag.screenshotVerified">SCREENSHOT-VERIFIED</span>
+      <h2 data-i18n="title.toolFalconRef">Falcon Tower Reference</h2>
+    </div>
+    <p class="section-note" data-i18n="note.toolfalconref">The Falcon Tower figures the planner runs on, recorded from in-game upgrade panels.</p>
 
     <div class="tool-card" id="falconReference">
       <h3 data-i18n="fq.refTitle">Falcon Tower &mdash; reference</h3>
@@ -1976,6 +2108,14 @@ section.evf-out{ display:none; }
 
       <details class="src-note"><summary data-i18n="ui.source">Source</summary><div class="src-body" data-i18n="fq.src">In-game Falcon Tower upgrade-preview panels and the Info notice, from two accounts on server #217, 1 Aug 2026. Highest evidence tier. The six-hour refresh interval is inferred from two independent countdowns reading 4:46:37 and 4:14:02 against a stated 11-per-refresh rate; it has not been timed end to end. English-only for now.</div></details>
     </div>
+  </section>
+
+  <section id="sec-tool-hoard">
+    <div class="section-head">
+      <span class="section-tag calc" data-i18n="tag.arithmetic">ARITHMETIC ONLY</span>
+      <h2 data-i18n="title.toolHoard">General Hoard Planner</h2>
+    </div>
+    <p class="section-note" data-i18n="note.toolhoard">A general version of the same idea for any capped pool that refills over time. Contains no game data &mdash; you supply the numbers.</p>
 
     <div class="tool-card" id="hoardPlanner">
       <h3 data-i18n="tools.hoardTitle">General Hoard Planner</h3>
@@ -2016,6 +2156,21 @@ section.evf-out{ display:none; }
 
       <div class="hoard-out" id="hoardOut"></div>
       <p class="tbl-foot" data-i18n="hoard.note">If your pool actually fills in timed blocks rather than smoothly, treat the answer as the earliest safe moment rather than an exact one.</p>
+    </div>
+  </section>
+
+  <section id="sec-tool-external">
+    <div class="section-head">
+      <span class="section-tag tbd" data-i18n="tag.communitySourced">COMMUNITY-SOURCED</span>
+      <h2 data-i18n="title.toolExternal">Community Tools</h2>
+    </div>
+    <p class="section-note" data-i18n="note.tools">Tools built and maintained by other players. These are external links &mdash; they are not part of this page and we do not control their contents or availability.</p>
+
+    <div class="tool-card">
+      <h3 data-i18n="tools.speedupTitle">Speed-Up Calculator</h3>
+      <p data-i18n="tools.speedupBody">Enter how many of each speed-up you hold and it totals the time, in minutes and in days/hours/minutes. The top block covers general-use speed-ups, the bottom block task-specific ones. Version 2 adds build-queue times and shows whether you have enough banked to cover all current projects. Make your own copy before entering anything.</p>
+      <p class="tool-credit" data-i18n="tools.speedupCredit">Built by <b>Corlanthis v1.0#1029</b>, posted to the Discord guide section on 29 Jul 2026.</p>
+      <p><a class="tool-link" id="speedupLink" href="https://docs.google.com/spreadsheets/d/1_QBCVOMEPCUG3qstRQ3XbAU7SPIQKWxZ966slcPzO18/edit" target="_blank" rel="noopener" data-i18n="tools.openSheet">Open the original sheet ↗</a></p>
     </div>
   </section>
 
@@ -2263,6 +2418,20 @@ section.evf-out{ display:none; }
 
       <h4 data-i18n="guide.lineupPosHead">Positioning</h4>
       <p data-i18n="guide.lineupPosBody">Two further points from the answer key, both about placement rather than composition: putting a <b>tank hero in the back row is explicitly marked incorrect</b>, and asked what the roles of the different hero classes are, the answer is <b>all of the above</b> &mdash; that is, tanks, damage and support each have a distinct job rather than being interchangeable stat blocks. Detailed per-hero placement lives in the companion hero and squad builder rather than here.</p>
+
+      <h4 data-i18n="guide.lineupSpreadHead">Spreading your strongest heroes &mdash; alliance opinion</h4>
+      <div class="opinion-block" data-i18n="guide.lineupSpread"><b>Not a confirmed mechanic.</b> This is playing experience shared in alliance chat, not something read off a game panel or a vetted guide. It is recorded because it is specific and testable, not because it is established.
+      <ul>
+        <li>The advice is to <b>avoid putting your strongest tank and your strongest carry on the same side</b> of the formation &mdash; swap the back corners so the two flanks are balanced rather than one being loaded.</li>
+        <li>The reasoning offered: with both weakest heroes on one side, <b>that flank collapses sooner, the enemy reaches your support faster</b>, and the fight is lost earlier than the raw stats suggest.</li>
+        <li>A separate suggestion from the same conversation: against the <b>Demon King</b>, running a <b>third carry in place of a tank</b> reportedly performs better.</li>
+      </ul>
+      <p class="opinion-src">Shared by <b>Shiney</b>, with the Demon King variant from <b>hellokatzchen</b> crediting <b>TheyCallMeJoe</b>. Alliance chat, 1 Aug 2026.</p>
+      </div>
+
+      <p class="tbl-foot" data-i18n="guide.lineupSpreadTest"><b>How to test it.</b> <b>Spookz</b> pointed out that Demon King fights can be <b>replayed</b>, which makes this one of the few claims on this page that can be checked directly rather than argued about: run the same squad twice with the corners swapped, watch both replays, and compare which flank breaks first and how long the support survives. Because Demon King ranking uses your <b>single highest hit</b>, a controlled comparison costs only two of your ten daily attacks. If anyone runs that test, the result belongs here and would move this block up a tier.</p>
+
+      <p class="tbl-foot" data-i18n="guide.lineupSpreadWhy">Worth noting <i>why</i> this is plausible rather than treating it as folklore: the game already rewards positioning elsewhere &mdash; the quiz answer key marks putting a tank in the back row as outright incorrect &mdash; so the engine clearly reads formation, not just totals. Whether it reads left and right flanks separately is exactly the open question.</p>
     </div>
 
     <div class="guide-block" id="heroShardGuide">
@@ -2664,6 +2833,17 @@ en: {
 "nav.research":"Alliance Research",
 "nav.howto":"How-To",
 "nav.changelog":"What Changed",
+"tag.arithmetic":"ARITHMETIC ONLY",
+"note.toolspeedup":"A local rebuild of the community speed-up sheet, so nobody has to copy it. Nothing is sent anywhere &mdash; entries stay in this browser.",
+"note.toolfalcon":"Works out how many Falcon Quests you can safely spend now and still be full when you want to claim.",
+"note.toolfalconref":"The Falcon Tower figures the planner runs on, recorded from in-game upgrade panels.",
+"note.toolhoard":"A general version of the same idea for any capped pool that refills over time. Contains no game data &mdash; you supply the numbers.",
+"nav.communityTools":"Community Tools",
+"title.toolSpeedup":"Speed-Up Calculator",
+"title.toolFalcon":"Falcon Quest Planner",
+"title.toolFalconRef":"Falcon Tower Reference",
+"title.toolHoard":"General Hoard Planner",
+"title.toolExternal":"Community Tools",
 "fq.showNumbers":"Show the numbers",
 "fq.refTitle":"Falcon Tower &mdash; reference",
 "fq.refBody":"The numbers behind the planner. You do not need any of this to use it.",
@@ -2689,6 +2869,10 @@ en: {
 "title.changelog":"What Changed",
 "ui.source":"Source",
 "ui.backToTop":"Back to top",
+"ui.theme_auto":"Theme: Auto",
+"ui.theme_light":"Theme: Light",
+"ui.theme_dark":"Theme: Dark",
+"ui.themeHint":"Auto follows your device setting",
 "tag.awaitingSources":"AWAITING SOURCES",
 "ui.search":"Search the file…",
 "ui.noHits":"No matches in this tab",
@@ -2881,6 +3065,17 @@ de: {
 "nav.research":"Allianzforschung",
 "nav.howto":"Anleitungen",
 "nav.changelog":"Änderungen",
+"tag.arithmetic":"NUR RECHNUNG",
+"note.toolspeedup":"Eine lokale Nachbildung der Community-Tabelle, damit sie niemand kopieren muss. Nichts wird übertragen &mdash; Eingaben bleiben in diesem Browser.",
+"note.toolfalcon":"Berechnet, wie viele Falcon Quests du jetzt ausgeben kannst und trotzdem voll bist, wenn du einlösen willst.",
+"note.toolfalconref":"Die Falkenturm-Werte, mit denen der Planer rechnet, aus den Upgrade-Panels im Spiel.",
+"note.toolhoard":"Eine allgemeine Fassung derselben Idee für jeden begrenzten Vorrat, der sich mit der Zeit füllt. Enthält keine Spieldaten &mdash; die Zahlen gibst du selbst ein.",
+"nav.communityTools":"Community-Tools",
+"title.toolSpeedup":"Beschleuniger-Rechner",
+"title.toolFalcon":"Falken-Quest-Planer",
+"title.toolFalconRef":"Falkenturm-Referenz",
+"title.toolHoard":"Allgemeiner Hortplaner",
+"title.toolExternal":"Community-Tools",
 "fq.showNumbers":"Zahlen anzeigen",
 "fq.refTitle":"Falkenturm &mdash; Referenz",
 "fq.refBody":"Die Zahlen hinter dem Planer. Zum Benutzen brauchst du davon nichts.",
@@ -2906,6 +3101,10 @@ de: {
 "title.changelog":"Änderungen",
 "ui.source":"Quelle",
 "ui.backToTop":"Nach oben",
+"ui.theme_auto":"Design: Auto",
+"ui.theme_light":"Design: Hell",
+"ui.theme_dark":"Design: Dunkel",
+"ui.themeHint":"Auto folgt der Geräteeinstellung",
 "tag.awaitingSources":"QUELLEN FEHLEN",
 "ui.search":"Datei durchsuchen…",
 "ui.noHits":"Keine Treffer in diesem Tab",
@@ -3035,6 +3234,17 @@ nl: {
 "nav.research":"Alliantieonderzoek",
 "nav.howto":"Handleidingen",
 "nav.changelog":"Wijzigingen",
+"tag.arithmetic":"ALLEEN REKENWERK",
+"note.toolspeedup":"Een lokale herbouw van de community-sheet, zodat niemand hem hoeft te kopiëren. Er wordt niets verstuurd &mdash; invoer blijft in deze browser.",
+"note.toolfalcon":"Berekent hoeveel Falcon Quests je nu kunt gebruiken en toch vol bent wanneer je wilt claimen.",
+"note.toolfalconref":"De Falcon Tower-cijfers waarop de planner rekent, uit de upgradepanelen in het spel.",
+"note.toolhoard":"Een algemene versie van hetzelfde idee voor elke begrensde voorraad die zich met de tijd vult. Bevat geen spelgegevens &mdash; de getallen voer je zelf in.",
+"nav.communityTools":"Community-tools",
+"title.toolSpeedup":"Speedup-calculator",
+"title.toolFalcon":"Falcon Quest-planner",
+"title.toolFalconRef":"Falcon Tower-naslag",
+"title.toolHoard":"Algemene hoardplanner",
+"title.toolExternal":"Community-tools",
 "fq.showNumbers":"Toon de getallen",
 "fq.refTitle":"Falcon Tower &mdash; naslag",
 "fq.refBody":"De getallen achter de planner. Je hebt hier niets van nodig om hem te gebruiken.",
@@ -3060,6 +3270,10 @@ nl: {
 "title.changelog":"Wijzigingen",
 "ui.source":"Bron",
 "ui.backToTop":"Naar boven",
+"ui.theme_auto":"Thema: Auto",
+"ui.theme_light":"Thema: Licht",
+"ui.theme_dark":"Thema: Donker",
+"ui.themeHint":"Auto volgt je apparaatinstelling",
 "tag.awaitingSources":"BRONNEN ONTBREKEN",
 "ui.search":"Doorzoek het dossier…",
 "ui.noHits":"Geen resultaten in dit tabblad",
@@ -3189,6 +3403,17 @@ fr: {
 "nav.research":"Recherche d’alliance",
 "nav.howto":"Tutoriels",
 "nav.changelog":"Changements",
+"tag.arithmetic":"CALCUL SEULEMENT",
+"note.toolspeedup":"Une reconstruction locale de la feuille communautaire, pour éviter d’avoir à la copier. Rien n’est envoyé &mdash; les saisies restent dans ce navigateur.",
+"note.toolfalcon":"Calcule combien de Falcon Quests vous pouvez dépenser maintenant tout en étant plein au moment de réclamer.",
+"note.toolfalconref":"Les chiffres du Falcon Tower utilisés par le planificateur, relevés dans les panneaux d’amélioration du jeu.",
+"note.toolhoard":"Une version générique de la même idée pour tout stock plafonné qui se remplit avec le temps. Aucune donnée de jeu &mdash; vous fournissez les chiffres.",
+"nav.communityTools":"Outils communautaires",
+"title.toolSpeedup":"Calculateur d’accélération",
+"title.toolFalcon":"Planificateur Falcon Quest",
+"title.toolFalconRef":"Référence Falcon Tower",
+"title.toolHoard":"Planificateur de réserve",
+"title.toolExternal":"Outils communautaires",
 "fq.showNumbers":"Afficher les chiffres",
 "fq.refTitle":"Falcon Tower &mdash; référence",
 "fq.refBody":"Les chiffres derrière le planificateur. Rien de tout cela n’est nécessaire pour s’en servir.",
@@ -3214,6 +3439,10 @@ fr: {
 "title.changelog":"Changements",
 "ui.source":"Source",
 "ui.backToTop":"Retour en haut",
+"ui.theme_auto":"Thème : Auto",
+"ui.theme_light":"Thème : Clair",
+"ui.theme_dark":"Thème : Sombre",
+"ui.themeHint":"Auto suit le réglage de votre appareil",
 "tag.awaitingSources":"SOURCES MANQUANTES",
 "ui.search":"Rechercher…",
 "ui.noHits":"Aucun résultat dans cet onglet",
@@ -3343,6 +3572,17 @@ es: {
 "nav.research":"Investigación de alianza",
 "nav.howto":"Cómo se hace",
 "nav.changelog":"Cambios",
+"tag.arithmetic":"SOLO CÁLCULO",
+"note.toolspeedup":"Una reconstrucción local de la hoja comunitaria, para no tener que copiarla. No se envía nada &mdash; los datos se quedan en este navegador.",
+"note.toolfalcon":"Calcula cuántas Falcon Quests puedes gastar ahora y aún estar lleno cuando quieras reclamar.",
+"note.toolfalconref":"Los datos de Falcon Tower que usa el planificador, tomados de los paneles de mejora del juego.",
+"note.toolhoard":"Una versión general de la misma idea para cualquier reserva con tope que se rellena con el tiempo. No contiene datos del juego &mdash; los números los pones tú.",
+"nav.communityTools":"Herramientas de la comunidad",
+"title.toolSpeedup":"Calculadora de aceleraciones",
+"title.toolFalcon":"Planificador de Falcon Quests",
+"title.toolFalconRef":"Referencia Falcon Tower",
+"title.toolHoard":"Planificador de reservas",
+"title.toolExternal":"Herramientas de la comunidad",
 "fq.showNumbers":"Ver los números",
 "fq.refTitle":"Falcon Tower &mdash; referencia",
 "fq.refBody":"Los números detrás del planificador. No hace falta nada de esto para usarlo.",
@@ -3368,6 +3608,10 @@ es: {
 "title.changelog":"Cambios",
 "ui.source":"Fuente",
 "ui.backToTop":"Volver arriba",
+"ui.theme_auto":"Tema: Auto",
+"ui.theme_light":"Tema: Claro",
+"ui.theme_dark":"Tema: Oscuro",
+"ui.themeHint":"Auto sigue la configuración de tu dispositivo",
 "tag.awaitingSources":"FALTAN FUENTES",
 "ui.search":"Buscar…",
 "ui.noHits":"Sin resultados en esta pestaña",
@@ -3497,6 +3741,17 @@ pt: {
 "nav.research":"Pesquisa de aliança",
 "nav.howto":"Como fazer",
 "nav.changelog":"Alterações",
+"tag.arithmetic":"APENAS CÁLCULO",
+"note.toolspeedup":"Uma reconstrução local da folha da comunidade, para ninguém ter de a copiar. Nada é enviado &mdash; os dados ficam neste navegador.",
+"note.toolfalcon":"Calcula quantas Falcon Quests podes gastar agora e ainda estares cheio quando quiseres reclamar.",
+"note.toolfalconref":"Os dados da Falcon Tower que o planeador usa, tirados dos painéis de melhoria do jogo.",
+"note.toolhoard":"Uma versão geral da mesma ideia para qualquer reserva com limite que se enche com o tempo. Não contém dados do jogo &mdash; os números és tu que dás.",
+"nav.communityTools":"Ferramentas da comunidade",
+"title.toolSpeedup":"Calculadora de acelerações",
+"title.toolFalcon":"Planeador de Falcon Quests",
+"title.toolFalconRef":"Referência Falcon Tower",
+"title.toolHoard":"Planeador de reservas",
+"title.toolExternal":"Ferramentas da comunidade",
 "fq.showNumbers":"Ver os números",
 "fq.refTitle":"Falcon Tower &mdash; referência",
 "fq.refBody":"Os números por trás do planeador. Não precisas de nada disto para o usar.",
@@ -3522,6 +3777,10 @@ pt: {
 "title.changelog":"Alterações",
 "ui.source":"Fonte",
 "ui.backToTop":"Voltar ao topo",
+"ui.theme_auto":"Tema: Auto",
+"ui.theme_light":"Tema: Claro",
+"ui.theme_dark":"Tema: Escuro",
+"ui.themeHint":"Auto segue a definição do teu dispositivo",
 "tag.awaitingSources":"FALTAM FONTES",
 "ui.search":"Pesquisar…",
 "ui.noHits":"Sem resultados nesta aba",
@@ -3651,6 +3910,17 @@ hu: {
 "nav.research":"Szövetségi kutatás",
 "nav.howto":"Lépésről lépésre",
 "nav.changelog":"Változások",
+"tag.arithmetic":"CSAK SZÁMÍTÁS",
+"note.toolspeedup":"A közösségi táblázat helyi újraépítése, hogy senkinek ne kelljen lemásolnia. Semmi nem távozík &mdash; az adatok ebben a böngészőben maradnak.",
+"note.toolfalcon":"Kiszámítja, hány Falcon Questet költhetsz most, és mégis tele legyél, amikor beváltanád.",
+"note.toolfalconref":"A Falcon Tower értékek, amelyekkel a tervező számol, a játék fejlesztési paneljeiből.",
+"note.toolhoard":"Ugyanennek az általános változata bármilyen korlátos, idővel feltöltődő készlethez. Nem tartalmaz játékadatot &mdash; a számokat te adod meg.",
+"nav.communityTools":"Közösségi eszközök",
+"title.toolSpeedup":"Gyorsító-kalkulátor",
+"title.toolFalcon":"Falcon Quest tervező",
+"title.toolFalconRef":"Falcon Tower adatok",
+"title.toolHoard":"Általános gyűjtéstervező",
+"title.toolExternal":"Közösségi eszközök",
 "fq.showNumbers":"Számok mutatása",
 "fq.refTitle":"Falcon Tower &mdash; adatok",
 "fq.refBody":"A tervező mögötti számok. A használatához semmi sem kell belőle.",
@@ -3676,6 +3946,10 @@ hu: {
 "title.changelog":"Változások",
 "ui.source":"Forrás",
 "ui.backToTop":"Vissza a tetejére",
+"ui.theme_auto":"Téma: Auto",
+"ui.theme_light":"Téma: Világos",
+"ui.theme_dark":"Téma: Sötét",
+"ui.themeHint":"Az Auto az eszköz beállítását követi",
 "tag.awaitingSources":"FORRÁSOKRA VÁR",
 "ui.search":"Keresés…",
 "ui.noHits":"Nincs találat ezen a fülön",
@@ -3805,6 +4079,17 @@ ru: {
 "nav.research":"Исследования альянса",
 "nav.howto":"Инструкции",
 "nav.changelog":"Изменения",
+"tag.arithmetic":"ТОЛЬКО РАСЧЁТ",
+"note.toolspeedup":"Локальная копия общественной таблицы, чтобы её не пришлось копировать. Ничего не отправляется &mdash; ввод остаётся в этом браузере.",
+"note.toolfalcon":"Считает, сколько Falcon Quest можно потратить сейчас и всё равно быть полным к моменту сбора.",
+"note.toolfalconref":"Данные Falcon Tower, на которых работает планировщик, снятые с панелей улучшения в игре.",
+"note.toolhoard":"Общая версия того же для любого ограниченного запаса, который пополняется со временем. Игровых данных нет &mdash; числа вводите вы.",
+"nav.communityTools":"Инструменты сообщества",
+"title.toolSpeedup":"Калькулятор ускорений",
+"title.toolFalcon":"Планировщик Falcon Quest",
+"title.toolFalconRef":"Справка Falcon Tower",
+"title.toolHoard":"Общий планировщик запаса",
+"title.toolExternal":"Инструменты сообщества",
 "fq.showNumbers":"Показать цифры",
 "fq.refTitle":"Falcon Tower &mdash; справка",
 "fq.refBody":"Цифры, на которых основан планировщик. Для его использования ничего из этого не нужно.",
@@ -3830,6 +4115,10 @@ ru: {
 "title.changelog":"Изменения",
 "ui.source":"Источник",
 "ui.backToTop":"Наверх",
+"ui.theme_auto":"Тема: Авто",
+"ui.theme_light":"Тема: Светлая",
+"ui.theme_dark":"Тема: Тёмная",
+"ui.themeHint":"Авто следует настройке устройства",
 "tag.awaitingSources":"НЕТ ИСТОЧНИКОВ",
 "ui.search":"Поиск…",
 "ui.noHits":"Нет совпадений на этой вкладке",
@@ -3959,6 +4248,17 @@ uk: {
 "nav.research":"Дослідження альянсу",
 "nav.howto":"Інструкції",
 "nav.changelog":"Зміни",
+"tag.arithmetic":"ЛИШЕ РОЗРАХУНОК",
+"note.toolspeedup":"Локальна копія громадської таблиці, щоб її не доводилося копіювати. Нічого не надсилається &mdash; введене залишається в цьому браузері.",
+"note.toolfalcon":"Рахує, скільки Falcon Quest можна витратити зараз і все одно бути повним на момент збору.",
+"note.toolfalconref":"Дані Falcon Tower, на яких працює планувальник, зняті з панелей покращення в грі.",
+"note.toolhoard":"Загальна версія того самого для будь-якого обмеженого запасу, що поповнюється з часом. Ігрових даних немає &mdash; числа вводите ви.",
+"nav.communityTools":"Інструменти спільноти",
+"title.toolSpeedup":"Калькулятор прискорень",
+"title.toolFalcon":"Планувальник Falcon Quest",
+"title.toolFalconRef":"Довідка Falcon Tower",
+"title.toolHoard":"Загальний планувальник запасу",
+"title.toolExternal":"Інструменти спільноти",
 "fq.showNumbers":"Показати цифри",
 "fq.refTitle":"Falcon Tower &mdash; довідка",
 "fq.refBody":"Цифри, на яких базується планувальник. Для його використання нічого з цього не потрібно.",
@@ -3984,6 +4284,10 @@ uk: {
 "title.changelog":"Зміни",
 "ui.source":"Джерело",
 "ui.backToTop":"Нагору",
+"ui.theme_auto":"Тема: Авто",
+"ui.theme_light":"Тема: Світла",
+"ui.theme_dark":"Тема: Темна",
+"ui.themeHint":"Авто слідує налаштуванню пристрою",
 "tag.awaitingSources":"НЕМАЄ ДЖЕРЕЛ",
 "ui.search":"Пошук…",
 "ui.noHits":"Немає збігів на цій вкладці",
@@ -4113,6 +4417,17 @@ pl: {
 "nav.research":"Badania sojuszu",
 "nav.howto":"Instrukcje",
 "nav.changelog":"Zmiany",
+"tag.arithmetic":"TYLKO OBLICZENIA",
+"note.toolspeedup":"Lokalna wersja społecznościowego arkusza, żeby nikt nie musiał go kopiować. Nic nie jest wysyłane &mdash; dane zostają w tej przeglądarce.",
+"note.toolfalcon":"Oblicza, ile Falcon Questów możesz teraz wydać i wciąż być pełnym, gdy zechcesz odebrać.",
+"note.toolfalconref":"Dane Falcon Tower, na których opiera się planer, odczytane z paneli ulepszeń w grze.",
+"note.toolhoard":"Ogólna wersja tego samego dla dowolnego limitowanego zapasu, który uzupełnia się z czasem. Nie zawiera danych z gry &mdash; liczby podajesz sam.",
+"nav.communityTools":"Narzędzia społeczności",
+"title.toolSpeedup":"Kalkulator przyspieszeń",
+"title.toolFalcon":"Planer Falcon Quest",
+"title.toolFalconRef":"Dane Falcon Tower",
+"title.toolHoard":"Ogólny planer zapasów",
+"title.toolExternal":"Narzędzia społeczności",
 "fq.showNumbers":"Pokaż liczby",
 "fq.refTitle":"Falcon Tower &mdash; dane",
 "fq.refBody":"Liczby stojące za planerem. Do korzystania z niego nic z tego nie jest potrzebne.",
@@ -4138,6 +4453,10 @@ pl: {
 "title.changelog":"Zmiany",
 "ui.source":"Źródło",
 "ui.backToTop":"Do góry",
+"ui.theme_auto":"Motyw: Auto",
+"ui.theme_light":"Motyw: Jasny",
+"ui.theme_dark":"Motyw: Ciemny",
+"ui.themeHint":"Auto podąża za ustawieniem urządzenia",
 "tag.awaitingSources":"BRAK ŹRÓDEŁ",
 "ui.search":"Szukaj…",
 "ui.noHits":"Brak wyników w tej zakładce",
@@ -4267,6 +4586,17 @@ fi: {
 "nav.research":"Liittouman tutkimus",
 "nav.howto":"Ohjeet",
 "nav.changelog":"Muutokset",
+"tag.arithmetic":"PELKKÄÄ LASKENTAA",
+"note.toolspeedup":"Paikallinen versio yhteisön taulukosta, jottei sitä tarvitse kopioida. Mitään ei lähetetä &mdash; syötteet pysyvät tässä selaimessa.",
+"note.toolfalcon":"Laskee, kuinka monta Falcon Questiä voit käyttää nyt ja olla silti täynnä lunastushetkellä.",
+"note.toolfalconref":"Falcon Tower -luvut, joilla suunnittelija laskee, luettuna pelin päivityspaneeleista.",
+"note.toolhoard":"Yleisversio samasta ideasta mille tahansa katolliselle varannolle, joka täyttyy ajan myötä. Ei sisällä pelidataa &mdash; luvut annat itse.",
+"nav.communityTools":"Yhteisön työkalut",
+"title.toolSpeedup":"Nopeutuslaskuri",
+"title.toolFalcon":"Falcon Quest -suunnittelija",
+"title.toolFalconRef":"Falcon Tower -tiedot",
+"title.toolHoard":"Yleinen keräyssuunnittelija",
+"title.toolExternal":"Yhteisön työkalut",
 "fq.showNumbers":"Näytä luvut",
 "fq.refTitle":"Falcon Tower &mdash; tiedot",
 "fq.refBody":"Suunnittelijan taustaluvut. Mitään tästä ei tarvita sen käyttöön.",
@@ -4292,6 +4622,10 @@ fi: {
 "title.changelog":"Muutokset",
 "ui.source":"Lähde",
 "ui.backToTop":"Takaisin ylös",
+"ui.theme_auto":"Teema: Auto",
+"ui.theme_light":"Teema: Vaalea",
+"ui.theme_dark":"Teema: Tumma",
+"ui.themeHint":"Auto seuraa laitteen asetusta",
 "tag.awaitingSources":"LÄHTEITÄ PUUTTUU",
 "ui.search":"Hae…",
 "ui.noHits":"Ei osumia tällä välilehdellä",
@@ -4421,6 +4755,17 @@ et: {
 "nav.research":"Liidu uuringud",
 "nav.howto":"Juhised",
 "nav.changelog":"Muudatused",
+"tag.arithmetic":"AINULT ARVUTUS",
+"note.toolspeedup":"Kogukonna tabeli kohalik versioon, et seda poleks vaja kopeerida. Midagi ei saadeta &mdash; sisestused jäävad sellesse brauserisse.",
+"note.toolfalcon":"Arvutab, kui palju Falcon Queste saad praegu kulutada ja olla ikkagi täis, kui tahad lunastada.",
+"note.toolfalconref":"Falcon Toweri numbrid, millega planeerija arvutab, loetud mängu uuenduspaneelidelt.",
+"note.toolhoard":"Sama idee üldversioon igale piiratud varule, mis aja jooksul täitub. Ei sisalda mänguandmeid &mdash; numbrid sisestad ise.",
+"nav.communityTools":"Kogukonna tööriistad",
+"title.toolSpeedup":"Kiirenduskalkulaator",
+"title.toolFalcon":"Falcon Questi planeerija",
+"title.toolFalconRef":"Falcon Toweri andmed",
+"title.toolHoard":"Üldine varumisplaneerija",
+"title.toolExternal":"Kogukonna tööriistad",
 "fq.showNumbers":"Näita numbreid",
 "fq.refTitle":"Falcon Tower &mdash; andmed",
 "fq.refBody":"Planeerija taga olevad numbrid. Selle kasutamiseks pole neist midagi vaja.",
@@ -4446,6 +4791,10 @@ et: {
 "title.changelog":"Muudatused",
 "ui.source":"Allikas",
 "ui.backToTop":"Tagasi üles",
+"ui.theme_auto":"Teema: Auto",
+"ui.theme_light":"Teema: Hele",
+"ui.theme_dark":"Teema: Tume",
+"ui.themeHint":"Auto järgib seadme sätet",
 "tag.awaitingSources":"ALLIKAD PUUDUVAD",
 "ui.search":"Otsi…",
 "ui.noHits":"Selles sakis vasteid pole",
@@ -6823,6 +7172,70 @@ function buildBackToTop(){
   onScroll();
 }
 
+// ============================================================
+// Theme
+// ------------------------------------------------------------
+// Two palettes, not one palette lightened. Both are set entirely through
+// custom properties on <html data-theme>, which is why every overlay literal
+// had to become a variable first: the dark theme lightens surfaces with white
+// at low alpha, the light theme darkens them with brown, and a hardcoded
+// rgba(255,255,255,.15) cannot do both.
+// First visit follows the OS preference; after that the choice is remembered.
+// ============================================================
+const THEME_KEY = 'lppc-theme';
+const THEME_MODES = ['auto', 'light', 'dark'];
+function prefersLight(){
+  try{ return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches); }
+  catch(e){ return false; }
+}
+function storedMode(){
+  try{
+    const v = localStorage.getItem(THEME_KEY);
+    if(THEME_MODES.indexOf(v) >= 0) return v;
+  }catch(e){}
+  return 'auto';
+}
+// Auto follows the device rather than our own clock. The device already knows
+// the user's schedule and may be on a manual override; second-guessing it with
+// a hardcoded sunset time would fight whatever they have configured.
+function resolveTheme(mode){
+  if(mode === 'light' || mode === 'dark') return mode;
+  return prefersLight() ? 'light' : 'dark';
+}
+function applyTheme(mode){
+  const resolved = resolveTheme(mode);
+  document.documentElement.setAttribute('data-theme', resolved);
+  const btn = document.getElementById('themeToggle');
+  if(btn){
+    const key = 'ui.theme_' + mode;
+    btn.dataset.i18n = key;
+    btn.textContent = t(key);
+    btn.setAttribute('aria-pressed', String(resolved === 'light'));
+    btn.title = t('ui.themeHint');
+  }
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute('content', resolved === 'light' ? '#ded7c4' : '#0b0d09');
+}
+function buildThemeToggle(){
+  const btn = document.getElementById('themeToggle');
+  if(!btn || btn.dataset.wired) return;
+  btn.dataset.wired = '1';
+  btn.addEventListener('click', function(){
+    const cur = storedMode();
+    const next = THEME_MODES[(THEME_MODES.indexOf(cur) + 1) % THEME_MODES.length];
+    try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+    applyTheme(next);
+  });
+  // Follow the device live, but only while the user is on Auto.
+  try{
+    const mq = window.matchMedia('(prefers-color-scheme: light)');
+    const onChange = function(){ if(storedMode() === 'auto') applyTheme('auto'); };
+    if(mq.addEventListener) mq.addEventListener('change', onChange);
+    else if(mq.addListener) mq.addListener(onChange);
+  }catch(e){}
+  applyTheme(storedMode());
+}
+
 const EVF_KEY = 'lppc-evfilter';
 const EVF_CHIPS = [
   {id:'all',    key:'evf.all'},
@@ -7324,12 +7737,13 @@ const TAB_KEY = 'lppc-tab';
 const TAB_LAYOUT = {
   events: ['sec-survival','sec-duel','sec-cheese','__dated__','sec-demonking','sec-league','sec-arena','sec-hunts','sec-kvk','sec-tbd','sec-milestones'],
   guides: ['sec-sanctuary','sec-titles','sec-heroes','sec-epigraphs','sec-research','sec-howto','sec-guides-tbd'],
-  tools:  ['sec-codes','sec-tools','sec-qow','sec-changelog']
+  tools:  ['sec-codes','sec-tool-speedup','sec-tool-falcon','sec-tool-falconref',
+           'sec-tool-hoard','sec-tool-external','sec-qow','sec-changelog']
 };
 const NAV_KEYS = {
   'sec-survival':'nav.survival','sec-duel':'nav.duel','sec-kvk':'nav.kvk','sec-elixir':'nav.elixir',
   'sec-crystal':'nav.crystal','sec-cheese':'nav.cheese','sec-tbd':'nav.tbd','sec-qow':'nav.qow',
-  'sec-milestones':'nav.milestones','sec-codes':'nav.codes','sec-tools':'nav.tools',
+  'sec-milestones':'nav.milestones','sec-codes':'nav.codes','sec-tool-speedup':'nav.calcSpeedup','sec-tool-falcon':'nav.calcFalcon','sec-tool-falconref':'nav.falconRef','sec-tool-hoard':'nav.calcHoard','sec-tool-external':'nav.communityTools',
   'sec-sanctuary':'nav.sanctuary','sec-titles':'nav.titles','sec-heroes':'nav.heroes','sec-epigraphs':'nav.epigraphs','sec-demonking':'nav.demonking','sec-league':'nav.league','sec-arena':'nav.arena','sec-hunts':'nav.hunts','sec-research':'nav.research','sec-howto':'nav.howto','sec-changelog':'nav.changelog','sec-guides-tbd':'nav.guidesTbd'
 };
 function datedPairOrder(){
@@ -7373,14 +7787,7 @@ function buildTabs(){
   });
   return panels;
 }
-const SUBNAV = {
-  'sec-tools': [
-    { id:'speedupCalc',   key:'nav.calcSpeedup' },
-    { id:'falconPlanner', key:'nav.calcFalcon'  },
-    { id:'falconReference', key:'nav.falconRef' },
-    { id:'hoardPlanner',  key:'nav.calcHoard'   }
-  ]
-};
+const SUBNAV = {};
 function buildQuicknav(tab){
   const inner = document.getElementById('quicknavInner');
   if(!inner) return;
@@ -8331,6 +8738,7 @@ function renderUpcomingBanner(){
   buildSpeedupCalc();
   buildHoardPlanner();
   buildFalconPlanner();
+  buildThemeToggle();
   buildEventFilter();
   buildBackToTop();
   buildSiteSearch();
