@@ -412,6 +412,9 @@
   }
   nav.quicknav .quicknav-inner{
     max-width:1100px; margin:0 auto;
+    /* Keep clear of the fixed theme pill in the top-right corner, which would
+       otherwise sit on top of the first row of buttons. */
+    padding-right:118px;
     display:flex; flex-wrap:wrap; gap:8px;
   }
   nav.quicknav button{
@@ -779,6 +782,7 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 .fq-refbody{ padding:0 12px 10px; }
 
 .fq-table tr.fq-gap td{ color:var(--muted); font-size:.8rem; font-style:italic; text-align:left; }
+.hoard-flag.ok-flag{ background:var(--ok-1); border-left-color:var(--green); }
 .hoard-flag{
   margin-top:8px; padding:8px 10px; border-radius:4px; font-size:.82rem; line-height:1.5;
   background:var(--bad-2); border-left:3px solid var(--red);
@@ -824,6 +828,9 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 }
 .theme-toggle:hover{ color:var(--accent); border-color:var(--accent); }
 @media (max-width:520px){ .theme-toggle{ top:6px; right:8px; font-size:.68rem; padding:4px 9px; } }
+.fq-hm{ display:inline-flex; align-items:center; gap:4px; flex:none; }
+.fq-hm input[type="number"]{ width:58px; text-align:right; }
+.fq-hm-sep{ font-size:.78rem; color:var(--muted); margin-right:4px; }
 .searchbar{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:10px 0 4px; }
 .searchbar input[type="search"]{
   flex:1 1 220px; min-width:0; background:var(--well-2); color:inherit; font:inherit;
@@ -952,6 +959,16 @@ section.evf-out{ display:none; }
     content:'\2193'; left:10px; top:-12px; transform:none;
   }
 }
+.alliance-rule{
+  margin:16px 0; padding:12px 15px; border-radius:6px;
+  background:var(--bad-1); border:1px solid var(--red);
+  border-left:4px solid var(--red-bright);
+}
+.alliance-rule h3{ margin:0 0 4px; font-size:1rem; color:var(--red-bright); }
+.alliance-rule > p{ margin:0 0 8px; font-size:.86rem; }
+.rule-list{ margin:0; padding-left:20px; }
+.rule-list li{ font-size:.88rem; line-height:1.6; margin-bottom:7px; }
+.rule-src{ margin:8px 0 0 !important; font-size:.75rem; color:var(--muted); }
 .opinion-block{
   margin-top:10px; padding:9px 12px; border-radius:5px;
   background:var(--info-1); border-left:3px solid var(--info-text);
@@ -1066,7 +1083,7 @@ section.evf-out{ display:none; }
 
 .tabbar{
   display:flex; gap:6px; justify-content:flex-start; align-items:flex-end; flex-wrap:wrap;
-  max-width:var(--maxw,1100px); margin:0 auto; padding:14px 18px 0;
+  max-width:var(--maxw,1100px); margin:0 auto; padding:14px 128px 0 18px;
 }
 /* Search sits opposite the tabs: navigation on the left, retrieval on the right. */
 .tabbar .searchbar{ margin-left:auto; margin-bottom:4px; }
@@ -1565,6 +1582,17 @@ section.evf-out{ display:none; }
 
     <div class="kvk-timeline" id="kvkTimeline"></div>
 
+    <div class="alliance-rule" id="satRules">
+      <h3 data-i18n="rule.satHead">Alliance rules &mdash; Saturday</h3>
+      <p data-i18n="rule.satIntro">Two standing instructions for members on Saturday, when enemy kills score and your territory is a target all day.</p>
+      <ol class="rule-list">
+        <li data-i18n="rule.sat1"><b>Keep your shield up all day Saturday, until server reset.</b> Drop it only for the moments you are personally attacking, and put it straight back. An unshielded city on kill-event day is free points for the other side.</li>
+        <li data-i18n="rule.sat2"><b>Do not gather from resource tiles at all on Saturday.</b> Gathering troops sit outside your city, and <b>a shield does not protect anything outside the walls</b> &mdash; a march on a farm is an undefended target that also tells an attacker exactly where your army is. Whatever you would have gathered is worth less than the troops.</li>
+      </ol>
+      <p class="rule-src" data-i18n="rule.satSrc">Alliance policy for #217, not a game mechanic. Set by alliance leadership, 2 Aug 2026.</p>
+    </div>
+
+
     <div class="monthly-note">
       <span data-i18n="kvk.monthlyNote"><b style="color:var(--amber)">Monthly layer — bracket tournament:</b> weekly KvK winners advance through elimination rounds (Round 1 → Quarterfinals → Semifinals → Final) against other matched kingdoms, over several weeks, until a monthly champion is crowned. Each week's Saturday battle still happens as above; the bracket just decides who you face next.</span>
     </div>
@@ -2007,8 +2035,13 @@ section.evf-out{ display:none; }
           <input type="number" id="fqHave" min="0" step="1" inputmode="numeric" value="0">
         </div>
         <div class="fq-row">
-          <label for="fqNext" data-i18n="fq.next">Next refresh countdown</label>
-          <input type="text" id="fqNext" inputmode="numeric" placeholder="4:46" value="4:46">
+          <label for="fqNextH" data-i18n="fq.next">Next refresh countdown</label>
+          <span class="fq-hm">
+            <input type="number" id="fqNextH" min="0" max="23" step="1" inputmode="numeric" placeholder="4" value="4" aria-label="hours">
+            <span class="fq-hm-sep">h</span>
+            <input type="number" id="fqNextM" min="0" max="59" step="1" inputmode="numeric" placeholder="46" value="46" aria-label="minutes">
+            <span class="fq-hm-sep">m</span>
+          </span>
           <span class="fq-hint" data-i18n="fq.nextHint">copy the timer at the top of the Falcon Tower screen</span>
         </div>
         <div class="fq-row">
@@ -2679,6 +2712,7 @@ section.evf-out{ display:none; }
         <li data-i18n="guide.sh2"><b>Shields do not protect troops outside your city.</b> Bring marches home first, or they die regardless.</li>
         <li data-i18n="guide.sh3"><b>Buy from the Alliance Shop, not the diamond shop</b> &mdash; the alliance 24-hour shield costs alliance currency and saves diamonds. The shop restocks weekly.</li>
         <li data-i18n="guide.sh4"><b>Re-shield before the current one expires</b>, not after. Keep one or two spares of each duration in your bag.</li>
+        <li data-i18n="guide.sh6"><b>Saturday is the day this matters most.</b> Enemy kills score in the Alliance Duel Raid phase, so unshielded cities are actively hunted. Alliance policy for #217 is shield up all day until server reset, and no gathering at all &mdash; see the Kingdom vs Kingdom section.</li>
         <li data-i18n="guide.sh5"><b>Two places where a shield does nothing.</b> Death Prison Blight waves ignore shield protection outright, and territories relocated into the <b>Cursed Land</b> around the Royal City cannot activate a shield at all. Plan troop positioning for both rather than relying on an item.</li>
       </ul>
 
@@ -2910,7 +2944,8 @@ en: {
 "codes.progress":"{done} of {total} marked used",
 "sb.objTipTrain":"The per-soldier value scales with tier — Lv.7 is worth +22, and the in-game list has a “View More” for the other tiers.",
 "sb.objDetailSummary":"What scores in each objective?",
-"banner.shields":"🛡 Shields up before server reset — the KvK attacker can relocate in from 00:05",
+"banner.shields":"🛡 Shields up for all of Saturday, until server reset — drop only while attacking",
+"banner.noGather":"🌾 No gathering on Saturday — troops on tiles are outside the shield",
 "btn.allSections":"All sections",
 "primer.summary":"New to this event? Start here",
 "tools.sanctuaryTitle":"Sanctuary Upgrade Guide &mdash; key notes",
@@ -3137,7 +3172,8 @@ de: {
 "codes.reset":"Alle Haken löschen",
 "codes.progress":"{done} von {total} benutzt",
 "sb.objDetailSummary":"Was zählt bei welchem Ziel?",
-"banner.shields":"🛡 Schilde vor dem Server-Reset aktivieren — der KvK-Angreifer kann ab 00:05 einreisen",
+"banner.shields":"🛡 Schilde den ganzen Samstag aktiv lassen, bis zum Server-Reset — nur zum Angreifen kurz senken",
+"banner.noGather":"🌾 Am Samstag nicht sammeln — Truppen auf Feldern stehen außerhalb des Schilds",
 "btn.allSections":"Alle Abschnitte",
 "primer.summary":"Neu bei diesem Event? Hier starten",
 "era.label":"Server-Phase",
@@ -3306,7 +3342,8 @@ nl: {
 "codes.reset":"Alle vinkjes wissen",
 "codes.progress":"{done} van {total} gebruikt",
 "sb.objDetailSummary":"Wat scoort er per doel?",
-"banner.shields":"🛡 Schilden aan vóór de serverreset — de KvK-aanvaller kan vanaf 00:05 binnenkomen",
+"banner.shields":"🛡 Schild de hele zaterdag aan laten, tot de serverreset — alleen laten zakken om aan te vallen",
+"banner.noGather":"🌾 Zaterdag niet verzamelen — troepen op tegels staan buiten het schild",
 "btn.allSections":"Alle secties",
 "primer.summary":"Nieuw bij dit event? Begin hier",
 "era.label":"Serverfase",
@@ -3475,7 +3512,8 @@ fr: {
 "codes.reset":"Effacer les coches",
 "codes.progress":"{done} sur {total} utilisés",
 "sb.objDetailSummary":"Qu'est-ce qui rapporte selon l'objectif ?",
-"banner.shields":"🛡 Boucliers actifs avant la réinitialisation — l'attaquant KvK peut arriver dès 00h05",
+"banner.shields":"🛡 Bouclier actif tout le samedi, jusqu’au reset serveur — à baisser uniquement pour attaquer",
+"banner.noGather":"🌾 Pas de récolte le samedi — les troupes sur les cases sont hors du bouclier",
 "btn.allSections":"Toutes les sections",
 "primer.summary":"Nouveau sur cet événement ? Commencez ici",
 "era.label":"Phase du serveur",
@@ -3644,7 +3682,8 @@ es: {
 "codes.reset":"Borrar marcas",
 "codes.progress":"{done} de {total} usados",
 "sb.objDetailSummary":"¿Qué puntúa en cada objetivo?",
-"banner.shields":"🛡 Activa escudos antes del reinicio — el atacante KvK puede reubicarse desde las 00:05",
+"banner.shields":"🛡 Escudo activo todo el sábado, hasta el reinicio del servidor — bájalo solo para atacar",
+"banner.noGather":"🌾 No recolectes el sábado — las tropas en casillas quedan fuera del escudo",
 "btn.allSections":"Todas las secciones",
 "primer.summary":"¿Nuevo en este evento? Empieza aquí",
 "era.label":"Fase del servidor",
@@ -3813,7 +3852,8 @@ pt: {
 "codes.reset":"Limpar marcas",
 "codes.progress":"{done} de {total} usados",
 "sb.objDetailSummary":"O que pontua em cada objetivo?",
-"banner.shields":"🛡 Escudos ativos antes do reinício — o atacante KvK pode realocar-se a partir das 00:05",
+"banner.shields":"🛡 Escudo ativo todo o sábado, até ao reset do servidor — baixa apenas para atacar",
+"banner.noGather":"🌾 Não recolhas ao sábado — as tropas nos tiles ficam fora do escudo",
 "btn.allSections":"Todas as secções",
 "primer.summary":"Novo neste evento? Começa aqui",
 "era.label":"Fase do servidor",
@@ -3982,7 +4022,8 @@ hu: {
 "codes.reset":"Jelölések törlése",
 "codes.progress":"{done} / {total} felhasználva",
 "sb.objDetailSummary":"Mi hoz pontot az egyes céloknál?",
-"banner.shields":"🛡 Pajzsot fel a szerver-reset előtt — a KvK támadó 00:05-től átköltözhet",
+"banner.shields":"🛡 Pajzs egész szombaton fenn, a szerver-reszetig — csak támadás idejére vedd le",
+"banner.noGather":"🌾 Szombaton ne gyűjts — a mezőkön lévő csapatok a pajzson kívül vannak",
 "btn.allSections":"Összes szakasz",
 "primer.summary":"Új ez az esemény? Kezdd itt",
 "era.label":"Szerverfázis",
@@ -4151,7 +4192,8 @@ ru: {
 "codes.reset":"Снять все отметки",
 "codes.progress":"использовано {done} из {total}",
 "sb.objDetailSummary":"Что приносит очки в каждой цели?",
-"banner.shields":"🛡 Включите щиты до сброса сервера — атакующий KvK может переселиться с 00:05",
+"banner.shields":"🛡 Щит всю субботу, до сброса сервера — снимайте только для атаки",
+"banner.noGather":"🌾 В субботу не собирайте ресурсы — войска на клетках не под щитом",
 "btn.allSections":"Все разделы",
 "primer.summary":"Впервые на этом событии? Начните отсюда",
 "era.label":"Фаза сервера",
@@ -4320,7 +4362,8 @@ uk: {
 "codes.reset":"Зняти всі позначки",
 "codes.progress":"використано {done} з {total}",
 "sb.objDetailSummary":"Що дає очки в кожній цілі?",
-"banner.shields":"🛡 Увімкніть щити до скидання сервера — атакувальник KvK може переселитися з 00:05",
+"banner.shields":"🛡 Щит усю суботу, до скидання сервера — знімайте лише для атаки",
+"banner.noGather":"🌾 У суботу не збирайте ресурси — війська на клітинках поза щитом",
 "btn.allSections":"Усі розділи",
 "primer.summary":"Уперше на цій події? Почніть звідси",
 "era.label":"Фаза сервера",
@@ -4489,7 +4532,8 @@ pl: {
 "codes.reset":"Wyczyść znaczniki",
 "codes.progress":"użyto {done} z {total}",
 "sb.objDetailSummary":"Co punktuje w każdym celu?",
-"banner.shields":"🛡 Włącz tarcze przed resetem serwera — atakujący KvK może się przenieść od 00:05",
+"banner.shields":"🛡 Tarcza przez całą sobotę, do resetu serwera — zdejmuj tylko na czas ataku",
+"banner.noGather":"🌾 W sobotę nie zbieraj — wojska na polach są poza tarczą",
 "btn.allSections":"Wszystkie sekcje",
 "primer.summary":"Nowy w tym wydarzeniu? Zacznij tutaj",
 "era.label":"Faza serwera",
@@ -4658,7 +4702,8 @@ fi: {
 "codes.reset":"Tyhjennä merkinnät",
 "codes.progress":"{done}/{total} käytetty",
 "sb.objDetailSummary":"Mikä tuo pisteitä missäkin tavoitteessa?",
-"banner.shields":"🛡 Kilvet päälle ennen palvelimen nollausta — KvK-hyökkääjä voi siirtyä klo 00:05 alkaen",
+"banner.shields":"🛡 Kilpi päällä koko lauantain, palvelimen nollaukseen asti — laske vain hyökätessäsi",
+"banner.noGather":"🌾 Älä kerää lauantaina — ruuduilla olevat joukot ovat kilven ulkopuolella",
 "btn.allSections":"Kaikki osiot",
 "primer.summary":"Uusi tässä tapahtumassa? Aloita tästä",
 "era.label":"Palvelimen vaihe",
@@ -4827,7 +4872,8 @@ et: {
 "codes.reset":"Tühjenda märked",
 "codes.progress":"{done}/{total} kasutatud",
 "sb.objDetailSummary":"Mis annab punkte igas eesmärgis?",
-"banner.shields":"🛡 Kilbid peale enne serveri lähtestamist — KvK ründaja saab ümber asuda alates 00:05",
+"banner.shields":"🛡 Kilp terve laupäeva, kuni serveri lähtestuseni — lase alla ainult rünnates",
+"banner.noGather":"🌾 Laupäeval ära kogu ressursse — väljadel olevad väed on kilbist väljas",
 "btn.allSections":"Kõik jaotised",
 "primer.summary":"Uus selles sündmuses? Alusta siit",
 "era.label":"Serveri faas",
@@ -7343,6 +7389,51 @@ function buildSrcBars(){
 // output is a SPEND FLOOR ("you may go down to N now") rather than a moment to
 // stop. Capacity is inactive cap + max active, since both hold usable quests.
 // ============================================================
+// ---- timezone helpers for the Falcon planner --------------------------------
+// The planner used to build its target with new Date(y, m, d, hh, mm), which is
+// the DEVICE's local time. Every other panel on this page works in the timezone
+// chosen in the header dropdown, so the two could disagree. These resolve a
+// wall-clock time in an arbitrary IANA zone, DST included.
+function tzOffsetMs(tz, date){
+  const p = new Intl.DateTimeFormat('en-US', {timeZone: tz, hour12: false,
+    year:'numeric', month:'2-digit', day:'2-digit',
+    hour:'2-digit', minute:'2-digit', second:'2-digit'})
+    .formatToParts(date).reduce((a, x) => { a[x.type] = x.value; return a; }, {});
+  const asUTC = Date.UTC(+p.year, +p.month - 1, +p.day, (+p.hour) % 24, +p.minute, +p.second);
+  return asUTC - date.getTime();
+}
+// Instant at which the wall clock in `tz` reads the given Y-M-D H:M.
+function instantFromWallClock(tz, y, m, d, hh, mm){
+  const guess = Date.UTC(y, m - 1, d, hh, mm, 0);
+  let off = tzOffsetMs(tz, new Date(guess));
+  off = tzOffsetMs(tz, new Date(guess - off));   // second pass settles DST edges
+  return new Date(guess - off);
+}
+function wallPartsIn(tz, date){
+  const p = new Intl.DateTimeFormat('en-US', {timeZone: tz, hour12: false,
+    year:'numeric', month:'2-digit', day:'2-digit', weekday:'short'})
+    .formatToParts(date).reduce((a, x) => { a[x.type] = x.value; return a; }, {});
+  const wd = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(p.weekday);
+  return {y:+p.year, m:+p.month, d:+p.day, weekday:wd};
+}
+// Next future instant where `tz` reads the given weekday at hh:mm.
+function nextWallClockInTZ(tz, weekday, hh, mm){
+  const now = new Date();
+  const cur = wallPartsIn(tz, now);
+  for(let add = 0; add <= 8; add++){
+    const probe = new Date(Date.UTC(cur.y, cur.m - 1, cur.d + add, 12, 0, 0));
+    const pp = wallPartsIn(tz, probe);
+    if(pp.weekday !== weekday) continue;
+    const cand = instantFromWallClock(tz, pp.y, pp.m, pp.d, hh, mm);
+    if(cand.getTime() > now.getTime()) return cand;
+  }
+  return null;
+}
+// Weekday on the SERVER clock (fixed GMT-2) at a given instant. 1970-01-01 was
+// a Thursday, hence the +4.
+function serverWeekday(date){
+  return ((serverEpochDay(date) + 4) % 7 + 7) % 7;
+}
 const FQ_KEY = 'lppc-falcon';
 const FQ_REFRESH_HOURS = 6;
 const FQ_LEVELS = {
@@ -7355,18 +7446,26 @@ const FQ_LEVELS = {
 };
 const FQ_SCORING_DAYS = [1, 3, 5];
 
-function fqParseHM(txt){
-  const m = String(txt || '').match(/^\s*(\d+)\s*[:.h]\s*(\d+)?/);
-  if(!m) return null;
-  const h = parseInt(m[1], 10), mi = parseInt(m[2] || '0', 10);
-  if(!isFinite(h) || !isFinite(mi)) return null;
-  return h + mi / 60;
+// Read the countdown from two separate number inputs. It used to be one text
+// field expecting "4:46", but a numeric keyboard on mobile has no colon key —
+// delete the separator and the value could not be retyped without reloading.
+// Two fields need no separator at all.
+function fqReadCountdown(){
+  const hEl = document.getElementById('fqNextH');
+  const mEl = document.getElementById('fqNextM');
+  if(!hEl || !mEl) return null;
+  const hRaw = hEl.value.trim(), mRaw = mEl.value.trim();
+  if(hRaw === '' && mRaw === '') return null;      // both blank: nothing to go on
+  const h = hRaw === '' ? 0 : parseInt(hRaw, 10);
+  const m = mRaw === '' ? 0 : parseInt(mRaw, 10);
+  if(!isFinite(h) || !isFinite(m) || h < 0 || m < 0) return null;
+  return h + Math.min(m, 59) / 60;
 }
 function buildFalconPlanner(){
   const host = document.getElementById('falconPlanner');
   if(!host || host.dataset.wired) return;
   host.dataset.wired = '1';
-  const ids = ['fqLevel','fqHave','fqNext','fqDay','fqTime','fqRefresh','fqInactive','fqActive'];
+  const ids = ['fqLevel','fqHave','fqNextH','fqNextM','fqDay','fqTime','fqRefresh','fqInactive','fqActive'];
   try{
     const saved = JSON.parse(localStorage.getItem(FQ_KEY) || '{}');
     ids.forEach(function(id){
@@ -7386,7 +7485,7 @@ function buildFalconPlanner(){
     };
     const cap  = spec.inactive + spec.active;
     const have = Math.max(0, parseInt(document.getElementById('fqHave').value, 10) || 0);
-    const nextIn = fqParseHM(document.getElementById('fqNext').value);
+    const nextIn = fqReadCountdown();
     const day  = parseInt(document.getElementById('fqDay').value, 10);
     const tv   = (document.getElementById('fqTime').value || '08:00').split(':');
     const hh = parseInt(tv[0],10) || 0, mm = parseInt(tv[1],10) || 0;
@@ -7396,16 +7495,30 @@ function buildFalconPlanner(){
     if(nextIn === null){
       const e = document.createElement('div');
       e.className = 'hoard-answer warn';
-      e.innerHTML = '<b>Enter the next refresh countdown</b> as h:mm, exactly as the Falcon Tower screen shows it.';
+      e.innerHTML = '<b>Enter the next refresh countdown</b> \u2014 the hours and minutes shown at the top of the Falcon Tower screen.';
       out.appendChild(e);
       return;
     }
 
     const now = new Date();
-    const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, mm, 0, 0);
-    target.setDate(target.getDate() + ((day - target.getDay() + 7) % 7));
-    if(target <= now) target.setDate(target.getDate() + 7);
+    const tz = (typeof getSelectedTZ === 'function')
+      ? getSelectedTZ() : Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const target = nextWallClockInTZ(tz, day, hh, mm);
+    if(!target){
+      const e = document.createElement('div');
+      e.className = 'hoard-answer warn';
+      e.textContent = 'Could not resolve that day and time.';
+      out.appendChild(e);
+      return;
+    }
     const hoursToTarget = (target - now) / 3600000;
+    // Falcon Quests score on SERVER days. A claim time late on Sunday evening in
+    // a western timezone can already be Monday on the server, and vice versa —
+    // so the scoring check must use the server weekday at that instant, not the
+    // weekday the player picked in their own zone.
+    const srvDay = serverWeekday(target);
+    const srvConv = (typeof convertServerDateTime === 'function')
+      ? convertServerDateTime(target, 'Etc/GMT+2') : null;
 
     // How many refreshes land strictly before the claim moment.
     let refreshes = 0;
@@ -7424,7 +7537,10 @@ function buildFalconPlanner(){
     let head, why;
     if(incoming >= cap){
       head = 'Use them freely.';
-      why  = 'Enough refreshes land before ' + HOARD_DAYNAMES[day] + ' to refill you completely, whatever you spend now.';
+      // Name the SERVER day: on a shifted timezone the local day the player
+      // picked is not the day the duel scores on, and saying "Monday" when the
+      // claim lands on server Tuesday is exactly the confusion to avoid.
+      why  = 'Enough refreshes land before ' + HOARD_DAYNAMES[srvDay] + ' (server) to refill you completely, whatever you spend now.';
     } else if(spendable > 0){
       head = 'You can use ' + spendable + ' now.';
       why  = 'Keep at least ' + floor + ' in reserve and the refreshes will top you back up to ' + cap + ' in time.';
@@ -7449,7 +7565,8 @@ function buildFalconPlanner(){
     det.appendChild(sum);
     const lines = document.createElement('div');
     lines.className = 'hoard-lines';
-    [['Capacity', spec.inactive + ' inactive + ' + spec.active + ' active = ' + cap],
+    [['Claim moment (server)', srvConv ? (srvConv.dateStr + ' ' + srvConv.timeStr + ' \u2014 ' + HOARD_DAYNAMES[srvDay]) : '\u2014'],
+     ['Capacity', spec.inactive + ' inactive + ' + spec.active + ' active = ' + cap],
      ['Refreshes before claim', refreshes + ' \u00d7 ' + spec.refresh + ' = ' + incoming + ' quests'],
      ['Projected at claim', projected + ' of ' + cap],
      ['Time until claim', Math.floor(hoursToTarget) + 'h ' + Math.round((hoursToTarget % 1) * 60) + 'm']
@@ -7462,11 +7579,19 @@ function buildFalconPlanner(){
     det.appendChild(lines);
     out.appendChild(det);
 
-    if(FQ_SCORING_DAYS.indexOf(day) < 0){
+    if(FQ_SCORING_DAYS.indexOf(srvDay) < 0){
       const w = document.createElement('div');
       w.className = 'hoard-flag';
-      w.innerHTML = '<b>' + HOARD_DAYNAMES[day] + ' does not score Falcon Quests in the Alliance Duel.</b> ' +
-        'The task tables award them on <b>Monday, Wednesday and Friday</b> only.';
+      w.innerHTML = '<b>That moment is ' + HOARD_DAYNAMES[srvDay] + ' on the server, which does not score ' +
+        'Falcon Quests.</b> The Alliance Duel task tables award them on <b>Monday, Wednesday and Friday</b> ' +
+        'server time only.';
+      out.appendChild(w);
+    } else if(srvDay !== day){
+      const w = document.createElement('div');
+      w.className = 'hoard-flag ok-flag';
+      w.innerHTML = '<b>Note the day difference.</b> ' + HOARD_DAYNAMES[day] + ' ' +
+        String(hh).padStart(2,'0') + ':' + String(mm).padStart(2,'0') + ' where you are is <b>' +
+        HOARD_DAYNAMES[srvDay] + '</b> on the server &mdash; which is a scoring day, so this works.';
       out.appendChild(w);
     }
     const perDay = spec.refresh * (24 / FQ_REFRESH_HOURS);
@@ -8678,6 +8803,10 @@ function renderUpcomingBanner(){
   // server reset is exposed. Pinned to Sat 00:00 — the 24h banner window puts
   // it on screen from Friday, which is the point of it.
   candidates.push({name:t('banner.shields'), date: nextFutureWeeklyServerTime(6, 0, 0), alert:true});
+  // Alliance policy for #217, not a game mechanic: shield stays up for the whole
+  // of Saturday and nobody gathers. Pinned to the same reset so both land in the
+  // banner from Friday, which is when there is still time to bring marches home.
+  candidates.push({name:t('banner.noGather'), date: nextFutureWeeklyServerTime(6, 0, 0), alert:true});
 
   // KvK: attacker relocate window + Royal City Scramble
   candidates.push({name:t('banner.kvkRelocate'), date: nextFutureWeeklyServerTime(6, 0, 5)});
