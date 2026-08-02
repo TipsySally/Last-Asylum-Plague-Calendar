@@ -1127,6 +1127,24 @@ section.evf-out{ display:none; }
 .code-chip.is-used{ opacity:.42; border-color:var(--tint-3); }
 .code-chip.is-used .code-tick{ background:var(--hl-4); border-color:var(--amber); }
 .code-chip.is-used .code-text{ text-decoration:line-through; text-decoration-thickness:1.5px; }
+.sanct-group-head{ margin:16px 0 4px; font-size:.82rem; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+.sanct-group-head:first-child{ margin-top:4px; }
+.sanct-check-row{
+  display:flex; align-items:center; gap:10px; padding:8px 4px;
+  border-bottom:1px solid var(--edge-2); cursor:pointer; font-size:.9rem;
+}
+.sanct-check-row input[type="checkbox"]{ flex:none; width:19px; height:19px; accent-color:var(--amber); }
+.sanct-check-name{ flex:1 1 auto; }
+.sanct-check-lvl{ flex:none; color:var(--muted); font-size:.82rem; }
+.sanct-check-row.is-done{ opacity:.5; }
+.sanct-check-row.is-done .sanct-check-name{ text-decoration:line-through; text-decoration-thickness:1.5px; }
+.sanct-notes{
+  width:100%; box-sizing:border-box; margin-top:10px; padding:10px;
+  background:var(--well-2); border:1px solid var(--edge-2); border-radius:6px;
+  color:var(--text); font:inherit; font-size:.9rem; resize:vertical; min-height:110px;
+}
+.sanct-notes:focus{ outline:none; border-color:var(--accent); }
+.sanct-save-hint{ font-size:.74rem; color:var(--muted); margin-top:6px; }
 </style>
 </head>
 <body>
@@ -1262,7 +1280,28 @@ section.evf-out{ display:none; }
           <p class="obj-tip" data-i18n="sb.objTipTech">Research speedups are the workhorse here — bank them and spend the lot inside the block. Consuming Study Scrolls raises Tech Might, which is where the per-point value comes from.</p>
         </div>
 
-        <div class="obj-card is-empty"><h5>Build Territory</h5><p class="obj-missing" data-i18n="sb.objMissing">Point values not captured yet.</p></div>
+        <div class="obj-card">
+          <h5>Build Territory</h5>
+          <table class="obj-table">
+            <tr><td colspan="2"><i>Eliminate a Lv.X soldier, Royal City or turret</i></td></tr>
+            <tr><td>Lv.1 / Lv.2 / Lv.3 / Lv.4 / Lv.5</td><td class="pts">+14 / +17 / +26 / +31 / +37</td></tr>
+            <tr><td>Lv.6 / Lv.7 / Lv.8 / Lv.9 / Lv.10</td><td class="pts">+42 / +49 / +53 / +60 / +67</td></tr>
+            <tr><td colspan="2"><i>Eliminate a Lv.X soldier, Cursed Land — same values as "wounded or killed in battle, Cursed Land" below</i></td></tr>
+            <tr><td>Lv.1 / Lv.2 / Lv.3 / Lv.4 / Lv.5</td><td class="pts">+5 / +8 / +13 / +16 / +19</td></tr>
+            <tr><td>Lv.6 / Lv.7 / Lv.8 / Lv.9 / Lv.10</td><td class="pts">+23 / +25 / +29 / +31 / +34</td></tr>
+            <tr><td colspan="2"><i>Eliminate a Lv.X soldier, no location qualifier</i></td></tr>
+            <tr><td>Lv.1 / Lv.2 / Lv.3 / Lv.4 / Lv.5</td><td class="pts">+2 / +3 / +4 / +5 / +7</td></tr>
+            <tr><td>Lv.6 / Lv.7 / Lv.8 / Lv.9 / Lv.10</td><td class="pts">+8 / +9 / +11 / +12 / +13</td></tr>
+            <tr><td colspan="2"><i>Turret kills a Lv.X soldier while your troops are garrisoned there</i></td></tr>
+            <tr><td>Lv.1&ndash;6 (flat)</td><td class="pts">+1</td></tr>
+            <tr><td>Lv.7 / Lv.8 / Lv.9</td><td class="pts">+2</td></tr>
+            <tr><td>Lv.10</td><td class="pts">+3</td></tr>
+            <tr><td>Displace the territory of a rival kingdom player</td><td class="pts">+51,000</td></tr>
+            <tr><td>Garrison in the Royal City or a turret, per second</td><td class="pts">+25</td></tr>
+            <tr><td>Deplete 1 City DEF of a rival kingdom player's territory</td><td class="pts">+10</td></tr>
+          </table>
+          <p class="obj-tip">Four separate "eliminate/wounded" tables share overlapping wording but different values — the location (Royal City/turret vs Cursed Land vs unqualified) is what changes the payout, not the phrasing. Royal City/turret kills pay roughly 3&ndash;5&times; the unqualified rate; Cursed Land sits in between. Displacing a rival's territory (+51,000) dwarfs every per-kill line on this list.</p>
+        </div>
         <div class="obj-card">
           <h5>Train Soldiers</h5>
           <table class="obj-table">
@@ -1272,10 +1311,26 @@ section.evf-out{ display:none; }
           </table>
           <p class="obj-tip" data-i18n="sb.objTipTrain">The per-soldier value scales with tier — Lv.7 is worth +22, and the in-game list has a “View More” for the other tiers. Training higher-tier soldiers is worth more per unit of the same speedup.</p>
         </div>
-        <div class="obj-card is-empty"><h5>Enhance Raven</h5><p class="obj-missing" data-i18n="sb.objMissing">Point values not captured yet.</p></div>
-        <div class="obj-card is-empty"><h5>Enhance Heroes</h5><p class="obj-missing" data-i18n="sb.objMissing">Point values not captured yet.</p></div>
+        <div class="obj-card">
+          <h5>Enhance Raven</h5>
+          <table class="obj-table">
+            <tr><td>For every 10 Raven Fruits consumed</td><td class="pts">+1</td></tr>
+            <tr><td>Consume 1 Stamina</td><td class="pts">+100</td></tr>
+            <tr><td>Buy a pack containing diamonds [1 diamond]</td><td class="pts">+30</td></tr>
+          </table>
+          <p class="obj-tip">Phase thresholds: 1,500 / 10,000 / 20,000 / 30,000 for phases 1&ndash;4. Stamina consumption is the standout rate here &mdash; a single point of Stamina is worth 100x a single Raven Fruit unit.</p>
+        </div>
+        <div class="obj-card">
+          <h5>Enhance Heroes</h5>
+          <table class="obj-table">
+            <tr><td>Recruit heroes once</td><td class="pts">+400</td></tr>
+            <tr><td>For every 1,950 Antitoxin consumed</td><td class="pts">+1</td></tr>
+            <tr><td>Buy a pack containing diamonds [1 diamond]</td><td class="pts">+30</td></tr>
+          </table>
+          <p class="obj-tip">Phase thresholds: 2,000 / 4,000 / 8,000 / 12,000 for phases 1&ndash;4. The one-time "recruit heroes" action is worth more than any repeatable line in this objective &mdash; use it inside the block if it hasn't been claimed yet this rotation.</p>
+        </div>
 
-        <div class="primer-gap" data-i18n="sb.objGap"><b>Three of five still to capture</b> — Build Territory, Enhance Raven and Enhance Heroes. One screenshot of the Survival Battle panel during each remaining block completes this.<br><br><b>Phase thresholds are per objective, not shared.</b> Technology Research runs 5,000 / 10,000 / 17,000 / 24,000 for phases 1&ndash;4, while Train Soldiers runs 12,000 / 24,000 / 42,000 / 60,000 — so a phase badge is not comparable across objectives.</div>
+        <div class="primer-gap" data-i18n="sb.objGap"><b>All five objectives now captured</b> (2 Aug 2026): Technology Research, Build Territory, Train Soldiers, Enhance Raven and Enhance Heroes.<br><br><b>Phase thresholds are per objective, not shared.</b> Technology Research runs 5,000 / 10,000 / 17,000 / 24,000; Train Soldiers runs 12,000 / 24,000 / 42,000 / 60,000; Build Territory runs 5,000 / 10,000 / 17,000 / 24,000 (same numbers as Technology Research, but a separate track); Enhance Raven runs 1,500 / 10,000 / 20,000 / 30,000; Enhance Heroes runs 2,000 / 4,000 / 8,000 / 12,000 &mdash; a phase badge is never comparable across objectives.</div>
       </div>
     </details>
   </section>
@@ -1299,7 +1354,7 @@ section.evf-out{ display:none; }
       <ul>
         <li><b>Send a UR Caravan &mdash; 220,000.</b> The single biggest line in the week.</li>
         <li><b>Execute a UR Covert Operation &mdash; 168,750.</b></li>
-        <li><b>Complete a Falcon Quest &mdash; 25,500.</b></li>
+        <li><b>Claim a completed Falcon Quest &mdash; 25,500.</b> Confirmed: the point fires on <i>claiming</i>, not on completing — this is why hoarding completed-but-unclaimed quests and claiming them on a Falcon-Quest-scoring day is the correct strategy (see the Falcon Quest Planner tool).</li>
         <li><b>Consume a UR Hero Shard &mdash; 20,500</b>, Raven Essence <b>5,125</b>, Study Scroll <b>615</b>.</li>
         <li>By contrast, gathering 100 grain is <b>10.2</b> and using a minute of speedup is <b>122.5</b>. Do the big ones first; the small ones are filler.</li>
       </ul>
@@ -1343,6 +1398,19 @@ section.evf-out{ display:none; }
         </tbody>
       </table>
       <p data-i18n="guide.duelScoringNote">13 is deliberately odd, so a week can never end in a draw. <b>7 points wins outright</b> — once your alliance is mathematically there, remaining phases can be skipped and items banked for next week. Saturday alone is worth 4, so a week can still be swung on the last day.</p>
+
+      <h4>A seasonal "Points Buff" multiplies scoring on top of the base values</h4>
+      <table class="score-table">
+        <thead><tr><th>Category</th><th class="pts">Bonus</th></tr></thead>
+        <tbody>
+          <tr><td>All points (excluding diamond purchases)</td><td class="pts">+110%</td></tr>
+          <tr><td>Speedup points</td><td class="pts">+50%</td></tr>
+          <tr><td>Kill points</td><td class="pts">+30%</td></tr>
+          <tr><td>Covert Operation points</td><td class="pts">+25%</td></tr>
+          <tr><td>Caravan points</td><td class="pts">+20%</td></tr>
+        </tbody>
+      </table>
+      <p class="tbl-foot">Read from an in-game "Points Buff" popup on Phase 6 (Raid the Enemy), 2 Aug 2026. Not yet confirmed whether this buff is a Phase-6-only bonus or applies kingdom-wide across all six phases for the duel's duration — treat the scope as unconfirmed until seen on another phase.</p>
 
       <h4 data-i18n="guide.duelRulesHead">Entry &amp; settlement</h4>
       <ul>
@@ -1480,11 +1548,11 @@ section.evf-out{ display:none; }
       <summary data-i18n="primer.summary">New to this event? Start here</summary>
       <div class="primer-body">
       <h5>The 30-second version</h5>
-      <p>Three events that fire on their own triggers rather than a fixed weekly slot &mdash; <b>Thief Hunt</b>, <b>Celia&rsquo;s Hunting</b> and the <b>Death Prison</b>.</p>
+      <p>Three events that fire on their own triggers rather than a fixed weekly slot &mdash; <b>Thief Hunt</b>, <b>Celia&rsquo;s Hunting</b> and <b>Undead Siege</b> (tracked here under its earlier community name, "Death Prison").</p>
       <h5>If you do nothing else</h5>
       <ul>
         <li><b>Join rallies rather than starting them if stamina is short</b> &mdash; joining costs none, initiating does.</li>
-        <li><b>A shield will not protect you in the Death Prison.</b> Blight waves ignore it entirely; position troops for defence instead.</li>
+        <li><b>A shield will not protect you in Undead Siege.</b> Blight waves ignore it entirely; position troops for defence instead.</li>
         <li>For Thief Hunt, ranking is by damage to the <b>Thief Leader</b>, not by thieves captured.</li>
       </ul>
       </div>
@@ -1523,8 +1591,9 @@ section.evf-out{ display:none; }
     </div>
 
     <div class="guide-block" id="prisonGuide">
-      <h3 data-i18n="guide.dpTitle">Death Prison &mdash; Falcon Quests</h3>
-      <details class="src-note"><summary data-i18n="ui.source">Source</summary><div class="src-body" data-i18n="guide.dpSrc">Source: community &ldquo;Death Prison Falcon Quests&rdquo; guide infographic, 2026. Not verified in-game. English-only for now.</div></details>
+      <h3 data-i18n="guide.dpTitle">Undead Siege &mdash; formerly tracked here as "Death Prison"</h3>
+      <details class="src-note"><summary data-i18n="ui.source">Source</summary><div class="src-body" data-i18n="guide.dpSrc">Source: community &ldquo;Death Prison Falcon Quests&rdquo; guide infographic, 2026, confirmed by the in-game Info panel and event screen (screenshots, 2 Aug 2026) &mdash; same clue values, same requirements, same rules. <b>The in-game tab is titled "Undead Siege"</b>; "Death Prison" was the community guide's name for the same event and is kept here as a cross-reference. In-game evidence backs this section now, not the community guide alone.</div></details>
+      <p class="tbl-foot">In-game flavor text: a death-row prison, shrouded in fog and ravaged by plague, has turned its inmates and guards into the Blights described below.</p>
       <p data-i18n="guide.dpIntro">The alliance gathers clues by completing Falcon Quests. Once enough are gathered, R4 and R5 can dispatch Falcons to locate the prison and pick a difficulty; harder settings mean stronger Blights and better rewards. After a successful activation the search enters cooldown.</p>
 
       <div class="table-scroll">
@@ -1545,13 +1614,40 @@ section.evf-out{ display:none; }
         </tbody>
       </table>
       </div>
-      <p class="tbl-foot" data-i18n="guide.dpTblNote">The three combat quests are worth <b>thirty times</b> any of the others. An alliance chasing activation should push those and treat the +10 tasks as incidental.</p>
+      <p class="tbl-foot" data-i18n="guide.dpTblNote">The three combat quests are worth <b>thirty times</b> any of the others. An alliance chasing activation should push those and treat the +10 tasks as incidental. The in-game clue bar (screenshot, 2 Aug 2026) confirms the threshold to unlock "Search Plan" is <b>300,000</b> clue points.</p>
 
       <ul class="guide-block-ul">
         <li data-i18n="guide.dp1"><b>Eligibility:</b> your territory must meet the minimum level for the chosen difficulty, you must have been in the alliance <b>more than 48 hours</b> with offline time <b>under 72 hours</b>, and your territory must not be in a cross-server state.</li>
         <li data-i18n="guide.dp2"><b>Blight attacks ignore shield protection.</b> A shield will not save you here &mdash; position troops for defence instead.</li>
         <li data-i18n="guide.dp3">Once a member&rsquo;s territory is breached they are <b>not targeted again</b> for the rest of the event.</li>
         <li data-i18n="guide.dp4">Personal rewards scale with waves you defend; alliance rewards scale with waves the alliance defends collectively, and are <b>claimable only by members in the alliance over 48 hours</b>.</li>
+      </ul>
+
+      <h4>Difficulty selection, all 10 levels (screenshot-verified, 2 Aug 2026)</h4>
+      <div class="table-scroll">
+      <table class="score-table">
+        <thead><tr><th>Level</th><th>Territory Lv. required</th><th>Enemy Might</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>15</td><td>2.4M</td></tr>
+          <tr><td>2</td><td>15</td><td>3.3M</td></tr>
+          <tr><td>3</td><td>17</td><td>4.2M</td></tr>
+          <tr><td>4</td><td>20</td><td>6.1M</td></tr>
+          <tr><td>5</td><td>20</td><td>8.0M</td></tr>
+          <tr><td>6</td><td>21</td><td>11.5M</td></tr>
+          <tr><td>7</td><td>23</td><td>14.0M</td></tr>
+          <tr><td>8</td><td>25</td><td>17.4M</td></tr>
+          <tr><td>9</td><td>26</td><td>20.2M</td></tr>
+          <tr><td>10</td><td>27</td><td>24.5M</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="tbl-foot">R4/R5 choose the difficulty when searching for the prison; higher levels need a higher territory level, field stronger enemies, and pay better rewards. Levels 9 and 10 additionally unlock the mutation mechanic below.</p>
+
+      <h4>Wave mutations: Warden and Rabid Warden (Lv.9&ndash;10 only)</h4>
+      <ul class="guide-block-ul">
+        <li><b>Warden:</b> at waves 4, 8, 12, 16 and 20, 20% of the attacking troops (max 8) transform into a Warden before attacking. Defending against a Warden successfully offers a reward roll: Merit &times;1 (33.5%), a Speedup item &times;2 (33.25%), or a growth-resource bag &times;2 (33.25%).</li>
+        <li><b>Rabid Warden:</b> each time a Warden attacks, it has a 30% chance (max 3 per run) to further transform into a Rabid Warden, with enhanced rewards: Merit &times;1 at a higher value (2.5K vs 500) (33%), Speedup &times;4 (33%), growth-resource &times;4 (33%), and two rare rolls at 0.5% each for growth-resource &times;12 or Speedup &times;12.</li>
+        <li>Both mutation tiers are garrison-defense rewards &mdash; you must participate in defending that wave and succeed to claim the roll.</li>
       </ul>
     </div>
   </section>
@@ -1596,6 +1692,18 @@ section.evf-out{ display:none; }
         <li data-i18n="rule.sat2"><b>Do not gather from resource tiles at all on Saturday.</b> Gathering troops sit outside your city, and <b>a shield does not protect anything outside the walls</b> &mdash; a march on a farm is an undefended target that also tells an attacker exactly where your army is. Whatever you would have gathered is worth less than the troops.</li>
       </ol>
       <p class="rule-src" data-i18n="rule.satSrc">Alliance policy for #217, not a game mechanic. Set by alliance leadership, 2 Aug 2026.</p>
+    </div>
+
+    <div class="alliance-rule" id="raidKvkRules">
+      <h3>Alliance rules &mdash; Raids &amp; KvK engagement</h3>
+      <p>Standing instructions covering cross-server raid exposure and battle-line formation during active Kingdom War.</p>
+      <ol class="rule-list">
+        <li><b>Keep shielded unless actively engaging in PvP.</b> Players from other servers raid all day and will hit any unshielded sanctuary. Jump to Kingdom 220 if you want to engage in PvP for AD (Alliance Duel) points.</li>
+        <li><b>Do not attack sanctuaries belonging to our AD opponent</b> (named per season &mdash; "Beer" at time of writing). To hit a gathering tile occupied by one of their members, DM them and get permission first. Other alliances' and unallied sanctuaries/tiles are fair game.</li>
+        <li><b>Kingdom 222 can teleport into us but we cannot teleport to them</b>, so they may attack all day; our no-sanctuary-hit truce with them is active only 1 hour before and after Kingdom War &mdash; stay shielded outside that window.</li>
+        <li><b>Troop-tier formation during active KvK engagement:</b> T9 troops go to the front, attacking turrets and the castle directly. T8 supports in the mud. Everyone else supports from the green.</li>
+      </ol>
+      <p class="rule-src">Alliance policy for #217, not a game mechanic. Posted by hellokatzchen, alliance notice UTC 2026-08-01 05:45.</p>
     </div>
 
 
@@ -1744,21 +1852,21 @@ section.evf-out{ display:none; }
     </table>
       <div class="guide-block" id="crystalGuide">
       <h3 data-i18n="guide.cvTitle">Event guide &mdash; how the valley works</h3>
-      <details class="src-note"><summary data-i18n="ui.source">Source</summary><div class="src-body" data-i18n="guide.cvSrc">Source: two community &ldquo;Crystal Cluster Valley Event Guide&rdquo; infographics, which agree with each other throughout. The 30-minute window and the 20-minute entry cut-off match what this page already had. Not verified in-game. English-only for now.</div></details>
+      <details class="src-note"><summary data-i18n="ui.source">Source</summary><div class="src-body" data-i18n="guide.cvSrc">Source: two community &ldquo;Crystal Cluster Valley Event Guide&rdquo; infographics, cross-checked against the in-game Info panel (screenshot, 2 Aug 2026), which confirms the same 6 rules. In-game evidence now backs this section rather than community guides alone.</div></details>
 
       <ul class="guide-block-ul">
         <li data-i18n="guide.cv1"><b>You are given troops on entry.</b> On entering you receive troops equal to your Barracks capacity, all at your highest unlocked tier &mdash; so your own army is irrelevant and low-might players are not disadvantaged on numbers.</li>
-        <li data-i18n="guide.cv2"><b>You cannot attack cities inside the valley</b>, but you can seize gathering points that others already hold.</li>
-        <li data-i18n="guide.cv3"><b>Seizing is destructive.</b> When a node changes hands, Purified Crystals scatter into Crystal Shards &mdash; taking a node from someone costs the pot something.</li>
-        <li data-i18n="guide.cv4"><b>Failed seizures stack against you.</b> Each failure raises a hero failure count; consecutive failures apply a temporary debuff until the failure timer expires. Repeatedly throwing yourself at a defended node makes you progressively worse at taking the next one.</li>
+        <li data-i18n="guide.cv2"><b>You cannot attack cities inside the valley</b>, but you can seize gathering points that others already hold, including Alliance members.</li>
+        <li data-i18n="guide.cv3"><b>Seizing is destructive.</b> When a node changes hands after reaching a certain collection amount, the gathered Purified Crystal scatters as Crystal Shards around it &mdash; taking a node from someone costs the pot something.</li>
+        <li data-i18n="guide.cv4"><b>Failed seizures stack against you.</b> Each failure raises a hero failure count; consecutive failures apply a temporary debuff until the failure timer expires (the count then decreases by 1). Repeatedly throwing yourself at a defended node makes you progressively worse at taking the next one.</li>
         <li data-i18n="guide.cv5"><b>Plague Rats drop Skill Crystals</b>, which unlock Valley Skills. Those skills work only inside the valley and <b>reset every session</b>, so there is nothing to save.</li>
-        <li data-i18n="guide.cv6"><b>Free relocation is available inside the valley</b>, with a cooldown after use.</li>
+        <li data-i18n="guide.cv6"><b>Free relocation is available inside the valley</b>; after use it goes on cooldown, during which you can still relocate by spending Advanced Relocate Items.</li>
         <li data-i18n="guide.cv7">The <b>Sacred Cave</b> is the single most valuable location on the map.</li>
       </ul>
 
       <p class="tbl-foot" data-i18n="guide.cvRank">Ranking rewards are paid in five brackets &mdash; <b>1st</b>, <b>2nd&ndash;3rd</b>, <b>4th&ndash;10th</b>, <b>11th&ndash;20th</b> and <b>21st&ndash;50th</b>. Finishing unranked pays no ranking reward at all, though gathering rewards still accrue.</p>
 
-      <div class="guide-warn" data-i18n="guide.cvGap"><b>Schedule still unconfirmed.</b> The mechanics above are documented, but neither guide states which day the valley opens or at which times. The four Sunday windows this page uses are unverified and should be treated as a working assumption until a countdown or event-schedule screenshot confirms them.</div>
+      <div class="guide-warn" data-i18n="guide.cvGap"><b>Schedule partly confirmed.</b> A live entry screen (2 Aug 2026) showed four daily slots in the device's local time: 06:00&ndash;06:30, 13:00&ndash;13:30, 22:00&ndash;22:30 and 03:00&ndash;03:30 (next day) &mdash; irregular spacing, not evenly every 6 hours. These are genuine observed times, but converting them to server time (GMT&minus;2) needs the device's own UTC offset, which the screenshot doesn't state, so the four Sunday server-time windows this page uses remain a working assumption pending that conversion. Also still open: exact scoring rates, what makes the Sacred Cave the top location, and whether ranking is individual or alliance-wide.</div>
     </div>
 
   </section>
@@ -2022,6 +2130,7 @@ section.evf-out{ display:none; }
       <p data-i18n="tools.falconBody">Tells you how many Falcon Quests you can safely use right now, and still be full when you want to claim them.</p>
 
       <div class="guide-warn" data-i18n="tools.falconExpiry"><b>Complete them, just don&rsquo;t claim them.</b> Completing and claiming are two separate actions. Any quest you leave <i>uncompleted</i> will <b>expire and be lost</b> &mdash; so keep completing as they arrive, and hold back only the claim.</div>
+      <p class="tbl-foot"><b>Confirmed (William, 2 Aug 2026):</b> the Alliance Duel point for a Falcon Quest fires on <b>claiming</b>, not on completing. This settles a previously open question and is exactly why this planner is built around a claim-time target rather than a completion-time one &mdash; complete quests as they arrive, then time the claim to land on a Monday/Wednesday/Friday.</p>
 
       <div class="fq-simple">
         <div class="fq-row">
@@ -2039,6 +2148,7 @@ section.evf-out{ display:none; }
         <div class="fq-row">
           <label for="fqHave" data-i18n="fq.have">I have this many saved</label>
           <input type="number" id="fqHave" min="0" step="1" inputmode="numeric" value="0">
+          <span class="fq-hint">the number next to the <b>?</b> pin on the Falcon Tower map screen (e.g. "14/35") &mdash; completed-but-unclaimed quests banked against your level's inactive cap. <b>Not</b> the map pins still showing a red exclamation mark (those are uncompleted quests still costing Stamina) and <b>not</b> the alliance-member portraits (those are Aid Alliance Members prompts, a separate thing). Confirmed 2 Aug 2026: a Lv.9 tower showed 14/35, matching the 35 inactive cap already recorded below.</span>
         </div>
         <div class="fq-row">
           <label for="fqNextH" data-i18n="fq.next">Next refresh countdown</label>
@@ -2115,6 +2225,7 @@ section.evf-out{ display:none; }
       </table>
       </div>
       <p class="tbl-foot" data-i18n="fq.tableNote"><b>Six levels captured from three accounts</b>, each panel showing its current level and the next. Lv.1&ndash;3, Lv.6&ndash;8 and Lv.13+ are unrecorded and are <b>not interpolated</b> &mdash; the three stats move on different levels, so a midpoint guess would be wrong more often than right. Upgrades come from <b>completing Falcon Tower incidents</b>: 50 to leave Lv.4, 1,500 to leave Lv.9, 2,500 to leave Lv.11.</p>
+      <p class="tbl-foot">The Falcon Tower map screen shows a live counter next to a <b>?</b> pin, e.g. "14/35" for a Lv.9 tower &mdash; the 35 matches this table's Lv.9 inactive cap exactly, confirming that counter tracks completed-but-unclaimed quests against the inactive cap (screenshot, 2 Aug 2026). Use that number, not the count of quest pins still on the map (those are uncompleted) or alliance-member portraits (a separate Aid Alliance Members prompt), when filling in the Falcon Quest Planner above.</p>
       <p class="tbl-foot" data-i18n="fq.capCurve"><b>The useful pattern is capacity against daily output.</b> At Lv.4 you hold 31 but generate 32 a day, and at Lv.5 you hold 32 and generate 36 &mdash; so early on <b>you cannot bank even a single day</b> and hoarding for a specific hour is barely possible. At <b>Lv.9 capacity and daily output meet exactly at 44</b>. From <b>Lv.10</b> the cap finally exceeds production (49 held against 44 a day), which is the first point where banking more than one day’s worth becomes possible at all. If you are hoarding for Alliance Duel days, <b>Lv.10 is the upgrade that changes what you can do</b>, not Lv.11 or Lv.12.</p>
         </div>
       </details>
@@ -2199,6 +2310,32 @@ section.evf-out{ display:none; }
     </div>
   </section>
 
+  <section id="sec-tool-sanctcheck">
+    <div class="section-head">
+      <span class="section-tag tbd" data-i18n="tag.playerSubmitted">PLAYER-SUBMITTED</span>
+      <h2>Sanctuary Upgrade Checklist</h2>
+    </div>
+    <p class="section-note">Building-level requirements below come from a player&rsquo;s own tracking table, not an in-game screenshot &mdash; treat the exact building names as approximate; the levels and Sanctuary thresholds are what was submitted. See the Sanctuary guide in the Guides tab for the full level-by-level breakdown this checklist is a companion to.</p>
+
+    <div class="tool-card" id="sanctChecklist">
+      <h3>Track your own building levels</h3>
+      <p>Tick a building once you&rsquo;ve reached the level shown. Rows are grouped by which Sanctuary level they unlock &mdash; a group with every box ticked means that gate is clear.</p>
+
+      <div class="code-toolbar">
+        <span class="qow-count" id="sanctCheckCount"></span>
+        <button type="button" class="code-reset" id="sanctCheckReset" hidden>Clear all ticks</button>
+      </div>
+
+      <div id="sanctCheckList"></div>
+
+      <p class="sanct-save-hint"><b>Saved in this browser only</b> &mdash; no login, no account, nothing sent anywhere. Ticks persist across visits on this device, but are not synced to any other device and are lost if this site&rsquo;s browser data is ever cleared.</p>
+
+      <h4 style="margin-top:22px">My notes</h4>
+      <p class="sanct-save-hint">Same storage as the ticks above: this browser only, no sync, no backup elsewhere. Copy anything important out if you want to keep it long-term.</p>
+      <textarea id="sanctNotes" class="sanct-notes" rows="6" placeholder="e.g. Wall to 23 next, then start Training Ground toward 25..."></textarea>
+    </div>
+  </section>
+
   <section id="sec-tool-external">
     <div class="section-head">
       <span class="section-tag tbd" data-i18n="tag.communitySourced">COMMUNITY-SOURCED</span>
@@ -2257,6 +2394,7 @@ section.evf-out{ display:none; }
       <h2 data-i18n="title.sanctuary">Sanctuary Upgrades</h2>
     </div>
     <p class="section-note" data-i18n="note.sanctuary">Planning notes for pushing your Sanctuary level. The Sanctuary gates your hero level cap, so it is usually the building that decides how fast everything else can grow.</p>
+    <p class="tbl-foot">Want to track which prerequisite buildings you&rsquo;ve already reached, with a notes box for your own build order? See <b>Sanctuary Upgrade Checklist</b> in the Tools tab &mdash; kept separate here so this guide stays a reference rather than a form.</p>
 
     <div class="guide-block" id="sanctuaryGuide">
       <h3 data-i18n="guide.sanctTitle">Full upgrade table &mdash; Lv1 to Lv30</h3>
@@ -2391,9 +2529,18 @@ section.evf-out{ display:none; }
         <li data-i18n="guide.titlesMech2">&ldquo;Time in office&rdquo; on each panel <b>counts down</b> to the handover, not up from the appointment.</li>
         <li data-i18n="guide.titlesMech3">Each title has an <b>Auto Appointment List capped at 50</b>. Press <b>Apply</b> to join the queue; it then cycles without further input.</li>
         <li data-i18n="guide.titlesMech6"><b>A long remaining time just means nobody is waiting.</b> Titles with an empty queue have been observed sitting on 1:22 and 1:45 while queued titles turned over every five minutes. The clock says nothing about how a title is granted &mdash; only whether anyone has applied.</li>
-        <li data-i18n="guide.titlesMech4"><b>No prerequisite has been observed</b> &mdash; no might threshold, rank, or alliance requirement.</li>
+        <li data-i18n="guide.titlesMech4"><b>Sanctuary Lv.16 is required to apply</b> for any Official position (in-game Info panel, 2 Aug 2026) &mdash; this corrects an earlier note on this page that no prerequisite had been observed. No further might, rank, or alliance requirement is stated beyond that.</li>
         <li data-i18n="guide.titlesMech5"><b>The title screen has a time-zone toggle</b> at the top right. Switching it changes the header clock <i>and</i> the timestamps shown in every Apply queue, so a queue time read off this screen means whichever zone the toggle was set to. Check the toggle before quoting a handover time.</li>
       </ul>
+
+      <h4>Application rules, in full</h4>
+      <ul class="guide-block-ul">
+        <li>You can only apply for <b>one Official position at a time</b>, and cannot reapply for the <b>same</b> position within <b>30 minutes</b> of your previous application.</li>
+        <li>Each position's application queue holds up to <b>50 applicants</b>; approved applicants then move to a separate auto-appointment list, also capped at <b>50</b>.</li>
+        <li>The King and Queen can appoint other Officials directly, with a cooldown between appointments.</li>
+        <li><b>When the Royal City Scramble begins, every Official position is cleared</b> and stays empty until the next King is decided.</li>
+      </ul>
+      <p class="tbl-foot">Source: in-game Info panel for Kingdom Titles, screenshot 2 Aug 2026. Highest evidence tier.</p>
 
       <h4 data-i18n="guide.titlesUseHead">Why this matters for build planning</h4>
       <p data-i18n="guide.titlesUseBody"><b>Chief of Affairs</b> and <b>Minister of Construction</b> each grant +60% Building Construction Speed for free, to anyone willing to queue. On a long Sanctuary or building upgrade that is a very large saving, and it is the main reason observed build times in player guides differ so widely from the base figures. Queue for one before starting an expensive upgrade rather than after.</p>
@@ -2403,6 +2550,7 @@ section.evf-out{ display:none; }
 
       <h4 data-i18n="guide.titlesKvkHead">The two Chief titles are tied to KvK</h4>
       <p data-i18n="guide.titlesKvkBody"><b>If the server wins the weekly Kingdom-versus-Kingdom battle, it keeps <i>Chief of Affairs</i> and <i>Chief of War</i>. If it loses, those two titles are lost until the next battle</b> &mdash; and whether the server was attacking or defending makes no difference. This matters more than it first looks: Chief of Affairs is the +60% construction and +60% research title, so a lost KvK week removes the strongest freely-available build buff on the server for everyone, not just for whoever held it.</p>
+      <p class="tbl-foot">One nuance from the in-game Info panel: <b>being crowned "King of Battle"</b> (as opposed to just retaining the Chief titles) <b>specifically requires winning KvK as the attacker</b> &mdash; and doing so both mints the Chief of Affairs/Chief of War positions and <b>enhances the effects of every existing Official position</b> kingdom-wide, not just the two new Chief titles.</p>
 
       <h4 data-i18n="guide.titlesKingHead">Where the King comes from</h4>
       <p data-i18n="guide.titlesKingBody">The in-game Royal City Scramble rules state it plainly: <b>the leader of the alliance that wins the Scramble becomes the King</b>. That resolves the countdown seen on the Chief panels &mdash; &ldquo;After 17:53, the title King of Battle will disappear&rdquo; is the clock running down to the next Scramble, not a separate timer. The King&rsquo;s own bonus panel is a <b>flat +10% to hero HP, ATK and DEF</b> plus <b>+5% enemy troop death rate in PvP</b>, and it is the one title with no Apply queue &mdash; it is won, not requested. See the Kingdom vs Kingdom section for the Scramble rules themselves.</p>
@@ -2642,7 +2790,9 @@ section.evf-out{ display:none; }
       </ul>
 
       <h4 data-i18n="guide.epiBonusHead">What the Epigraph Bonus actually is</h4>
-      <p data-i18n="guide.epiBonusBody">The in-game Epigraph Details panel states it directly: <b>keep raising the Raven Evolve level and the Epigraph Bonus is enhanced at each uncap</b>, with the next uncap shown as <b>Lv.150</b>. The panel displays it as a ladder of tiers &mdash; the captured example reads <i>&ldquo;when HP is above 50%, all allies&rsquo; damage taken is reduced by&rdquo;</i> <b>0%</b> at the current tier, <b>1%</b> at the next, <b>2%</b> at the one after. So it is a squad-wide effect that grows in whole percentage points as the Raven levels, not a per-epigraph stat.</p>
+      <p data-i18n="guide.epiBonusBody">The in-game Epigraph Details panel states it directly: <b>keep raising the Raven Evolve level and the Epigraph Bonus is enhanced at each uncap</b>, with the next uncap shown as <b>Lv.150</b>. The panel displays it as a ladder of tiers &mdash; a fuller capture (2 Aug 2026) reads <i>&ldquo;when HP is above 50%, your and allies&rsquo; damage taken is reduced by&rdquo;</i> <b>0%</b> at the current tier (+0), rising by 1 point per tier through <b>+1&nbsp;=&nbsp;1%</b>, <b>+2&nbsp;=&nbsp;2%</b>, <b>+3&nbsp;=&nbsp;3%</b>, <b>+4&nbsp;=&nbsp;4%</b>, up to <b>+5&nbsp;=&nbsp;5%</b> at the tier captured so far (the ladder continues past +5, but that was the bottom of the visible scroll). So it is a squad-wide effect that grows in whole percentage points as the Raven levels, not a per-epigraph stat.</p>
+
+      <p class="tbl-foot">A separate, per-epigraph <b>"Promotion Details"</b> tab on the same screen shows a different ladder: fusing one specific epigraph up through its five star levels reads <b>&#9733;1&nbsp;=&nbsp;2%</b>, <b>&#9733;2&nbsp;=&nbsp;3%</b>, <b>&#9733;3&nbsp;=&nbsp;4%</b>, <b>&#9733;4&nbsp;=&nbsp;5%</b>, <b>&#9733;5&nbsp;=&nbsp;6%</b> less damage taken while above 50% HP &mdash; the same effect wording as the Epigraph Bonus above, but this one is a property of the crafted epigraph card itself (via fusing/promoting), separate from the Raven Evolve-driven bonus. Different epigraph cards will have their own promotion values; this is one worked example, not a universal table.</p>
 
       <p class="tbl-foot" data-i18n="guide.epiThresholdResolved"><b>This settles the 150 / 300 / 450 question.</b> One guide said those numbers unlock tier bonuses; another said they unlock epigraph plans. The in-game panel shows <b>150 is a Raven Evolve uncap that enhances the Epigraph Bonus</b>, which matches the first reading. The second guide was not simply wrong, though &mdash; <b>plan slots do also scale</b>, just on their own track (see below). Two mechanisms, one set of numbers quoted for both.</p>
 
@@ -2650,7 +2800,26 @@ section.evf-out{ display:none; }
       <p data-i18n="guide.epiPlanBody">Each squad can run its own epigraph plan, and the plans themselves hold increasing numbers of epigraphs: the captured panel shows <b>Plan 1 at 3 slots, Plan 2 at 4, Plan 3 at 5 and Plan 4 at 6</b>, with Plan 4 still locked. More plans and more slots open as you progress.</p>
       <div class="guide-conflict" data-i18n="guide.epiPlanConflict"><b>Unresolved &mdash; what actually unlocks plan slots.</b> The same guide says it two ways on one page: the plans panel says slots open <i>as you evolve</i>, while its own quick-tips list says to <b>use Shards to upgrade the Epigraph Workshop and unlock more plan slots</b>. Those are different currencies driving the same unlock. Both are recorded until a live panel settles it.</div>
 
-      <h4 data-i18n="guide.epiClassHead">The four bonus classes</h4>
+      <h4>Confirmed values, tier by tier (screenshot-verified, 2 Aug 2026)</h4>
+      <p class="tbl-foot">Over 20 individual epigraph cards were captured across all three factions at Tier III and Tier IV. The numbers below are <b>identical regardless of faction</b> &mdash; only the affected faction changes; the mechanic and magnitude do not. Merit cost is <b>20,000</b> at Tier III and <b>120,000</b> at Tier IV for every class and faction seen.</p>
+      <div class="table-scroll">
+      <table class="score-table stackable epi-table">
+        <thead><tr>
+          <th data-i18n="guide.thClass">Class</th>
+          <th>Tier III effect</th>
+          <th>Tier IV effect</th>
+        </tr></thead>
+        <tbody>
+          <tr><td data-label="Class"><b>Initiative</b></td><td data-label="Tier III">Start of battle: if the faction has HP above 50%, all allies take <b>1%</b> less damage.</td><td data-label="Tier IV">Start of battle: faction allies gain an <b>800K-HP shield</b> absorbing 50% damage for 15s; after the shield ends, ally damage taken is reduced by <b>5%</b> until battle ends.</td></tr>
+          <tr><td data-label="Class"><b>Attack</b></td><td data-label="Tier III">After Raven casts a skill, all faction allies gain <b>1%</b> ATK for 3s.</td><td data-label="Tier IV">After Raven casts a skill, all faction allies gain <b>2.5%</b> ATK for 3s, and Raven's skill targets <b>+1</b>.</td></tr>
+          <tr><td data-label="Class"><b>Support</b></td><td data-label="Tier III">After Raven casts a skill, the 3 faction allies with highest ATK deal <b>2%</b> more damage for 3s.</td><td data-label="Tier IV">The 3 highest-ATK faction allies deal <b>3%</b> more damage for 3s, and all enemies deal <b>5%</b> less Ultimate Skill damage for 3s.</td></tr>
+          <tr><td data-label="Class"><b>Defense</b></td><td data-label="Tier III">Start of battle: all faction allies gain <b>2.5%</b> DEF until battle ends.</td><td data-label="Tier IV">Start of battle: all faction allies gain <b>9.0%</b> DEF, and the 2 allies with the highest max HP gain a further <b>13.5%</b> DEF, both until battle ends.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="tbl-foot">One asymmetry worth flagging: Tier III <b>Initiative</b> epigraphs grant <b>40,000 EXP</b> if fed to the Raven as evolution material &mdash; double the <b>20,000 EXP</b> every other Tier III class grants. Tier IV (UR) epigraphs of every class cannot be used as Raven evolution material at all, confirmed on every UR card seen.</p>
+
+      <h4 data-i18n="guide.epiClassHead">The four bonus classes, in general terms</h4>
       <div class="table-scroll">
       <table class="score-table stackable epi-table">
         <thead><tr>
@@ -2662,7 +2831,7 @@ section.evf-out{ display:none; }
           <tr><td data-label="Class"><b>Attack</b></td><td data-label="Role">Offensive</td><td data-label="What it provides">Increases heroes&rsquo; Attack after activating the Raven skill. At gold level, also increases the number of targets hit and Raven damage.</td></tr>
           <tr><td data-label="Class"><b>Support</b></td><td data-label="Role">Enhancing</td><td data-label="What it provides">Increases damage dealt by the hero with the highest Attack. At gold level, reduces damage taken by the team via a fourth stat slot.</td></tr>
           <tr><td data-label="Class"><b>Defense</b></td><td data-label="Role">Defensive</td><td data-label="What it provides">Increases Defense of the hero with the highest HP. Gold grants up to <b>+13.5%</b> Defense at the highest level.</td></tr>
-          <tr><td data-label="Class"><b>Warning</b> / <b>Initiative</b></td><td data-label="Role">Protective</td><td data-label="What it provides">Grants a shield that reduces incoming damage. <b>The guides disagree on this class&rsquo;s name</b> &mdash; one calls it Warning, the other Initiative and describes it as helping your squad act first. Both are shown until the in-game term is readable.</td></tr>
+          <tr><td data-label="Class"><b>Initiative</b></td><td data-label="Role">Protective</td><td data-label="What it provides">Grants a shield that reduces incoming damage. Leaning towards <b>Initiative</b>: an in-game Epigraph Workshop crafting screen (2 Aug 2026) shows this label on a Warrior-faction epigraph card, alongside the other guide that already used this name. <b>Warning</b> is kept as the alternate reading below since the crafting screen's layout overlapped two text elements, so this is not a full confirmation.</td></tr>
         </tbody>
       </table>
       </div>
@@ -2676,7 +2845,18 @@ section.evf-out{ display:none; }
       </ul>
       <p class="tbl-foot" data-i18n="guide.epiPreempt">One gold effect worth naming separately: <b>Pre-emptive</b> &mdash; after taking damage, a 50% chance to deal 50% damage back to the attacker for 15 seconds.</p>
 
-      <div class="guide-warn" data-i18n="guide.epiGap"><b>Still open.</b> The fourth class name is unresolved, and <b>part 2 of the &ldquo;1/2&rdquo; guide has still not surfaced</b> &mdash; the third guide supplied here is a separate document, not its continuation. One guide also states that Raven Development Level &ldquo;increases based on total sales&rdquo;, which is unclear and is contradicted by the in-game panel showing it driven by EXP Books; that phrasing is not recorded above.</div>
+      <div class="guide-warn" data-i18n="guide.epiGap"><b>Still open.</b> The fourth class name now leans <b>Initiative</b> rather than Warning (see table above), but the source screenshot had two overlapping UI text elements, so treat it as leaning, not settled. <b>Part 2 of the &ldquo;1/2&rdquo; guide has still not surfaced</b> &mdash; the third guide supplied here is a separate document, not its continuation. One guide also states that Raven Development Level &ldquo;increases based on total sales&rdquo;, which is unclear and is contradicted by the in-game panel showing it driven by EXP Books; that phrasing is not recorded above.</div>
+
+      <h4>The Raven itself &mdash; separate from the epigraphs it carries</h4>
+      <p class="tbl-foot">Screenshot-verified, single account, 2 Aug 2026. The Raven ("Oath's Eye" in the captured account) is a persistent companion with its own level, evolve stages and gear, distinct from the Epigraph mechanics above &mdash; epigraphs are items the Raven equips, not the Raven itself.</p>
+      <ul class="guide-block-ul">
+        <li><b>Levels via Feed Fruit</b>, a dedicated resource (captured account was banked at 753K against a 25.0K requirement for the next level, Lv.77 at the time).</li>
+        <li><b>Raven Evolve</b> is a separate progression track from level: Stage I was observed at Raven level 10, progressing 200/1000 toward the next stage, with the next <i>stage uncap</i> (which enhances the Epigraph Bonus, see above) at <b>Lv.150</b>. Stage I base stats at that point: HP 100,869 / ATK 595 / DEF 595.</li>
+        <li><b>Raven Gear has 8 slots</b> (4 pairs, left/right of the portrait), each independently levelled. A fully-geared example (all 8 pieces at Lv.5&ndash;6) contributed an "Additional Stats" bonus of: Hero DMG Dealt +2.5%, Hero HP +343,050, Hero ATK +2,286, Hero DEF +2,479, Raven ATK +4,315, Raven DEF +1,865, Raven HP +641,133. <b>Raven Gear buffs your heroes, not just the Raven</b> &mdash; this is a squad-wide stat source that doesn't show up anywhere else on this page yet.</li>
+        <li><b>The Raven has its own Skill</b>, shown with a 1&ndash;5 star rating (captured at 3 of 5 stars) on the Stats tab, separate from hero skills.</li>
+        <li><b>Epigraph Plan is queue-based, not just slot-based.</b> The Plan screen shows a triangular layout of 4 "+" epigraph slots (one large central node, one top, two bottom corners) <i>and</i> a queue of 5 heroes with a "Change Queue" button underneath. This suggests a Raven Epigraph Plan applies its bonuses to a specific 5-hero queue, not to "your squad" in the abstract as the guides above phrase it &mdash; worth confirming before this becomes load-bearing for the hero/squad tool.</li>
+      </ul>
+      <div class="guide-conflict">Unresolved &mdash; the 4-slot layout observed on the Plan screen (1 large centre node + 3 outer nodes) doesn't obviously match the "Plan 1 = 3 slots" figure already recorded above from the community guide. It's possible the centre node is a separate "core" upgrade rather than a counted plan slot, but that's inference, not confirmed. A screenshot with all 4 nodes filled and labelled would settle it.</div>
 
     </div>
   </section>
@@ -2899,6 +3079,7 @@ en: {
 "nav.calcSpeedup":"Speed-Up Calculator",
 "nav.calcFalcon":"Falcon Quest Planner",
 "nav.calcHoard":"General Hoard Planner",
+"nav.sanctCheck":"Sanctuary Checklist",
 "note.titles":"Nine court titles, each granting a buff. Seven rotate on a five-minute queue that anyone can join; King of Battle is won in the Royal City Scramble and Queen is appointed by the King.",
 "note.research":"A donation-order suggestion for the alliance tech tree. This is strategy, not a game rule.",
 "note.league":"A seasonal ladder layered on top of the Alliance Duel, with promotion and relegation between groups.",
@@ -2971,14 +3152,14 @@ en: {
 "guide.epiPlanConflict":"<b>Unresolved — what actually unlocks plan slots.</b> The same guide says it two ways on one page: the plans panel says slots open <i>as you evolve</i>, while its own quick-tips list says to <b>use Shards to upgrade the Epigraph Workshop and unlock more plan slots</b>. Those are different currencies driving the same unlock. Both are recorded until a live panel settles it.",
 "note.howtoPaths":"Button paths are shown as numbered chains rather than screenshots, so the page stays one small file and the steps cannot rot when an image host expires. <b>The button names are given in English</b> because no localised screenshots of these menus exist yet — per the rule used throughout this page, a game string is never guessed. Unlike a screenshot, these chains can be translated once localised menus are confirmed.",
 "guide.exwWarn":"<b>Flagged as not confirmed for this game.</b> The source infographic states on its own face that it is based on information from <b>Era of Revival</b> servers and that features may change before reaching all kingdoms. It also uses a hero taxonomy — Defense / Attack / Strategy — that does not match the Warrior / Ranger / Warlock factions used everywhere else, including by the game’s own quiz. Treat everything below as unverified and possibly not applicable here.",
-"guide.epiGap":"<b>Still open.</b> The fourth class name is unresolved, and <b>part 2 of the “1/2” guide has still not surfaced</b> — the third guide supplied here is a separate document, not its continuation. One guide also states that Raven Development Level “increases based on total sales”, which is unclear and is contradicted by the in-game panel showing it driven by EXP Books; that phrasing is not recorded above.",
+"guide.epiGap":"<b>Still open.</b> The fourth class name now leans Initiative rather than Warning (see table above), but the source screenshot had two overlapping UI text elements, so treat it as leaning, not settled. <b>Part 2 of the “1/2” guide has still not surfaced</b> — the third guide supplied here is a separate document, not its continuation. One guide also states that Raven Development Level “increases based on total sales”, which is unclear and is contradicted by the in-game panel showing it driven by EXP Books; that phrasing is not recorded above.",
 "note.guidesTbdHow":"<b>Nothing here yet.</b> Send the guides and this fills in. Each will get its own block with the author, source link and date, the same as the event guides — and anything that contradicts a screenshot-verified fact will be flagged rather than quietly overwritten.",
 "guide.titlesGap":"<b>One item still open.</b> The panel is headed “King Bonus” rather than naming a recipient, so it is not stated whether those four bonuses apply only to the King or to the whole kingdom while a King is seated. <b>The leaning is towards the King alone</b>, on the grounds that the panel uses the same avatar-name-bonus layout as the eight title panels, where the bonuses demonstrably belong to the holder. That is a structural argument, not a confirmation. <b>What would settle it:</b> a non-King player checking their own active buff list — if a King-derived bonus appears there, it is kingdom-wide. Separately, the Minister of the Inner Court resource percentages still want a second account’s screenshot to confirm they are flat title values.",
 "guide.dkGap":"<b>Spawn hour still unknown.</b> A countdown of 05:19:50 was observed at 18:30 server time, putting the despawn at roughly 23:50 server — consistent with the Blight lasting until the 00:00 daily reset, and an earlier reading of 11:53:32 fits the same pattern. That is inference from two countdowns, not a confirmed schedule, and it gives the <i>end</i> rather than the start. A screenshot taken shortly after a Blight appears would settle it.",
 "tools.falconExpiry":"<b>Complete them, just don’t claim them.</b> Completing and claiming are two separate actions. Any quest you leave <i>uncompleted</i> will <b>expire and be lost</b> — so keep completing as they arrive, and hold back only the claim.",
 "guide.taGap":"<b>Still unknown.</b> Arena of Fate’s format, challenge count and rewards have not been captured — only its entry gate and tier structure. Neither arena’s season length is confirmed; the ten-day figure is inferred from a single countdown. And it is not established whether the top-200 and top-1,200 gates are measured per kingdom or across the pooled kingdoms.",
 "guide.elixirStarNote":"<b>Transcribed from screenshots of the source sheet.</b> Figures and effects are as printed there. The star priorities on the two lowest rows (Migration Portal, Camps) are the hardest to resolve at that resolution — worth a second look if you are ranking targets by them.",
-"guide.cvGap":"<b>Schedule still unconfirmed.</b> The mechanics above are documented, but neither guide states which day the valley opens or at which times. The four Sunday windows this page uses are unverified and should be treated as a working assumption until a countdown or event-schedule screenshot confirms them.",
+"guide.cvGap":"<b>Schedule partly confirmed.</b> A live entry screen (2 Aug 2026) showed four daily slots in the device's local time: 06:00–06:30, 13:00–13:30, 22:00–22:30 and 03:00–03:30 (next day) — irregular spacing, not evenly every 6 hours. These are genuine observed times, but converting them to server time (GMT−2) needs the device's own UTC offset, which the screenshot doesn't state, so the four Sunday server-time windows this page uses remain a working assumption pending that conversion. Also still open: exact scoring rates, what makes the Sacred Cave the top location, and whether ranking is individual or alliance-wide.",
 "note.tools":"Tools built and maintained by other players. These are external links &mdash; they are not part of this page and we do not control their contents or availability.",
 "tools.speedupTitle":"Speed-Up Calculator",
 "tools.speedupBody":"Enter how many of each speed-up you hold and it totals the time, in minutes and in days/hours/minutes. The top block covers general-use speed-ups, the bottom block task-specific ones. Version 2 adds build-queue times and shows whether you have enough banked to cover all current projects. Make your own copy before entering anything.",
@@ -7310,6 +7491,101 @@ function initGiftCodes(){
   }
   renderGiftCodes();
 }
+
+// Building-level requirements gathered from a player's own tracking table
+// (not an in-game screenshot), 2 Aug 2026. "forLv" is the Sanctuary level the
+// building's level requirement gates.
+const SANCT_BUILDINGS = [
+  {id:'granary',       name:'Granary',          lvl:10, forLv:23},
+  {id:'lumberdepo',     name:'Lumber Depot',     lvl:10, forLv:24},
+  {id:'herbstorage',    name:'Herb Storage',     lvl:10, forLv:25},
+  {id:'infirmary',      name:'Infirmary',        lvl:22, forLv:23},
+  {id:'wall',           name:'Wall',             lvl:23, forLv:24},
+  {id:'warriorstatue',  name:'Warrior Statue',   lvl:25, forLv:26},
+  {id:'farm',           name:'Farm',             lvl:13, forLv:27},
+  {id:'barrack',        name:'Barrack',          lvl:27, forLv:28},
+  {id:'lumberyard',     name:'Lumberyard',       lvl:13, forLv:28},
+  {id:'herbgarden',     name:'Herb Garden',      lvl:13, forLv:29},
+  {id:'alliancehall',   name:'Alliance Hall',    lvl:28, forLv:29},
+  {id:'antitoxinws',    name:'Antitoxin WS',     lvl:15, forLv:30},
+  {id:'lab',            name:'Lab',              lvl:29, forLv:30},
+  {id:'traininggnd',    name:'Training Ground',  lvl:29, forLv:30}
+];
+const SANCT_CHECK_KEY = 'lppc-sanct-check';
+const SANCT_NOTES_KEY = 'lppc-sanct-notes';
+function loadSanctChecks(){
+  try{ return new Set(JSON.parse(localStorage.getItem(SANCT_CHECK_KEY) || '[]')); }
+  catch(e){ return new Set(); }
+}
+function saveSanctChecks(set){
+  try{ localStorage.setItem(SANCT_CHECK_KEY, JSON.stringify([...set])); }catch(e){}
+}
+function renderSanctCheck(){
+  const list = document.getElementById('sanctCheckList');
+  if(!list) return;
+  const checked = loadSanctChecks();
+  const groups = {};
+  SANCT_BUILDINGS.forEach(b=>{ (groups[b.forLv] = groups[b.forLv] || []).push(b); });
+  list.innerHTML = '';
+  Object.keys(groups).map(Number).sort((a,b)=>a-b).forEach(forLv=>{
+    const h = document.createElement('h5');
+    h.className = 'sanct-group-head';
+    h.textContent = 'For Sanctuary Lv.' + forLv;
+    list.appendChild(h);
+    groups[forLv].forEach(b=>{
+      const row = document.createElement('label');
+      row.className = 'sanct-check-row' + (checked.has(b.id) ? ' is-done' : '');
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = checked.has(b.id);
+      cb.dataset.bid = b.id;
+      const name = document.createElement('span');
+      name.className = 'sanct-check-name';
+      name.textContent = b.name;
+      const lvl = document.createElement('span');
+      lvl.className = 'sanct-check-lvl';
+      lvl.textContent = 'Lv.' + b.lvl;
+      row.appendChild(cb);
+      row.appendChild(name);
+      row.appendChild(lvl);
+      list.appendChild(row);
+    });
+  });
+  const done = SANCT_BUILDINGS.filter(b=>checked.has(b.id)).length;
+  const cnt = document.getElementById('sanctCheckCount');
+  if(cnt) cnt.textContent = done + ' / ' + SANCT_BUILDINGS.length + ' ticked';
+  const reset = document.getElementById('sanctCheckReset');
+  if(reset) reset.hidden = done === 0;
+}
+function initSanctCheck(){
+  const list = document.getElementById('sanctCheckList');
+  if(list && !list.dataset.wired){
+    list.dataset.wired = '1';
+    list.addEventListener('change', (e)=>{
+      const cb = e.target;
+      if(!cb || cb.type !== 'checkbox') return;
+      const set = loadSanctChecks();
+      if(cb.checked) set.add(cb.dataset.bid); else set.delete(cb.dataset.bid);
+      saveSanctChecks(set);
+      renderSanctCheck();
+    });
+  }
+  const reset = document.getElementById('sanctCheckReset');
+  if(reset && !reset.dataset.wired){
+    reset.dataset.wired = '1';
+    reset.addEventListener('click', ()=>{ saveSanctChecks(new Set()); renderSanctCheck(); });
+  }
+  const notes = document.getElementById('sanctNotes');
+  if(notes && !notes.dataset.wired){
+    notes.dataset.wired = '1';
+    try{ notes.value = localStorage.getItem(SANCT_NOTES_KEY) || ''; }catch(e){}
+    notes.addEventListener('input', ()=>{
+      try{ localStorage.setItem(SANCT_NOTES_KEY, notes.value); }catch(e){}
+    });
+  }
+  renderSanctCheck();
+}
+
 function fallbackCopy(text, done){
   try{
     const ta = document.createElement('textarea');
@@ -8155,12 +8431,12 @@ const TAB_LAYOUT = {
   events: ['sec-survival','sec-duel','sec-cheese','__dated__','sec-demonking','sec-league','sec-arena','sec-hunts','sec-kvk','sec-tbd','sec-milestones'],
   guides: ['sec-sanctuary','sec-titles','sec-heroes','sec-epigraphs','sec-research','sec-howto','sec-guides-tbd'],
   tools:  ['sec-codes','sec-tool-speedup','sec-tool-falcon','sec-tool-falconref',
-           'sec-tool-hoard','sec-tool-external','sec-qow','sec-changelog']
+           'sec-tool-hoard','sec-tool-sanctcheck','sec-tool-external','sec-qow','sec-changelog']
 };
 const NAV_KEYS = {
   'sec-survival':'nav.survival','sec-duel':'nav.duel','sec-kvk':'nav.kvk','sec-elixir':'nav.elixir',
   'sec-crystal':'nav.crystal','sec-cheese':'nav.cheese','sec-tbd':'nav.tbd','sec-qow':'nav.qow',
-  'sec-milestones':'nav.milestones','sec-codes':'nav.codes','sec-tool-speedup':'nav.calcSpeedup','sec-tool-falcon':'nav.calcFalcon','sec-tool-falconref':'nav.falconRef','sec-tool-hoard':'nav.calcHoard','sec-tool-external':'nav.communityTools',
+  'sec-milestones':'nav.milestones','sec-codes':'nav.codes','sec-tool-speedup':'nav.calcSpeedup','sec-tool-falcon':'nav.calcFalcon','sec-tool-falconref':'nav.falconRef','sec-tool-hoard':'nav.calcHoard','sec-tool-sanctcheck':'nav.sanctCheck','sec-tool-external':'nav.communityTools',
   'sec-sanctuary':'nav.sanctuary','sec-titles':'nav.titles','sec-heroes':'nav.heroes','sec-epigraphs':'nav.epigraphs','sec-demonking':'nav.demonking','sec-league':'nav.league','sec-arena':'nav.arena','sec-hunts':'nav.hunts','sec-research':'nav.research','sec-howto':'nav.howto','sec-changelog':'nav.changelog','sec-guides-tbd':'nav.guidesTbd'
 };
 function datedPairOrder(){
@@ -9154,6 +9430,7 @@ function renderUpcomingBanner(){
   renderMilestones();
   initQow();
   initGiftCodes();
+  initSanctCheck();
   initEra();
   initTabs();
   buildSpeedupCalc();
