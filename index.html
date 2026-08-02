@@ -828,6 +828,12 @@ section.is-collapsed .section-head{ margin-bottom:0; }
 }
 .theme-toggle:hover{ color:var(--accent); border-color:var(--accent); }
 @media (max-width:520px){ .theme-toggle{ top:6px; right:8px; font-size:.68rem; padding:4px 9px; } }
+.fq-echo{
+  flex:1 1 100%; font-size:.78rem; color:var(--muted);
+  font-variant-numeric:tabular-nums; padding-left:1px;
+}
+.fq-echo.is-ok b{ color:var(--green-bright); }
+.fq-echo.is-no b{ color:var(--amber); }
 .fq-hm{ display:inline-flex; align-items:center; gap:4px; flex:none; }
 .fq-hm input[type="number"]{ width:58px; text-align:right; }
 .fq-hm-sep{ font-size:.78rem; color:var(--muted); margin-right:4px; }
@@ -2045,7 +2051,7 @@ section.evf-out{ display:none; }
           <span class="fq-hint" data-i18n="fq.nextHint">copy the timer at the top of the Falcon Tower screen</span>
         </div>
         <div class="fq-row">
-          <label for="fqDay" data-i18n="fq.day">I want to claim on</label>
+          <label for="fqDay" data-i18n="fq.day">I want to claim on (your time)</label>
           <select id="fqDay">
             <option value="1">Monday</option>
             <option value="3">Wednesday</option>
@@ -2056,6 +2062,7 @@ section.evf-out{ display:none; }
             <option value="0">Sunday</option>
           </select>
           <input type="time" id="fqTime" value="08:00">
+          <span class="fq-echo" id="fqServerEcho"></span>
         </div>
       </div>
 
@@ -2886,6 +2893,8 @@ en: {
 "nav.falconRef":"Falcon Tower Reference",
 "fq.optOther":"Another level",
 "fq.nextHint":"copy the timer at the top of the Falcon Tower screen",
+"fq.serverTime":"server time",
+"fq.noScore":"not a scoring day",
 "fq.customNote":"Only six levels have been recorded. For any other level, read these three numbers off your own upgrade preview.",
 "nav.calcSpeedup":"Speed-Up Calculator",
 "nav.calcFalcon":"Falcon Quest Planner",
@@ -3119,6 +3128,8 @@ de: {
 "nav.falconRef":"Falkenturm-Referenz",
 "fq.optOther":"Andere Stufe",
 "fq.nextHint":"übernimm den Timer oben im Falkenturm-Bildschirm",
+"fq.serverTime":"Serverzeit",
+"fq.noScore":"kein Wertungstag",
 "fq.customNote":"Nur sechs Stufen sind erfasst. Für jede andere Stufe lies diese drei Zahlen in deiner eigenen Upgrade-Vorschau ab.",
 "nav.calcSpeedup":"Beschleuniger-Rechner",
 "nav.calcFalcon":"Falken-Quest-Planer",
@@ -3289,6 +3300,8 @@ nl: {
 "nav.falconRef":"Falcon Tower-naslag",
 "fq.optOther":"Ander niveau",
 "fq.nextHint":"neem de timer boven in het Falcon Tower-scherm over",
+"fq.serverTime":"servertijd",
+"fq.noScore":"geen scoredag",
 "fq.customNote":"Slechts zes niveaus zijn vastgelegd. Lees voor elk ander niveau deze drie getallen af in je eigen upgradevoorbeeld.",
 "nav.calcSpeedup":"Speedup-calculator",
 "nav.calcFalcon":"Falcon Quest-planner",
@@ -3459,6 +3472,8 @@ fr: {
 "nav.falconRef":"Référence Falcon Tower",
 "fq.optOther":"Autre niveau",
 "fq.nextHint":"recopiez le minuteur en haut de l’écran Falcon Tower",
+"fq.serverTime":"heure serveur",
+"fq.noScore":"jour sans points",
 "fq.customNote":"Seuls six niveaux ont été relevés. Pour tout autre niveau, lisez ces trois chiffres dans votre propre aperçu d’amélioration.",
 "nav.calcSpeedup":"Calculateur d’accélération",
 "nav.calcFalcon":"Planificateur Falcon Quest",
@@ -3629,6 +3644,8 @@ es: {
 "nav.falconRef":"Referencia Falcon Tower",
 "fq.optOther":"Otro nivel",
 "fq.nextHint":"copia el temporizador de la parte superior de la pantalla Falcon Tower",
+"fq.serverTime":"hora del servidor",
+"fq.noScore":"día sin puntos",
 "fq.customNote":"Solo se han registrado seis niveles. Para cualquier otro, lee estos tres números en tu propia vista previa de mejora.",
 "nav.calcSpeedup":"Calculadora de aceleraciones",
 "nav.calcFalcon":"Planificador de Falcon Quests",
@@ -3799,6 +3816,8 @@ pt: {
 "nav.falconRef":"Referência Falcon Tower",
 "fq.optOther":"Outro nível",
 "fq.nextHint":"copia o temporizador no topo do ecrã Falcon Tower",
+"fq.serverTime":"hora do servidor",
+"fq.noScore":"dia sem pontos",
 "fq.customNote":"Só foram registados seis níveis. Para qualquer outro, lê estes três números na tua própria pré-visualização de melhoria.",
 "nav.calcSpeedup":"Calculadora de acelerações",
 "nav.calcFalcon":"Planeador de Falcon Quests",
@@ -3969,6 +3988,8 @@ hu: {
 "nav.falconRef":"Falcon Tower adatok",
 "fq.optOther":"Más szint",
 "fq.nextHint":"másold a Falcon Tower képernyő tetején látható időzítőt",
+"fq.serverTime":"szerveridő",
+"fq.noScore":"nem pontszerző nap",
 "fq.customNote":"Csak hat szint van rögzítve. Bármely más szinthez olvasd le ezt a három számot a saját fejlesztési előnézetedből.",
 "nav.calcSpeedup":"Gyorsító-kalkulátor",
 "nav.calcFalcon":"Falcon Quest tervező",
@@ -4139,6 +4160,8 @@ ru: {
 "nav.falconRef":"Справка Falcon Tower",
 "fq.optOther":"Другой уровень",
 "fq.nextHint":"скопируйте таймер сверху экрана Falcon Tower",
+"fq.serverTime":"серверного времени",
+"fq.noScore":"не зачётный день",
 "fq.customNote":"Записано только шесть уровней. Для любого другого возьмите эти три числа из своего предпросмотра улучшения.",
 "nav.calcSpeedup":"Калькулятор ускорений",
 "nav.calcFalcon":"Планировщик Falcon Quest",
@@ -4309,6 +4332,8 @@ uk: {
 "nav.falconRef":"Довідка Falcon Tower",
 "fq.optOther":"Інший рівень",
 "fq.nextHint":"скопіюйте таймер угорі екрана Falcon Tower",
+"fq.serverTime":"серверного часу",
+"fq.noScore":"не заліковий день",
 "fq.customNote":"Записано лише шість рівнів. Для будь-якого іншого візьміть ці три числа зі свого передперегляду покращення.",
 "nav.calcSpeedup":"Калькулятор прискорень",
 "nav.calcFalcon":"Планувальник Falcon Quest",
@@ -4479,6 +4504,8 @@ pl: {
 "nav.falconRef":"Dane Falcon Tower",
 "fq.optOther":"Inny poziom",
 "fq.nextHint":"przepisz licznik u góry ekranu Falcon Tower",
+"fq.serverTime":"czasu serwera",
+"fq.noScore":"dzień bez punktów",
 "fq.customNote":"Zapisano tylko sześć poziomów. Dla dowolnego innego odczytaj te trzy liczby z własnego podglądu ulepszenia.",
 "nav.calcSpeedup":"Kalkulator przyspieszeń",
 "nav.calcFalcon":"Planer Falcon Quest",
@@ -4649,6 +4676,8 @@ fi: {
 "nav.falconRef":"Falcon Tower -tiedot",
 "fq.optOther":"Muu taso",
 "fq.nextHint":"kopioi Falcon Tower -ruudun yläreunan ajastin",
+"fq.serverTime":"palvelinaikaa",
+"fq.noScore":"ei pisteytä tänä päivänä",
 "fq.customNote":"Vain kuusi tasoa on kirjattu. Muille tasoille lue nämä kolme lukua omasta päivitysesikatselustasi.",
 "nav.calcSpeedup":"Nopeutuslaskuri",
 "nav.calcFalcon":"Falcon Quest -suunnittelija",
@@ -4819,6 +4848,8 @@ et: {
 "nav.falconRef":"Falcon Toweri andmed",
 "fq.optOther":"Muu tase",
 "fq.nextHint":"kopeeri taimer Falcon Toweri ekraani ülaservast",
+"fq.serverTime":"serveri aega",
+"fq.noScore":"ei ole punktipäev",
 "fq.customNote":"Kirja on pandud vaid kuus taset. Iga muu taseme puhul loe need kolm numbrit oma uuenduse eelvaatest.",
 "nav.calcSpeedup":"Kiirenduskalkulaator",
 "nav.calcFalcon":"Falcon Questi planeerija",
@@ -7434,6 +7465,17 @@ function nextWallClockInTZ(tz, weekday, hh, mm){
 function serverWeekday(date){
   return ((serverEpochDay(date) + 4) % 7 + 7) % 7;
 }
+// Weekday name in the currently selected UI language. HOARD_DAYNAMES is a
+// hardcoded English array used for logic; this is for anything shown to a
+// reader, so a Dutch viewer does not get "Monday" mid-sentence.
+function uiWeekdayName(idx){
+  const lang = (typeof currentLang === 'string' && currentLang) ? currentLang : 'en';
+  try{
+    // 2024-01-07 was a Sunday, so +idx lands on the wanted weekday.
+    const d = new Date(Date.UTC(2024, 0, 7 + idx));
+    return new Intl.DateTimeFormat(lang, { weekday:'long', timeZone:'UTC' }).format(d);
+  }catch(e){ return HOARD_DAYNAMES[idx]; }
+}
 const FQ_KEY = 'lppc-falcon';
 const FQ_REFRESH_HOURS = 6;
 const FQ_LEVELS = {
@@ -7497,6 +7539,8 @@ function buildFalconPlanner(){
       e.className = 'hoard-answer warn';
       e.innerHTML = '<b>Enter the next refresh countdown</b> \u2014 the hours and minutes shown at the top of the Falcon Tower screen.';
       out.appendChild(e);
+      const echo0 = document.getElementById('fqServerEcho');
+      if(echo0){ echo0.textContent = ''; echo0.className = 'fq-echo'; }
       return;
     }
 
@@ -7520,6 +7564,20 @@ function buildFalconPlanner(){
     const srvConv = (typeof convertServerDateTime === 'function')
       ? convertServerDateTime(target, 'Etc/GMT+2') : null;
 
+    // Echo the chosen moment back in server time, directly under the inputs.
+    // The player picks in their own clock but the duel scores on server days,
+    // so this is the line that lets them sanity-check the conversion without
+    // opening the breakdown.
+    const echo = document.getElementById('fqServerEcho');
+    if(echo){
+      const hm = srvConv ? srvConv.timeStr
+                         : (String(target.getUTCHours()).padStart(2,'0') + ':' + String(target.getUTCMinutes()).padStart(2,'0'));
+      const scores = FQ_SCORING_DAYS.indexOf(srvDay) >= 0;
+      echo.className = 'fq-echo' + (scores ? ' is-ok' : ' is-no');
+      echo.innerHTML = '= <b>' + uiWeekdayName(srvDay) + ' ' + hm + '</b> ' + t('fq.serverTime') +
+                       (scores ? ' \u2713' : ' \u2014 ' + t('fq.noScore'));
+    }
+
     // How many refreshes land strictly before the claim moment.
     let refreshes = 0;
     if(hoursToTarget >= nextIn){
@@ -7540,7 +7598,7 @@ function buildFalconPlanner(){
       // Name the SERVER day: on a shifted timezone the local day the player
       // picked is not the day the duel scores on, and saying "Monday" when the
       // claim lands on server Tuesday is exactly the confusion to avoid.
-      why  = 'Enough refreshes land before ' + HOARD_DAYNAMES[srvDay] + ' (server) to refill you completely, whatever you spend now.';
+      why  = 'Enough refreshes land before ' + uiWeekdayName(srvDay) + ' (server) to refill you completely, whatever you spend now.';
     } else if(spendable > 0){
       head = 'You can use ' + spendable + ' now.';
       why  = 'Keep at least ' + floor + ' in reserve and the refreshes will top you back up to ' + cap + ' in time.';
@@ -7565,7 +7623,7 @@ function buildFalconPlanner(){
     det.appendChild(sum);
     const lines = document.createElement('div');
     lines.className = 'hoard-lines';
-    [['Claim moment (server)', srvConv ? (srvConv.dateStr + ' ' + srvConv.timeStr + ' \u2014 ' + HOARD_DAYNAMES[srvDay]) : '\u2014'],
+    [['Claim moment (server)', srvConv ? (srvConv.dateStr + ' ' + srvConv.timeStr + ' \u2014 ' + uiWeekdayName(srvDay)) : '\u2014'],
      ['Capacity', spec.inactive + ' inactive + ' + spec.active + ' active = ' + cap],
      ['Refreshes before claim', refreshes + ' \u00d7 ' + spec.refresh + ' = ' + incoming + ' quests'],
      ['Projected at claim', projected + ' of ' + cap],
